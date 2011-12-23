@@ -1,4 +1,6 @@
 Escalator::Application.routes.draw do
+  resources :escalation_policies
+
   resources :issues
 
   # The priority is based upon order of creation:

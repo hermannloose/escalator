@@ -1,4 +1,6 @@
 Escalator::Application.routes.draw do
+  resources :users
+
   resources :rotations
 
   resources :escalation_policies

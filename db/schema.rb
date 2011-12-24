@@ -10,7 +10,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111223102004) do
+ActiveRecord::Schema.define(:version => 20111224145109) do
+
+  create_table "contact_details", :force => true do |t|
+    t.string   "name"
+    t.string   "category"
+    t.string   "value"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "contact_details", ["user_id"], :name => "index_contact_details_on_user_id"
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -45,6 +56,14 @@ ActiveRecord::Schema.define(:version => 20111223102004) do
 
   create_table "rotations", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.boolean  "is_admin"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

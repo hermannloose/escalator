@@ -1,4 +1,14 @@
 Escalator::Application.routes.draw do
+  resources :contact_details
+
+  resources :users
+
+  resources :rotations
+
+  resources :escalation_policies
+
+  resources :issues
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

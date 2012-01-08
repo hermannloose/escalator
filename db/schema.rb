@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120108090406) do
+ActiveRecord::Schema.define(:version => 20120108114638) do
 
   create_table "contact_details", :force => true do |t|
     t.string   "name"
@@ -44,6 +44,15 @@ ActiveRecord::Schema.define(:version => 20120108090406) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "escalation_steps", :force => true do |t|
+    t.integer  "delay"
+    t.integer  "rotation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "escalation_steps", ["rotation_id"], :name => "index_escalation_steps_on_rotation_id"
 
   create_table "issues", :force => true do |t|
     t.string   "title"

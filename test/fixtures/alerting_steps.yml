@@ -1,9 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
+valid:
+  delay: 1
+  contact_detail: valid
+  rotation_membership: valid
+
 one:
   delay: 1
   contact_detail: 
+  rotation_membership: 
 
 two:
   delay: 1
   contact_detail: 
+  rotation_membership: 

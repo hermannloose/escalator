@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class EscalationPolicyTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "should validate presence of name" do
+    policy = EscalationPolicy.new
+    assert !policy.save
+  end
 end

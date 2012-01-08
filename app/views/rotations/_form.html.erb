@@ -1,0 +1,21 @@
+<%= form_for(@rotation) do |f| %>
+  <% if @rotation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@rotation.errors.count, "error") %> prohibited this rotation from being saved:</h2>
+
+      <ul>
+      <% @rotation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

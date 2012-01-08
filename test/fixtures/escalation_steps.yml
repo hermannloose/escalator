@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+valid:
+  delay: 1
+  rotation: valid
+
+one:
+  delay: 1
+  rotation: 
+
+two:
+  delay: 1
+  rotation: 

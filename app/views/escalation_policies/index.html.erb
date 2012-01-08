@@ -1,0 +1,23 @@
+<h1>Listing escalation_policies</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @escalation_policies.each do |escalation_policy| %>
+  <tr>
+    <td><%= escalation_policy.name %></td>
+    <td><%= link_to 'Show', escalation_policy %></td>
+    <td><%= link_to 'Edit', edit_escalation_policy_path(escalation_policy) %></td>
+    <td><%= link_to 'Destroy', escalation_policy, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Escalation policy', new_escalation_policy_path %>

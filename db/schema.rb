@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111224145109) do
+ActiveRecord::Schema.define(:version => 20120108090406) do
 
   create_table "contact_details", :force => true do |t|
     t.string   "name"
@@ -53,6 +53,16 @@ ActiveRecord::Schema.define(:version => 20111224145109) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "rotation_memberships", :force => true do |t|
+    t.integer  "rotation_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "rotation_memberships", ["rotation_id"], :name => "index_rotation_memberships_on_rotation_id"
+  add_index "rotation_memberships", ["user_id"], :name => "index_rotation_memberships_on_user_id"
 
   create_table "rotations", :force => true do |t|
     t.string   "name"

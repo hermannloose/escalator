@@ -10,16 +10,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120108144527) do
+ActiveRecord::Schema.define(:version => 20120108150326) do
 
   create_table "alerting_steps", :force => true do |t|
     t.integer  "delay"
     t.integer  "contact_detail_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "rotation_membership_id"
   end
 
   add_index "alerting_steps", ["contact_detail_id"], :name => "index_alerting_steps_on_contact_detail_id"
+  add_index "alerting_steps", ["rotation_membership_id"], :name => "index_alerting_steps_on_rotation_membership_id"
 
   create_table "contact_details", :force => true do |t|
     t.string   "name"

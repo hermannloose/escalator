@@ -10,7 +10,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120108114638) do
+ActiveRecord::Schema.define(:version => 20120108144527) do
+
+  create_table "alerting_steps", :force => true do |t|
+    t.integer  "delay"
+    t.integer  "contact_detail_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "alerting_steps", ["contact_detail_id"], :name => "index_alerting_steps_on_contact_detail_id"
 
   create_table "contact_details", :force => true do |t|
     t.string   "name"

@@ -1,13 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
+valid:
+  name: present
+  category: present
+  value: present
+  user: valid
+
 one:
   name: MyString
   category: MyString
   value: MyString
-  user: 
+  user: one
 
 two:
   name: MyString
   category: MyString
   value: MyString
-  user: 
+  user: two

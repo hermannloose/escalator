@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  delay: 1
+  contact_detail: 
+
+two:
+  delay: 1
+  contact_detail: 

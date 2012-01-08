@@ -1,5 +1,10 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
+valid:
+  name: present
+  email: present
+  is_admin: false
+
 one:
   name: MyString
   email: MyString

@@ -5,4 +5,5 @@ class User < ActiveRecord::Base
 
   validates :name, :presence => true
   validates :email, :presence => true
+  validates :is_admin, :inclusion => { :in => [true, false] }
 end

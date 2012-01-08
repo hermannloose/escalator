@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class ContactDetailTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "should validate presence of name" do
+    detail = ContactDetail.new
+    assert !detail.save
+  end
 end

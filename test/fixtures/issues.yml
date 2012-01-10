@@ -1,5 +1,12 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
+valid:
+  escalation_policy: valid
+  title: present
+  description: 
+  posted_at: 
+  status: present
+
 one:
   title: MyString
   description: MyText

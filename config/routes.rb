@@ -5,7 +5,9 @@ Escalator::Application.routes.draw do
 
   resources :rotations
 
-  resources :escalation_policies
+  resources :escalation_policies do
+    resources :issues
+  end
 
   resources :issues
 

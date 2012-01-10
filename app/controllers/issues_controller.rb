@@ -2,7 +2,10 @@ class IssuesController < ApplicationController
   # GET /issues
   # GET /issues.json
   def index
-    @issues = Issue.all
+    @issues = Issue.scoped
+    if params[:escalation_policy_id]
+      @issues = @issues.where(:escalation_policy_id => params[:escalation_policy_id])
+    end
 
     respond_to do |format|
       format.html # index.html.erb

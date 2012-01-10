@@ -1,0 +1,16 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+valid:
+  contact_detail: valid
+  key: present
+  value: present
+
+one:
+  contact_detail: 
+  key: MyString
+  value: MyString
+
+two:
+  contact_detail: 
+  key: MyString
+  value: MyString

@@ -2,13 +2,23 @@ require 'test_helper'
 
 class IssuesControllerTest < ActionController::TestCase
   setup do
-    @issue = issues(:one)
+    @issue = issues(:valid)
+    @policy = escalation_policies(:one)
   end
 
   test "should get index" do
     get :index
     assert_response :success
     assert_not_nil assigns(:issues)
+  end
+
+  test "should get only nested issues if requested" do
+    get :index, :escalation_policy_id => @policy.to_param
+    assert_response :success
+    assert_not_nil assigns(:issues)
+    assigns(:issues).each do |issue|
+      assert issue.escalation_policy == @policy
+    end
   end
 
   test "should get new" do

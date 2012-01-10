@@ -2,7 +2,7 @@ require 'test_helper'
 
 class EscalationPoliciesControllerTest < ActionController::TestCase
   setup do
-    @escalation_policy = escalation_policies(:one)
+    @escalation_policy = escalation_policies(:valid)
   end
 
   test "should get index" do

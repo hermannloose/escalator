@@ -1,13 +1,36 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  title: MyString
-  description: MyText
-  posted_at: 2011-12-22 20:58:59
-  status: MyString
+valid:
+  escalation_policy: valid
+  title: present
+  description: 
+  posted_at: 
+  status: present
 
-two:
-  title: MyString
-  description: MyText
+1-1:
+  escalation_policy: policy1
+  title: issue 1-1
+  description: 
   posted_at: 2011-12-22 20:58:59
-  status: MyString
+  status: new
+
+1-2:
+  escalation_policy: policy1
+  title: issue 1-2
+  description: 
+  posted_at: 2011-12-22 20:58:59
+  status: new
+
+2-1:
+  escalation_policy: policy2
+  title: issue 2-1
+  description: 
+  posted_at: 2011-12-22 20:58:59
+  status: new
+
+2-2:
+  escalation_policy: policy2
+  title: issue 2-2
+  description: 
+  posted_at: 2011-12-22 20:58:59
+  status: new

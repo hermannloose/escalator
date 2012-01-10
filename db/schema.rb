@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120109134002) do
+ActiveRecord::Schema.define(:version => 20120110135847) do
 
   create_table "alerting_steps", :force => true do |t|
     t.integer  "delay"
@@ -82,7 +82,10 @@ ActiveRecord::Schema.define(:version => 20120109134002) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "escalation_policy_id"
   end
+
+  add_index "issues", ["escalation_policy_id"], :name => "index_issues_on_escalation_policy_id"
 
   create_table "rotation_memberships", :force => true do |t|
     t.integer  "rotation_id"

@@ -4,7 +4,7 @@ valid:
   name: present
 
 one:
-  name: MyString
+  name: policy one
 
 two:
-  name: MyString
+  name: policy two

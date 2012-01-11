@@ -4,11 +4,11 @@ class EscalationPolicy < ActiveRecord::Base
 
   validates :name, :presence => true
 
-  def oncall
-    step = escalation_steps.ordered.first
-    # TODO(hermannloose): Should make sure there's always at least one step.
-    unless step.nil?
-      step.rotation.users.first
-    end
+  def oncall(issue)
+    delay = (Time.now - issue.posted_at) / 60
+    step = escalation_steps.ordered.find_all { |step|
+      step.delay_minutes < delay
+    }.last
+    step.rotation.users.first
   end
 end

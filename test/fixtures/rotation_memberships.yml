@@ -12,10 +12,12 @@ valid:
   rotation: one
   user: two
 
-2-1:
-  rotation: two
-  user: one
-
+# FIXME: Add explicit order/rank, as this is broken right now.
+# (can be fixed temporarily by swapping the ids ("2-2" <-> "2-3")
 2-2:
   rotation: two
   user: two
+
+2-3:
+  rotation: two
+  user: three

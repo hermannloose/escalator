@@ -1,21 +1,21 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 valid:
-  delay: 1
+  delay_minutes: 1
   escalation_policy: valid
   rotation: valid
 
 1-1:
-  delay: 0
+  delay_minutes: 0
   escalation_policy: one
   rotation: one
 
 1-2:
-  delay: 500
+  delay_minutes: 500
   escalation_policy: one
   rotation: one
 
 1-3:
-  delay: 250
+  delay_minutes: 250
   escalation_policy: one
   rotation: one

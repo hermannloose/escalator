@@ -10,17 +10,17 @@ class EscalationStepTest < ActiveSupport::TestCase
   end
 
   test "should allow a delay of zero" do
-    @step.delay = 0
+    @step.delay_minutes = 0
     assert @step.save
   end
 
   test "should not allow negative delays" do
-    @step.delay = -1
+    @step.delay_minutes = -1
     assert !@step.save
   end
 
   test "should only allow integer delays" do
-    @step.delay = 1.1
+    @step.delay_minutes = 1.1
     assert !@step.save
   end
 

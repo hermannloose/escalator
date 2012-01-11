@@ -13,4 +13,8 @@ class EscalationPolicyTest < ActiveSupport::TestCase
     @policy.name = nil
     assert !@policy.save
   end
+
+  test "should get current on-call user" do
+    assert escalation_policies(:one).oncall == users(:one)
+  end
 end

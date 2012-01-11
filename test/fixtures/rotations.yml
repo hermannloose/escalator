@@ -4,7 +4,7 @@ valid:
   name: present
 
 one:
-  name: MyString
+  name: rotation one
 
 two:
-  name: MyString
+  name: rotation two

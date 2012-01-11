@@ -5,7 +5,7 @@ class EscalationPolicyTest < ActiveSupport::TestCase
     @policy = escalation_policies(:valid)
   end
 
-  test "should save valid escalation poliy" do
+  test "should save valid escalation policy" do
     assert @policy.save
   end
 

@@ -24,6 +24,11 @@ class EscalationStepTest < ActiveSupport::TestCase
     assert !@step.save
   end
 
+  test "should validate presence of escalation_policy" do
+    @step.escalation_policy = nil
+    assert !@step.save
+  end
+
   test "should validate presence of rotation" do
     @step.rotation = nil
     assert !@step.save

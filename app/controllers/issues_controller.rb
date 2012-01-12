@@ -47,6 +47,7 @@ class IssuesController < ApplicationController
 
     respond_to do |format|
       if @issue.save
+        Delayed::Job.enqueue(EscalationJob.new(@issue.to_param))
         format.html { redirect_to @issue, :notice => 'Issue was successfully created.' }
         format.json { render :json => @issue, :status => :created, :location => @issue }
       else

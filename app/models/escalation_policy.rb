@@ -3,4 +3,10 @@ class EscalationPolicy < ActiveRecord::Base
   has_many :issues
 
   validates :name, :presence => true
+
+  def oncall(issue)
+    delay = (Time.now - issue.posted_at) / 60
+    step = escalation_steps.active_after(delay).last
+    step.rotation.users.first
+  end
 end

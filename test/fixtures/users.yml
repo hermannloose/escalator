@@ -6,11 +6,16 @@ valid:
   is_admin: false
 
 one:
-  name: MyString
-  email: MyString
+  name: User 1
+  email: user1@example.com
   is_admin: false
 
 two:
-  name: MyString
-  email: MyString
+  name: User 2
+  email: user2@example.com
+  is_admin: false
+
+three:
+  name: User 3
+  email: user3@example.com
   is_admin: false

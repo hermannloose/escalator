@@ -10,7 +10,10 @@ class EscalationStep < ActiveRecord::Base
   validates :rotation_id, :presence => true
 
   scope :ordered, order("delay_minutes")
-  scope :active_after, lambda { |minutes|
-    ordered.where("delay_minutes < #{minutes}")
+  scope :passed, lambda { |minutes|
+    ordered.where("delay_minutes <= #{minutes}")
+  }
+  scope :upcoming, lambda { |minutes|
+    ordered.where("delay_minutes > #{minutes}")
   }
 end

@@ -6,7 +6,7 @@ class EscalationPolicy < ActiveRecord::Base
 
   def oncall(issue)
     delay = (Time.now - issue.posted_at) / 60
-    step = escalation_steps.active_after(delay).last
+    step = escalation_steps.passed(delay).last
     step.rotation.users.first
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120111211847) do
+ActiveRecord::Schema.define(:version => 20120112115301) do
 
   create_table "alerting_steps", :force => true do |t|
     t.integer  "delay_minutes"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(:version => 20120111211847) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "rank"
   end
 
   add_index "rotation_memberships", ["rotation_id"], :name => "index_rotation_memberships_on_rotation_id"

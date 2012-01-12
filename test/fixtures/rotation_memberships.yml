@@ -3,21 +3,24 @@
 valid:
   rotation: valid
   user: valid
+  rank: 0
 
 1-1:
   rotation: one
   user: one
+  rank: 0
 
 1-2:
   rotation: one
   user: two
+  rank: 1
 
-# FIXME: Add explicit order/rank, as this is broken right now.
-# (can be fixed temporarily by swapping the ids ("2-2" <-> "2-3")
 2-2:
   rotation: two
   user: two
+  rank: 0
 
 2-3:
   rotation: two
   user: three
+  rank: 1

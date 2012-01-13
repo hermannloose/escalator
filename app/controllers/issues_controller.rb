@@ -43,6 +43,10 @@ class IssuesController < ApplicationController
   # GET /issues/1/edit
   def edit
     @issue = Issue.find(params[:id])
+
+    @policy_options = EscalationPolicy.all.map do |policy|
+      [policy.name, policy.to_param]
+    end
   end
 
   # POST /issues

@@ -8,8 +8,9 @@ class EscalationJob < Struct.new(:issue_id)
     escalate_to = issue.escalation_policy.escalation_steps.passed(elapsed_minutes).last
     upcoming = issue.escalation_policy.escalation_steps.upcoming(elapsed_minutes).first
     # TODO(hermannloose): Write log record when escalation stops.
+    check_after = nil
     if upcoming
-      check_after = elapsed_minutes - upcoming.delay_minutes
+      check_after = upcoming.delay_minutes - elapsed_minutes
       Delayed::Job.enqueue(EscalationJob.new(issue_id), 0, check_after.minutes.from_now)
     end
 
@@ -17,7 +18,8 @@ class EscalationJob < Struct.new(:issue_id)
     unless issue.assignee == oncall
       issue.assignee = oncall
       issue.save
-      Delayed::Job.enqueue(NotificationJob.new(oncall.to_param))
+      AssigneeMailer.assignee_mail(oncall, issue, check_after).deliver
+      #Delayed::Job.enqueue(NotificationJob.new(oncall.to_param))
     end
   end
 end

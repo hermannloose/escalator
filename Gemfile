@@ -32,3 +32,7 @@ gem 'jquery-rails'
 # gem 'ruby-debug'
 
 gem 'delayed_job_active_record'
+
+group :development do
+  gem 'ruby-prof'
+end

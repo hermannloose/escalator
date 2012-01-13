@@ -28,4 +28,8 @@
 
 <br />
 
+<% if @escalation_policy %>
+<%= link_to 'New Issue', new_escalation_policy_issue_path %>
+<% else %>
 <%= link_to 'New Issue', new_issue_path %>
+<% end %>

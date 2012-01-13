@@ -28,6 +28,11 @@ class IssuesController < ApplicationController
   # GET /issues/new.json
   def new
     @issue = Issue.new
+    @issue.escalation_policy_id = params[:escalation_policy_id]
+
+    @policy_options = EscalationPolicy.all.map do |policy|
+      [policy.name, policy.to_param]
+    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -44,6 +49,10 @@ class IssuesController < ApplicationController
   # POST /issues.json
   def create
     @issue = Issue.new(params[:issue])
+
+    # Not sure what benefit supplied values would have. -hermannloose
+    @issue.posted_at = Time.now
+    @issue.status = :open
 
     respond_to do |format|
       if @issue.save

@@ -16,9 +16,12 @@ class EscalationJob < Struct.new(:issue_id)
 
     oncall = escalate_to.rotation.users.first
     unless issue.assignee == oncall
+      old_assignee = issue.assignee
       issue.assignee = oncall
       issue.save
+
       AssigneeMailer.assignee_mail(oncall, issue, check_after).deliver
+      AssigneeMailer.escalated_mail(old_assignee, issue).deliver if old_assignee
       #Delayed::Job.enqueue(NotificationJob.new(oncall.to_param))
     end
   end

@@ -28,6 +28,11 @@ class IssuesController < ApplicationController
   # GET /issues/new.json
   def new
     @issue = Issue.new
+    @issue.escalation_policy_id = params[:escalation_policy_id]
+
+    @policy_options = EscalationPolicy.all.map do |policy|
+      [policy.name, policy.to_param]
+    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -38,6 +43,10 @@ class IssuesController < ApplicationController
   # GET /issues/1/edit
   def edit
     @issue = Issue.find(params[:id])
+
+    @policy_options = EscalationPolicy.all.map do |policy|
+      [policy.name, policy.to_param]
+    end
   end
 
   # POST /issues
@@ -45,8 +54,13 @@ class IssuesController < ApplicationController
   def create
     @issue = Issue.new(params[:issue])
 
+    # Not sure what benefit supplied values would have. -hermannloose
+    @issue.posted_at = Time.now
+    @issue.status = :open
+
     respond_to do |format|
       if @issue.save
+        Delayed::Job.enqueue(EscalationJob.new(@issue.to_param))
         format.html { redirect_to @issue, :notice => 'Issue was successfully created.' }
         format.json { render :json => @issue, :status => :created, :location => @issue }
       else

@@ -6,6 +6,7 @@
     <th>Description</th>
     <th>Posted at</th>
     <th>Status</th>
+    <th>Assignee</th>
     <th></th>
     <th></th>
     <th></th>
@@ -17,6 +18,7 @@
     <td><%= issue.description %></td>
     <td><%= issue.posted_at %></td>
     <td><%= issue.status %></td>
+    <td><%= issue.assignee.name unless issue.assignee.nil? %></td>
     <td><%= link_to 'Show', issue %></td>
     <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
     <td><%= link_to 'Destroy', issue, :confirm => 'Are you sure?', :method => :delete %></td>
@@ -26,4 +28,8 @@
 
 <br />
 
+<% if @escalation_policy %>
+<%= link_to 'New Issue', new_escalation_policy_issue_path %>
+<% else %>
 <%= link_to 'New Issue', new_issue_path %>
+<% end %>

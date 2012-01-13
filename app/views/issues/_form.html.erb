@@ -20,12 +20,8 @@
     <%= f.text_area :description %>
   </div>
   <div class="field">
-    <%= f.label :posted_at %><br />
-    <%= f.datetime_select :posted_at %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br />
-    <%= f.text_field :status %>
+    <%= f.label :escalation_policy_id %><br />
+    <%= f.select(:escalation_policy_id, options_for_select(@policy_options)) %>
   </div>
   <div class="actions">
     <%= f.submit %>

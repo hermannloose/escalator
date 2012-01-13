@@ -27,7 +27,7 @@ class IssuesControllerTest < ActionController::TestCase
   end
 
   test "should create issue" do
-    assert_difference('Issue.count') do
+    assert_difference ['Issue.count', 'Delayed::Job.count'] do
       post :create, :issue => @issue.attributes
     end
 

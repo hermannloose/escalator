@@ -5,6 +5,15 @@
   <%= @rotation.name %>
 </p>
 
+<p>
+  <b>Users in this rotation:</b>
+  <ol>
+  <% @rotation.users.each do |user| %>
+    <li><%= user.name %> (<%= user.email %>)</li>
+  <% end %>
+  </ol>
+</p>
+
 
 <%= link_to 'Edit', edit_rotation_path(@rotation) %> |
 <%= link_to 'Back', rotations_path %>

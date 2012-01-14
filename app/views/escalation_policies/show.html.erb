@@ -1,9 +1,19 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @escalation_policy.name %>
-</p>
+<h1><%= @escalation_policy.name %></h1>
+
+<% if @escalation_policy.escalation_steps.empty? %>
+<strong>There are no escalation steps defined for this policy!</strong>
+<% else %>
+<h3>Escalation Steps:</h3>
+<ol>
+  <% @escalation_policy.escalation_steps.each do |step| %>
+    <li>if the issue is not acknowledged within <strong>
+    <%= step.delay_minutes %> minutes</strong> of being posted, escalate it
+    to <%= link_to step.rotation.name, step.rotation %></li>
+  <% end %>
+</ol>
+<% end %>
 
 
 <%= link_to 'Edit', edit_escalation_policy_path(@escalation_policy) %> |

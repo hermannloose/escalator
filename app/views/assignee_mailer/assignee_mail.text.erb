@@ -1,0 +1,16 @@
+Dear <%= @user.name %>,
+
+you've been assigned the following issue:
+
+<%= @issue.to_param %>: <%= @issue.title %>
+<%= "-" * 80 %>
+<%= @issue.description %>
+
+PLEASE NOTE:
+<% if @time_left %>
+this issue will auto-escalate if you don't acknowledge it within
+<%= distance_of_time_in_words(Time.now, @time_left.minutes.from_now)
+%>, by <%= @time_left.minutes.from_now %>!
+<% else %>
+this issue will not auto-escalate!
+<% end %>

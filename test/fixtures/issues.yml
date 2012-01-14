@@ -7,30 +7,30 @@ valid:
   posted_at: <%= 1.minutes.ago %>
   status: present
 
-1-1:
+one:
   escalation_policy: one
-  title: issue 1-1
+  title: issue one
   description: 
   posted_at: <%= 1.minutes.ago %>
   status: new
 
-1-2:
+two:
   escalation_policy: one
-  title: issue 1-2
+  title: issue two
   description: 
   posted_at: <%= 5.minutes.ago %>
   status: new
 
-2-1:
+three:
   escalation_policy: two
-  title: issue 2-1
+  title: issue three
   description: 
   posted_at: <%= 1.minutes.ago %>
   status: new
 
-2-2:
+four:
   escalation_policy: two
-  title: issue 2-2
+  title: issue four
   description: 
   posted_at: <%= 5.minutes.ago %>
   status: new

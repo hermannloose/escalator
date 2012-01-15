@@ -1,7 +1,10 @@
 Escalator::Application.routes.draw do
-  resources :contact_details
+  root :to => "issues#index"
 
   devise_for :users
+
+  resources :contact_details
+
   resources :users
 
   resources :rotations

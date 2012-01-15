@@ -1,4 +1,8 @@
 Escalator::Application.routes.draw do
+  root :to => "issues#index"
+
+  devise_for :users
+
   resources :contact_details
 
   resources :users

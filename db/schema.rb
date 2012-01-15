@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120115130432) do
+ActiveRecord::Schema.define(:version => 20120115140806) do
 
   create_table "alerting_steps", :force => true do |t|
     t.integer  "delay_minutes"
@@ -111,7 +111,6 @@ ActiveRecord::Schema.define(:version => 20120115130432) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.boolean  "is_admin"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "encrypted_password",     :limit => 128

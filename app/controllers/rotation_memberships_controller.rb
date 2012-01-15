@@ -1,0 +1,2 @@
+class RotationMembershipsController < ApplicationController
+end

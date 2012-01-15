@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class EscalationPoliciesControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+
   setup do
     @escalation_policy = escalation_policies(:valid)
   end

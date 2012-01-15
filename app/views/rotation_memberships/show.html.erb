@@ -1,0 +1,13 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Details for <%= link_to @membership.user.name, @membership.user %> in
+    <%= link_to @membership.rotation.name, @membership.rotation %></h1>
+
+<h3>Alerting steps:</h3>
+<ol>
+  <% @membership.alerting_steps.each do |step| %>
+    <li>if I do not respond within <strong><%= step.delay_minutes %>
+    minutes</strong>, contact me via
+    <%= link_to step.contact_detail.name, step.contact_detail %></li>
+  <% end %>
+</ol>

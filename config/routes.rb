@@ -3,7 +3,9 @@ Escalator::Application.routes.draw do
 
   resources :users
 
-  resources :rotations
+  resources :rotations do
+    match 'users/:user_id' => 'rotation_memberships#show'
+  end
 
   resources :escalation_policies do
     resources :issues

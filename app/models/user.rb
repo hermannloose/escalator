@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
+      :trackable, :validatable
+
   has_many :contact_details
   has_many :issues, :foreign_key => "assignee_id"
   has_many :rotation_memberships

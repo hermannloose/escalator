@@ -1,6 +1,7 @@
 Escalator::Application.routes.draw do
   resources :contact_details
 
+  devise_for :users
   resources :users
 
   resources :rotations

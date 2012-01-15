@@ -18,9 +18,4 @@ class UserTest < ActiveSupport::TestCase
     @user.email = nil
     assert !@user.save
   end
-
-  test "should validate presence of is_admin" do
-    @user.is_admin = nil
-    assert !@user.save
-  end
 end

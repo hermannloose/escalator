@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class IssuesControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+
   setup do
     @issue = issues(:valid)
     @policy = escalation_policies(:one)

@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class RotationsControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+
   setup do
     @rotation = rotations(:one)
   end

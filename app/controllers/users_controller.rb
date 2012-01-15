@@ -56,6 +56,13 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.json
   def update
+    # As per https://github.com/plataformatec/devise/wiki/How-To:-Manage-users-through-a-CRUD-interface,
+    # not sure why this is needed though.
+    if params[:user][:password].blank?
+      params[:user].delete(:password)
+      params[:user].delete(:password_confirmation)
+    end
+
     @user = User.find(params[:id])
 
     respond_to do |format|

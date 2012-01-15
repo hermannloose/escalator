@@ -1,8 +1,11 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+
   setup do
     @user = users(:one)
+    sign_in @user
   end
 
   test "should get index" do
@@ -17,8 +20,15 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should create user" do
+    user_fields = {
+      :name => "new user",
+      :email => "unused@example.com",
+      :password => "present",
+      :password_confirmation => "present"
+    }
+
     assert_difference('User.count') do
-      post :create, :user => @user.attributes
+      post :create, :user => user_fields
     end
 
     assert_redirected_to user_path(assigns(:user))

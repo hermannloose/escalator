@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class ContactDetailsControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+
   setup do
     @contact_detail = contact_details(:one)
   end

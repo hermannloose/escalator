@@ -36,4 +36,8 @@ group :development do
   gem 'ruby-prof'
 end
 
+# Authentication
 gem 'devise'
+
+# Authorisation
+gem 'declarative_authorization'

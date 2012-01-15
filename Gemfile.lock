@@ -40,6 +40,7 @@ GEM
       execjs
     coffee-script-source (1.2.0)
     daemons (1.0.10)
+    declarative_authorization (0.5.5)
     delayed_job (3.0.0.pre4)
       activesupport (~> 3.0)
       daemons (= 1.0.10)
@@ -123,6 +124,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 3.1.1)
+  declarative_authorization
   delayed_job_active_record
   devise
   jquery-rails

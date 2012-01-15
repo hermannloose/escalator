@@ -18,7 +18,7 @@ authorization do
       :index, :show
     ]
     has_permission_on [:issues], :to => [:new]
-    has_permission_on [:contact_details], :to => [:edit, :update] do
+    has_permission_on [:contact_details], :to => [:edit, :update, :destroy] do
       if_attribute :user => is { user }
     end
   end

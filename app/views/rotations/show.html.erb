@@ -6,5 +6,7 @@
 </p>
 
 
-<%= link_to 'Edit', edit_rotation_path(@rotation) %> |
+<% if permitted_to? :edit, @rotation %>
+  <%= link_to 'Edit', edit_rotation_path(@rotation) %> |
+<% end %>
 <%= link_to 'Back', rotations_path %>

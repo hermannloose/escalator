@@ -6,6 +6,7 @@ class IssuesController < ApplicationController
   def index
     @issues = Issue.scoped
     if params[:escalation_policy_id]
+      @escalation_policy = EscalationPolicy.find(params[:escalation_policy_id])
       @issues = @issues.where(:escalation_policy_id => params[:escalation_policy_id])
     end
 

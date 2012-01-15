@@ -4,6 +4,9 @@ class ContactDetailsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   setup do
+    @user = users(:valid)
+    sign_in @user
+
     @contact_detail = contact_details(:one)
   end
 

@@ -1,4 +1,6 @@
 class IssuesController < ApplicationController
+  filter_resource_access
+
   # GET /issues
   # GET /issues.json
   def index

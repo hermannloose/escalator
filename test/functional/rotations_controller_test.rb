@@ -4,6 +4,9 @@ class RotationsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   setup do
+    @user = users(:valid)
+    sign_in @user
+
     @rotation = rotations(:one)
   end
 

@@ -4,6 +4,9 @@ class IssuesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   setup do
+    @user = users(:valid)
+    sign_in @user
+
     @issue = issues(:valid)
     @policy = escalation_policies(:one)
   end

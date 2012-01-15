@@ -4,6 +4,9 @@ class EscalationPoliciesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   setup do
+    @user = users(:valid)
+    sign_in @user
+
     @escalation_policy = escalation_policies(:valid)
   end
 

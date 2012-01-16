@@ -3,8 +3,8 @@
 valid:
   name: present
 
-one:
-  name: one
+admin:
+  name: admin
 
-two:
-  name: two
+user:
+  name: user

@@ -1,4 +1,6 @@
 class AssignmentsController < ApplicationController
+  filter_resource_access
+
   # GET /assignments
   # GET /assignments.json
   def index

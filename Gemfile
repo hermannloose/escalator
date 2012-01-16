@@ -32,6 +32,7 @@ gem 'jquery-rails'
 # gem 'ruby-debug'
 
 gem 'delayed_job_active_record'
+
 group :development do
   gem 'ruby-prof'
 end
@@ -41,3 +42,6 @@ gem 'devise'
 
 # Authorisation
 gem 'declarative_authorization'
+group :development do
+  gem 'ruby_parser' # for info on authorisation rules
+end

@@ -2,6 +2,8 @@ authorization do
   role :admin do
     includes :user
 
+    has_permission_on :authorization_rules, :to => :read
+
     has_permission_on :assignments, :to => [:index, :show]
     has_permission_on [
       :assignments, :contact_details, :escalation_policies, :issues,

@@ -1,4 +1,6 @@
 class EscalationPoliciesController < ApplicationController
+  filter_resource_access
+
   # GET /escalation_policies
   # GET /escalation_policies.json
   def index

@@ -1,4 +1,6 @@
 class RotationsController < ApplicationController
+  filter_resource_access
+
   # GET /rotations
   # GET /rotations.json
   def index

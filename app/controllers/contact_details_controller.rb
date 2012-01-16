@@ -1,4 +1,6 @@
 class ContactDetailsController < ApplicationController
+  filter_resource_access
+
   # GET /contact_details
   # GET /contact_details.json
   def index

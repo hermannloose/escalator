@@ -16,5 +16,7 @@
 <% end %>
 
 
-<%= link_to 'Edit', edit_escalation_policy_path(@escalation_policy) %> |
+<% if permitted_to? :edit, @escalation_policy %>
+  <%= link_to 'Edit', edit_escalation_policy_path(@escalation_policy) %> |
+<% end %>
 <%= link_to 'Back', escalation_policies_path %>

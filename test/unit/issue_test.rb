@@ -10,7 +10,7 @@ class IssueTest < ActiveSupport::TestCase
   end
 
   test "should validate presence of escalation_policy" do
-    @issue.escalation_policy = nil
+    @issue.escalation_policy_id = nil
     assert !@issue.save
   end
 

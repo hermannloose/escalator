@@ -1,0 +1,10 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+valid:
+  name: present
+
+admin:
+  name: admin
+
+user:
+  name: user

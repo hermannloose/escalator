@@ -12,12 +12,22 @@
   <tr>
     <td><%= rotation.name %></td>
     <td><%= link_to 'Show', rotation %></td>
-    <td><%= link_to 'Edit', edit_rotation_path(rotation) %></td>
-    <td><%= link_to 'Destroy', rotation, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td>
+      <% if permitted_to? :edit, rotation %>
+        <%= link_to 'Edit', edit_rotation_path(rotation) %>
+      <% end %>
+    </td>
+    <td>
+      <% if permitted_to? :edit, rotation %>
+        <%= link_to 'Destroy', rotation, :confirm => 'Are you sure?', :method => :delete %>
+      <% end %>
+    </td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Rotation', new_rotation_path %>
+<% if permitted_to? :new, :rotations %>
+  <%= link_to 'New Rotation', new_rotation_path %>
+<% end %>

@@ -15,3 +15,11 @@ two:
 three:
   name: User 3
   email: user3@example.com
+
+admin:
+  name: Admin User
+  email: admin@example.com
+
+user:
+  name: Normal User
+  email: user@example.com

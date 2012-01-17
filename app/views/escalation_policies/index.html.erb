@@ -12,12 +12,22 @@
   <tr>
     <td><%= escalation_policy.name %></td>
     <td><%= link_to 'Show', escalation_policy %></td>
-    <td><%= link_to 'Edit', edit_escalation_policy_path(escalation_policy) %></td>
-    <td><%= link_to 'Destroy', escalation_policy, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td>
+      <% if permitted_to? :edit, escalation_policy %>
+        <%= link_to 'Edit', edit_escalation_policy_path(escalation_policy) %>
+      <% end %>
+    </td>
+    <td>
+      <% if permitted_to? :destroy, escalation_policy %>
+        <%= link_to 'Destroy', escalation_policy, :confirm => 'Are you sure?', :method => :delete %>
+      <% end %>
+    </td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Escalation policy', new_escalation_policy_path %>
+<% if permitted_to? :new, :escalation_policies %>
+  <%= link_to 'New Escalation policy', new_escalation_policy_path %>
+<% end %>

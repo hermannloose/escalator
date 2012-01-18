@@ -5,22 +5,22 @@ valid:
   user: valid
   rank: 0
 
-1-1:
+r1u1:
   rotation: one
   user: one
   rank: 0
 
-1-2:
+r1u2:
   rotation: one
   user: two
   rank: 1
 
-2-2:
+r2u2:
   rotation: two
   user: two
   rank: 0
 
-2-3:
+r2u3:
   rotation: two
   user: three
   rank: 1

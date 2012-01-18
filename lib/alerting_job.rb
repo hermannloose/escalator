@@ -13,9 +13,19 @@ class AlertingJob < Struct.new(:rotation_membership_id, :issue_id)
     upcoming = steps.find { |step| step.delay_minutes > delay }
 
     check_after = upcoming ? upcoming.delay_minutes - delay : nil
-
-    if check_after Delayed::Job.enqueue(AlertingJob.new(rotation_membership_id, issue_id), 0, check_after)
+    if check_after
+      Delayed::Job.enqueue(AlertingJob.new(rotation_membership_id, issue_id), {
+        :priority => 0,
+        :run_at => check_after.minutes.from_now
+      })
+    end
 
     # TODO(hermannloose): Use use_contact to actually alert the user.
+    case use_contact.category
+    when "email"
+      AssigneeMailer.assignee_mail(user, issue).deliver
+    else
+      raise "Unknown category #{use_contact.category}.", ArgumentError
+    end
   end
 end

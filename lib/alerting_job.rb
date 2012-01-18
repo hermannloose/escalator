@@ -9,7 +9,9 @@ class AlertingJob < Struct.new(:rotation_membership_id, :issue_id)
 
     delay = (Time.now - issue.posted_at) / 60
     steps = rotation_membership.alerting_steps.ordered.all
-    use_contact = steps.reverse.find { |step| step.delay_minutes <= delay }.contact_detail
+    current_step = steps.reverse.find { |step| step.delay_minutes <= delay }
+    # TODO(hermannloose): Validate that there is always a first step.
+    return unless current_step
     upcoming = steps.find { |step| step.delay_minutes > delay }
 
     check_after = upcoming ? upcoming.delay_minutes - delay : nil
@@ -20,12 +22,20 @@ class AlertingJob < Struct.new(:rotation_membership_id, :issue_id)
       })
     end
 
-    # TODO(hermannloose): Use use_contact to actually alert the user.
-    case use_contact.category
+    contact = current_step.contact_detail
+    case contact.category
     when "email"
       AssigneeMailer.assignee_mail(user, issue).deliver
     else
-      raise "Unknown category #{use_contact.category}.", ArgumentError
+      raise ArgumentError, "Unknown category #{contact.category}."
+    end
+  end
+
+  def error(job, exception)
+    case exception
+    when ArgumentError
+      # Do not attempt to run again.
+      job.fail!
     end
   end
 end

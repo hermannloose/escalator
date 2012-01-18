@@ -42,6 +42,8 @@ class AlertingJobTest < ActiveSupport::TestCase
     assert_no_difference("ActionMailer::Base.deliveries.size") do
       successful, failed = Delayed::Worker.new.work_off
       assert_equal [0, 1], [successful, failed]
+      assert_equal 1, Delayed::Job.all.size
+      assert Delayed::Job.first.failed?
     end
   end
 end

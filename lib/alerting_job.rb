@@ -23,15 +23,15 @@ class AlertingJob < Struct.new(:rotation_membership_id, :issue_id)
     end
 
     contact = current_step.contact_detail
-    case contact.category
-    when "email"
-      AssigneeMailer.assignee_mail(user, issue).deliver
-    else
-      raise ArgumentError, "Unknown category #{contact.category}."
-    end
+
+    Service.invoke(contact.category.to_sym, {
+      :user => user
+    }, issue)
   end
 
   def error(job, exception)
+    Rails.logger.warn "#{exception}"
+
     case exception
     when ArgumentError
       # Do not attempt to run again.

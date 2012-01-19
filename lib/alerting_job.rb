@@ -23,10 +23,15 @@ class AlertingJob < Struct.new(:rotation_membership_id, :issue_id)
     end
 
     contact = current_step.contact_detail
+    details = {
+      :user => user,
+      :issue => issue
+    }
+    contact.contact_detail_properties.each do |property|
+      details[property.key.to_sym] = property.value
+    end
 
-    Service.invoke(contact.category.to_sym, {
-      :user => user
-    }, issue)
+    Service.invoke(contact.category.to_sym, details)
   end
 
   def error(job, exception)

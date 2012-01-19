@@ -5,10 +5,10 @@ valid:
   key: present
   value: present
 
-one:
-  contact_detail: 
-  key: MyString
-  value: MyString
+u1_email:
+  contact_detail: u1_email
+  key: email
+  value: user1@example.com
 
 two:
   contact_detail: 

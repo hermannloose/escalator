@@ -1,7 +1,7 @@
 module Service
   module Email
-    def Email.perform(params, issue)
-      AssigneeMailer.assignee_mail(params[:user], issue).deliver
+    def Email.perform(params)
+      AssigneeMailer.assignee_mail(params).deliver
     end
   end
 end

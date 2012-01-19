@@ -20,7 +20,6 @@ class EscalationJob < Struct.new(:issue_id)
       issue.assignee = oncall.user
       issue.save
 
-      #AssigneeMailer.assignee_mail(oncall, issue, check_after).deliver
       #AssigneeMailer.escalated_mail(old_assignee, issue).deliver if old_assignee
       Delayed::Job.enqueue(AlertingJob.new(oncall.to_param, issue.to_param))
     end

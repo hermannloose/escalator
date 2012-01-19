@@ -6,9 +6,9 @@ module Service
     :email => Service::Email
   }
 
-  def Service.invoke(key, params, issue)
+  def Service.invoke(key, params)
     if @services[key]
-      @services[key].perform(params, issue)
+      @services[key].perform(params)
     else
       raise ArgumentError, "Unknown service key #{key.inspect}."
     end

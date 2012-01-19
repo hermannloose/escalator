@@ -34,3 +34,33 @@ four:
   description: 
   posted_at: <%= 5.minutes.ago %>
   status: new
+
+# Issues used in testing escalation and alerting
+age1_assignee1_open:
+  escalation_policy: one
+  title: issue assigned to user one
+  posted_at: <%= 1.minutes.ago %>
+  status: open
+  assignee: one
+
+age1_assignee2_open:
+  escalation_policy: one
+  title: issue assigned to user two
+  posted_at: <%= 1.minutes.ago %>
+  status: open
+  assignee: two
+
+
+age5_assignee1_open:
+  escalation_policy: one
+  title: issue assigned to user one
+  posted_at: <%= 5.minutes.ago %>
+  status: open
+  assignee: one
+
+age5_assignee2_open:
+  escalation_policy: one
+  title: issue assigned to user two
+  posted_at: <%= 5.minutes.ago %>
+  status: open
+  assignee: two

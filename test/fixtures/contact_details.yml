@@ -6,14 +6,40 @@ valid:
   value: present
   user: valid
 
-one:
-  name: MyString
-  category: MyString
-  value: MyString
+# User One
+u1_android:
+  name: User One's Android
+  category: android
+  value: somethingsomething
   user: one
 
-two:
-  name: MyString
-  category: MyString
-  value: MyString
+u1_bogus:
+  name: User One's Bogus Contact Detail
+  category: bogus
+  value: bogusbogus
+  user: one
+
+u1_email:
+  name: User One's Email
+  category: email
+  value: user1@example.com
+  user: one
+
+# User Two
+u2_android:
+  name: User Two's Android
+  category: android
+  value: somethingsomething
+  user: two
+
+u2_bogus:
+  name: User Two's Bogus Contact Detail
+  category: bogus
+  value: bogusbogus
+  user: two
+
+u2_email:
+  name: User Two's Email
+  category: email
+  value: user2@example.com
   user: two

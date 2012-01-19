@@ -14,15 +14,14 @@ class EscalationJob < Struct.new(:issue_id)
       Delayed::Job.enqueue(EscalationJob.new(issue_id), 0, check_after.minutes.from_now)
     end
 
-    oncall = escalate_to.rotation.users.first
-    unless issue.assignee == oncall
+    oncall = escalate_to.rotation.rotation_memberships.first
+    unless issue.assignee == oncall.user
       old_assignee = issue.assignee
-      issue.assignee = oncall
+      issue.assignee = oncall.user
       issue.save
 
-      AssigneeMailer.assignee_mail(oncall, issue, check_after).deliver
-      AssigneeMailer.escalated_mail(old_assignee, issue).deliver if old_assignee
-      #Delayed::Job.enqueue(NotificationJob.new(oncall.to_param))
+      #AssigneeMailer.escalated_mail(old_assignee, issue).deliver if old_assignee
+      Delayed::Job.enqueue(AlertingJob.new(oncall.to_param, issue.to_param))
     end
   end
 end

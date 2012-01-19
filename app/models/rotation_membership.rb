@@ -1,7 +1,7 @@
 class RotationMembership < ActiveRecord::Base
   belongs_to :rotation
   belongs_to :user
-  has_many :alerting_steps
+  has_many :alerting_steps, :include => :contact_detail
 
   validates :rank, :numericality => {
     :only_integer => true,

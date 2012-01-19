@@ -5,12 +5,22 @@ valid:
   contact_detail: valid
   rotation_membership: valid
 
-one:
-  delay_minutes: 1
-  contact_detail: 
-  rotation_membership: 
+r1u1a1:
+  delay_minutes: 0
+  contact_detail: u1_email
+  rotation_membership: r1u1
 
-two:
-  delay_minutes: 1
-  contact_detail: 
-  rotation_membership: 
+r1u1a2:
+  delay_minutes: 2
+  contact_detail: u1_android
+  rotation_membership: r1u1
+
+r1u2a1:
+  delay_minutes: 0
+  contact_detail: u2_email
+  rotation_membership: r1u2
+
+r1u2a2:
+  delay_minutes: 2
+  contact_detail: u2_android
+  rotation_membership: r1u2

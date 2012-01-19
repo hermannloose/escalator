@@ -8,8 +8,14 @@
 <p>
   <b>Users in this rotation:</b>
   <ol>
-  <% @rotation.users.each do |user| %>
-    <li><%= link_to user.name, user %> (<%= user.email %>)</li>
+  <% @rotation.rotation_memberships.each do |membership| %>
+    <li>
+      <% user = membership.user %>
+      <%= link_to user.name, user %> (<%= user.email %>)
+      <% if user == current_user %>
+        <%= link_to "Details", rotation_user_path(@rotation) %>
+      <% end %>
+    </li>
   <% end %>
   </ol>
 </p>

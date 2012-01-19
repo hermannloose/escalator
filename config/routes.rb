@@ -10,7 +10,7 @@ Escalator::Application.routes.draw do
   resources :users
 
   resources :rotations do
-    match 'users/:user_id' => 'rotation_memberships#show'
+    match "membership", :to => "rotation_memberships#show", :as => "user"
   end
 
   resources :escalation_policies do

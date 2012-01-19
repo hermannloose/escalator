@@ -3,12 +3,17 @@ require 'test_helper'
 class AssigneeMailerTest < ActionMailer::TestCase
   setup do
     @user = users(:one)
+    @email = contact_detail_properties(:u1_email).value
     @issue = issues(:one)
   end
 
   test "should send assignee_mail" do
     assert_difference("ActionMailer::Base.deliveries.size", 1) do
-      AssigneeMailer.assignee_mail(@user, @issue).deliver
+      AssigneeMailer.assignee_mail({
+        :user => @user,
+        :email => @email,
+        :issue => @issue
+      }).deliver
     end
 
     mail = ActionMailer::Base.deliveries.first

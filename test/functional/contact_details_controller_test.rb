@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ContactDetailsControllerTest < ActionController::TestCase
   setup do
-    @contact_detail = contact_details(:one)
+    @contact_detail = contact_details(:u1_email)
   end
 
   test "access control" do

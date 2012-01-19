@@ -11,11 +11,15 @@ class AlertingJob < Struct.new(:rotation_membership_id, :issue_id)
     steps = rotation_membership.alerting_steps.ordered.all
     current_step = steps.reverse.find { |step| step.delay_minutes <= delay }
     # TODO(hermannloose): Validate that there is always a first step.
-    return unless current_step
+    unless current_step
+      raise RuntimeError, "No currently active alerting step."
+    end
     upcoming = steps.find { |step| step.delay_minutes > delay }
 
     check_after = upcoming ? upcoming.delay_minutes - delay : nil
     if check_after
+      Rails.logger.info "Scheduling new alert for #{check_after.minutes.from_now}."
+
       Delayed::Job.enqueue(AlertingJob.new(rotation_membership_id, issue_id), {
         :priority => 0,
         :run_at => check_after.minutes.from_now
@@ -35,10 +39,9 @@ class AlertingJob < Struct.new(:rotation_membership_id, :issue_id)
   end
 
   def error(job, exception)
-    Rails.logger.warn "#{exception}"
-
     case exception
     when ArgumentError
+      Rails.logger.warn "##{job.id} #{job.name}: caught ArgumentError, will not retry."
       # Do not attempt to run again.
       job.fail!
     end

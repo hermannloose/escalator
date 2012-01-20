@@ -31,6 +31,8 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'ruby-debug'
 
+gem 'rest-client'
+
 gem 'delayed_job_active_record'
 
 group :development do

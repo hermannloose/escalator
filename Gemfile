@@ -35,6 +35,12 @@ gem 'rest-client'
 
 gem 'delayed_job_active_record'
 
+# Mocking
+group :development, :test do
+  gem 'mocha'
+end
+
+# Performance Testing
 group :development do
   gem 'ruby-prof'
 end

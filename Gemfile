@@ -45,6 +45,10 @@ group :development do
   gem 'ruby-prof'
 end
 
+group :development, :testing do
+  gem 'rspec-rails'
+end
+
 # Authentication
 gem 'devise'
 

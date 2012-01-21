@@ -2,11 +2,8 @@ require 'rest_client'
 
 class GoogleClientLoginController < ApplicationController
   def acquire
-    #email = params[:email] || (raise ArgumentError, "No email given.")
-    #password = params[:password] || (raise ArgumentError, "No password given.")
-
-    email = params[:email]
-    password = params[:password]
+    email = params[:email] || (raise ArgumentError, "No email given.")
+    password = params[:password] || (raise ArgumentError, "No password given.")
 
     if email && password
       RestClient.post "https://www.google.com/accounts/ClientLogin", {

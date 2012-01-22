@@ -37,7 +37,7 @@ group :development do
   gem 'ruby-prof'
 end
 
-group :development, :testing do
+group :development, :test do
   gem 'mocha'
   gem 'rspec-rails'
   gem 'shoulda-matchers'

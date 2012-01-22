@@ -19,7 +19,8 @@ Escalator::Application.routes.draw do
 
   resources :issues
 
-  match "/clientlogin" => "google_client_login#acquire"
+  resources :google_client_login_credentials, :to => "google_client_login",
+      :except => [:edit, :update]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

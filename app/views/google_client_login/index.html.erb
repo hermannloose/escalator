@@ -1,0 +1,20 @@
+<h1>Google ClientLogin Tokens</h1>
+
+<table>
+  <tr>
+    <th>Email</th>
+    <th>Last refreshed at</th>
+    <th>Actions</th>
+  </tr>
+  <% @credentials.each do |credential| %>
+  <tr>
+    <td><%= credential.email %></td>
+    <td><%= credential.updated_at %></td>
+    <td><%= link_to "Delete", credential, :method => :delete %></td>
+  </tr>
+  <% end %>
+</table>
+
+<div>
+  <%= link_to "New ClientLogin token", new_google_client_login_credentials_path %>
+</div>

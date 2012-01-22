@@ -1,7 +1,7 @@
 <h2>Enter your credentials</h2>
 <strong>Only the acquired ClientLogin token, not your password, will be saved on the server.</strong>
 
-<%= form_tag do %>
+<%= form_tag(google_client_login_credentials_index_path) do %>
   <table>
     <tr>
       <td><%= label_tag(:email, "Email:") %></td>

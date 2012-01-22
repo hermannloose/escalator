@@ -15,4 +15,4 @@
 /tmp
 
 # Ignore RSpec HTML output.
-/spec/*.html
+rspec-results.html

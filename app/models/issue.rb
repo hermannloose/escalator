@@ -5,4 +5,9 @@ class Issue < ActiveRecord::Base
   validates :escalation_policy_id, :presence => true
   validates :title, :presence => true
   validates :status, :presence => true
+
+  # Get seconds since this issue was posted.
+  def delayed
+    Time.now - posted_at
+  end
 end

@@ -55,6 +55,11 @@ GEM
     erubis (2.7.0)
     execjs (1.2.13)
       multi_json (~> 1.0)
+    factory_girl (2.3.2)
+      activesupport
+    factory_girl_rails (1.4.0)
+      factory_girl (~> 2.3.0)
+      railties (>= 3.0.0)
     hike (1.2.1)
     i18n (0.6.0)
     jquery-rails (1.0.19)
@@ -150,6 +155,7 @@ DEPENDENCIES
   declarative_authorization
   delayed_job_active_record
   devise
+  factory_girl_rails (= 1.4.0)
   jquery-rails
   json
   mocha

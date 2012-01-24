@@ -35,17 +35,16 @@ gem 'rest-client'
 
 gem 'delayed_job_active_record'
 
-# Mocking
-group :development, :test do
-  gem 'mocha'
-end
-
 # Performance Testing
 group :development do
   gem 'ruby-prof'
 end
 
+# Testing
 group :development, :test do
+  # Anything above 1.4.0 seems to be broken using RubyGems 1.3.7, the current
+  # default in Ubuntu 11.04.
+  gem 'factory_girl_rails', '1.4.0'
   gem 'mocha'
   gem 'rspec-rails'
   gem 'shoulda-matchers'

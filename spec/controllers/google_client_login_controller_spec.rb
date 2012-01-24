@@ -6,9 +6,42 @@ describe GoogleClientLoginController do
 
   before :each do
     @admin = Factory(:admin)
-    Rails.logger.debug "Signing in user #{@admin} " +
-      "with roles #{@admin.role_symbols.inspect}."
     sign_in @admin
+  end
+
+  context "when guest" do
+    it "should deny all access" do
+      with_user nil do
+        should_not_be_allowed_to :index, :google_client_login
+        should_not_be_allowed_to :new, :google_client_login
+        should_not_be_allowed_to :create, :google_client_login
+        should_not_be_allowed_to :destroy, :google_client_login
+      end
+    end
+  end
+
+  context "when user" do
+    it "should deny all access" do
+      @user = Factory(:user)
+      sign_in @user
+      with_user @user do
+        should_not_be_allowed_to :index, :google_client_login
+        should_not_be_allowed_to :new, :google_client_login
+        should_not_be_allowed_to :create, :google_client_login
+        should_not_be_allowed_to :destroy, :google_client_login
+      end
+    end
+  end
+
+  context "when admin" do
+    it "should allow all access" do
+      with_user @admin do
+        should_be_allowed_to :index, :google_client_login
+        should_be_allowed_to :new, :google_client_login
+        should_be_allowed_to :create, :google_client_login
+        should_be_allowed_to :destroy, :google_client_login
+      end
+    end
   end
 
   describe :new do

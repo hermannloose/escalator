@@ -37,6 +37,12 @@ group :development do
   gem 'ruby-prof'
 end
 
+group :development, :test do
+  gem 'mocha'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
+end
+
 # Authentication
 gem 'devise'
 

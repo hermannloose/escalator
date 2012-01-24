@@ -2,10 +2,20 @@ require 'spec_helper'
 
 describe GoogleClientLoginController do
   render_views
+  setup_mapping
+
+  before :each do
+    @admin = Factory(:admin)
+    Rails.logger.debug "Signing in user #{@admin} " +
+      "with roles #{@admin.role_symbols.inspect}."
+    sign_in @admin
+  end
 
   describe :new do
     before :each do
-      get :new
+      with_user(@admin) do
+        get :new
+      end
     end
 
     specify { response.should render_template("new") }
@@ -15,7 +25,9 @@ describe GoogleClientLoginController do
     let(:email) { "present" }
     let(:password) { "present" }
     let(:create) do
-      post :create, :email => email, :password => password
+      with_user(@admin) do
+        post :create, :email => email, :password => password
+      end
     end
 
     context "when parameter :email is missing" do
@@ -97,7 +109,9 @@ describe GoogleClientLoginController do
       credentials = mock()
       credentials.expects(:destroy)
       GoogleClientLoginCredentials.expects(:find).with("id").returns(credentials)
-      delete :destroy, :id => "id"
+      with_user(@admin) do
+        delete :destroy, :id => "id"
+      end
     end
 
     specify { response.should redirect_to google_client_login_credentials_index_path }

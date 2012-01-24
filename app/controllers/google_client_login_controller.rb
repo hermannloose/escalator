@@ -1,6 +1,8 @@
 require 'rest_client'
 
 class GoogleClientLoginController < ApplicationController
+  filter_access_to :all
+
   def index
     @credentials = GoogleClientLoginCredentials.all
 

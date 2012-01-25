@@ -1,0 +1,7 @@
+<h1>Acquire Google ClientLogin token</h1>
+
+<% if @token_acquired %>
+  <div>Acquired a new ClientLogin token for <%= @email %>.</div>
+<% else %>
+  <%= render "form" %>
+<% end %>

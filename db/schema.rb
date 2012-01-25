@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120119195707) do
+ActiveRecord::Schema.define(:version => 20120125083755) do
 
   create_table "alerting_steps", :force => true do |t|
     t.integer  "delay_minutes"
@@ -129,6 +129,8 @@ ActiveRecord::Schema.define(:version => 20120119195707) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "rotate_every"
+    t.integer  "delayed_job_id"
   end
 
   create_table "users", :force => true do |t|

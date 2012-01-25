@@ -26,4 +26,18 @@ FactoryGirl.define do
     password 'password'
     roles [ Factory(:user_role) ]
   end
+
+  # Rotations
+  factory :rotation do
+    sequence :name do |n|
+      "Rotation ##{n}"
+    end
+    rotate_every 1000
+  end
+
+  factory :rotation_membership do
+    rotation Factory(:rotation)
+    user Factory(:user)
+    rank 0
+  end
 end

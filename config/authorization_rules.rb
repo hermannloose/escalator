@@ -4,10 +4,12 @@ authorization do
 
     has_permission_on :authorization_rules, :to => :read
 
-    has_permission_on :assignments, :to => [:index, :show]
+    has_permission_on [:assignments, :google_client_login],
+      :to => [:index, :show]
+
     has_permission_on [
-      :assignments, :contact_details, :escalation_policies, :issues,
-      :rotations, :users
+      :assignments, :contact_details, :escalation_policies,
+      :google_client_login, :issues, :rotations, :users
     ], :to => [
       :new, :create, :edit, :update, :destroy
     ]

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120116130254) do
+ActiveRecord::Schema.define(:version => 20120119195707) do
 
   create_table "alerting_steps", :force => true do |t|
     t.integer  "delay_minutes"
@@ -86,6 +86,13 @@ ActiveRecord::Schema.define(:version => 20120116130254) do
 
   add_index "escalation_steps", ["escalation_policy_id"], :name => "index_escalation_steps_on_escalation_policy_id"
   add_index "escalation_steps", ["rotation_id"], :name => "index_escalation_steps_on_rotation_id"
+
+  create_table "google_client_login_credentials", :force => true do |t|
+    t.string   "email"
+    t.string   "token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "issues", :force => true do |t|
     t.string   "title"

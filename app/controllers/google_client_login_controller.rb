@@ -21,34 +21,32 @@ class GoogleClientLoginController < ApplicationController
     email = params[:email] || (raise ArgumentError, "No email given.")
     password = params[:password] || (raise ArgumentError, "No password given.")
 
-    if email && password
-      RestClient.post "https://www.google.com/accounts/ClientLogin", {
-        "accountType" => "GOOGLE",
-        "Email" => email,
-        "Passwd" => password,
-        "service" => "ac2dm",
-        "source" => "hermannloose-escalator-none"
-      } do |resp, req, result|
-        case resp.code
-        when 200
-          matched = /Auth=(.*)$/.match(resp.body)
-          if matched
-            credentials = GoogleClientLoginCredentials.find_or_create_by_email(email)
-            credentials.token = matched[1]
-            credentials.save
-            respond_to do |format|
-              if credentials.save
-                format.html { redirect_to google_client_login_credentials_index_url,
-                    :notice => "Token acquired." }
+    RestClient.post "https://www.google.com/accounts/ClientLogin", {
+      "accountType" => "GOOGLE",
+      "Email" => email,
+      "Passwd" => password,
+      "service" => "ac2dm",
+      "source" => "hermannloose-escalator-none"
+    } do |resp, req, result|
+      case resp.code
+      when 200
+        matched = /Auth=(.*)$/.match(resp.body)
+        if matched
+          credentials = GoogleClientLoginCredentials.find_or_create_by_email(email)
+          credentials.token = matched[1]
+          credentials.save
+          respond_to do |format|
+            if credentials.save
+              format.html { redirect_to google_client_login_credentials_index_url,
+                  :notice => "Token acquired." }
 
-              else
-                format.html { render :action => "new" }
-              end
+            else
+              format.html { render :action => "new" }
             end
           end
-        when 403
-          # TODO(hermannloose): Handle this case appropriately.
         end
+      when 403
+        # TODO(hermannloose): Handle this case appropriately.
       end
     end
   end

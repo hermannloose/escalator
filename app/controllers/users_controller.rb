@@ -42,7 +42,15 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+    if params[:user][:password].blank?
+      params[:user].delete(:password)
+      params[:user].delete(:password_confirmation)
+    end
+
     @user = User.new(params[:user])
+
+    @user.roles << Role.find_by_name("user")
+    @user.roles << Role.find_by_name("admin") if params[:admin_role]
 
     respond_to do |format|
       if @user.save

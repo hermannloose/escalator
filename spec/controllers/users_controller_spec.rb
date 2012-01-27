@@ -162,14 +162,57 @@ describe UsersController do
       @user = Factory(:user)
 
       with_user(@admin) do
-        post :update, :id => @user.to_param, :user => @user.attributes
+        post :update, :id => @user.to_param, :user => user_attributes
       end
     end
 
-    it "should get the user for the given id" do
-      assigns(:user).should eql(@user)
+    context "when password is blank" do
+      let :user_attributes do
+        {
+          :name => "new",
+          :email => "new@example.com",
+          :password => "",
+          :password_confirmation => "password"
+        }
+      end
+
+      it "should get the user for the given id" do
+        assigns(:user).should eql(@user)
+      end
+      specify { response.should redirect_to user_path(@user) }
     end
-    specify { response.should redirect_to user_path(@user) }
+
+    context "when password confirmation does not match" do
+      let :user_attributes do
+        {
+          :name => "new",
+          :email => "new@example.com",
+          :password => "",
+          :password_confirmation => "password"
+        }
+      end
+
+      it "should get the user for the given id" do
+        assigns(:user).should eql(@user)
+      end
+      specify { response.should redirect_to user_path(@user) }
+    end
+
+    context "when password and confirmation match" do
+      let :user_attributes do
+        {
+          :name => "new",
+          :email => "new@example.com",
+          :password => "password",
+          :password_confirmation => "password"
+        }
+      end
+
+      it "should get the user for the given id" do
+        assigns(:user).should eql(@user)
+      end
+      specify { response.should redirect_to user_path(@user) }
+    end
   end
 
   describe "#destroy" do

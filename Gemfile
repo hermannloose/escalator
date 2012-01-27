@@ -44,7 +44,7 @@ end
 group :development, :test do
   # Anything above 1.4.0 seems to be broken using RubyGems 1.3.7, the current
   # default in Ubuntu 11.04.
-  gem 'factory_girl_rails', '1.4.0'
+  gem 'factory_girl_rails', '1.4.0', :require => false
   gem 'mocha'
   gem 'rspec-rails'
   gem 'shoulda-matchers'

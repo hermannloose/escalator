@@ -5,6 +5,7 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'shoulda-matchers'
 
+require 'factory_girl_rails'
 require 'declarative_authorization/maintenance'
 require 'authorization_helper'
 

@@ -3,7 +3,7 @@ Escalator::Application.routes.draw do
 
   root :to => "issues#index"
 
-  devise_for :users
+  devise_for :users, :path_prefix => "devise"
 
   resources :contact_details
 

@@ -4,13 +4,12 @@ class EscalationJob < Struct.new(:issue_id)
     # TODO(hermannloose): Update once there is a defined set of states.
     return unless issue.status.intern == :open
 
-    elapsed_minutes = (Time.now - issue.posted_at) / 60
-    escalate_to = issue.escalation_policy.escalation_steps.passed(elapsed_minutes).last
-    upcoming = issue.escalation_policy.escalation_steps.upcoming(elapsed_minutes).first
+    escalate_to = issue.escalation_policy.escalation_steps.passed(issue.delayed.minutes).last
+    upcoming = issue.escalation_policy.escalation_steps.upcoming(issue.delayed.minutes).first
     # TODO(hermannloose): Write log record when escalation stops.
     check_after = nil
     if upcoming
-      check_after = upcoming.delay_minutes - elapsed_minutes
+      check_after = upcoming.delay_minutes - issue.delayed.minutes
       Delayed::Job.enqueue(EscalationJob.new(issue_id), 0, check_after.minutes.from_now)
     end
 

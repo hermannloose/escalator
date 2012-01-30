@@ -47,7 +47,7 @@ group :development, :test do
   gem 'factory_girl_rails', '1.4.0', :require => false
   gem 'mocha'
   gem 'rspec-rails'
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', :git => 'git://github.com/thoughtbot/shoulda-matchers.git'
 end
 
 # Authentication

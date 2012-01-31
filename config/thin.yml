@@ -1,0 +1,7 @@
+environment: production
+
+servers: 3
+max_conns: 1024
+socket: /tmp/thin.sock
+daemonize: true
+wait: 30

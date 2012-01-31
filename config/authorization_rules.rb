@@ -24,6 +24,11 @@ authorization do
       :index, :show
     ]
     has_permission_on :issues, :to => [:new, :create]
+
+    has_permission_on :users, :to => [:create_token, :destroy_token] do
+      if_attribute :id => is { user.id }
+    end
+
     has_permission_on :contact_details, :to => [
       :new, :create, :edit, :update, :destroy
     ] do

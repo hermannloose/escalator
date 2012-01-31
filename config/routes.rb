@@ -7,7 +7,12 @@ Escalator::Application.routes.draw do
 
   resources :contact_details
 
-  resources :users
+  resources :users do
+    member do
+      post :create_token
+      delete :destroy_token
+    end
+  end
 
   resources :rotations do
     match "membership", :to => "rotation_memberships#show", :as => "user"

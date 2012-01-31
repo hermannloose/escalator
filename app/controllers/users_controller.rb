@@ -97,4 +97,18 @@ class UsersController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  def create_token
+    @user = User.find(params[:id])
+    @user.reset_authentication_token!
+    @user.save
+    redirect_to edit_user_registration_path
+  end
+
+  def destroy_token
+    @user = User.find(params[:id])
+    @user.authentication_token = nil
+    @user.save
+    redirect_to edit_user_registration_path
+  end
 end

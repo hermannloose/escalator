@@ -1,4 +1,4 @@
-<%= form_for(@contact_detail) do |f| %>
+<%= form_for [:profile, @contact_detail] do |f| %>
   <% if @contact_detail.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@contact_detail.errors.count, "error") %> prohibited this contact_detail from being saved:</h2>
@@ -23,11 +23,8 @@
     <%= f.label :value %><br />
     <%= f.text_field :value %>
   </div>
-  <div class="field">
-    <%= f.label :user %><br />
-    <%= f.text_field :user %>
-  </div>
   <div class="actions">
+    <%= f.hidden_field :user_id %>
     <%= f.submit %>
   </div>
 <% end %>

@@ -1,10 +1,10 @@
 class ContactDetailsController < ApplicationController
-  filter_resource_access
+  filter_access_to :all
 
   # GET /contact_details
   # GET /contact_details.json
   def index
-    @contact_details = ContactDetail.all
+    @contact_details = ContactDetail.where(:user_id => current_user.to_param)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,6 +14,8 @@ class ContactDetailsController < ApplicationController
 
   # GET /contact_details/1
   # GET /contact_details/1.json
+  # TODO(hermannloose): At the moment, this is not limited to the current
+  # user's details. Have to look up 404 generation in Rails.
   def show
     @contact_detail = ContactDetail.find(params[:id])
 
@@ -26,7 +28,7 @@ class ContactDetailsController < ApplicationController
   # GET /contact_details/new
   # GET /contact_details/new.json
   def new
-    @contact_detail = ContactDetail.new
+    @contact_detail = current_user.contact_details.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -46,7 +48,7 @@ class ContactDetailsController < ApplicationController
 
     respond_to do |format|
       if @contact_detail.save
-        format.html { redirect_to @contact_detail, :notice => 'Contact detail was successfully created.' }
+        format.html { redirect_to [:profile, @contact_detail], :notice => 'Contact detail was successfully created.' }
         format.json { render :json => @contact_detail, :status => :created, :location => @contact_detail }
       else
         format.html { render :action => "new" }
@@ -62,7 +64,7 @@ class ContactDetailsController < ApplicationController
 
     respond_to do |format|
       if @contact_detail.update_attributes(params[:contact_detail])
-        format.html { redirect_to @contact_detail, :notice => 'Contact detail was successfully updated.' }
+        format.html { redirect_to [:profile, @contact_detail], :notice => 'Contact detail was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render :action => "edit" }
@@ -78,7 +80,7 @@ class ContactDetailsController < ApplicationController
     @contact_detail.destroy
 
     respond_to do |format|
-      format.html { redirect_to contact_details_url }
+      format.html { redirect_to [:profile, :contact_details], :notice => "Contact detail was successfully deleted." }
       format.json { head :ok }
     end
   end

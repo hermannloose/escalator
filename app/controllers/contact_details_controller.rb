@@ -4,7 +4,7 @@ class ContactDetailsController < ApplicationController
   # GET /contact_details
   # GET /contact_details.json
   def index
-    @contact_details = ContactDetail.where(:user_id => current_user.to_param)
+    @contact_details = ContactDetail.with_permissions_to(:index)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,10 +14,8 @@ class ContactDetailsController < ApplicationController
 
   # GET /contact_details/1
   # GET /contact_details/1.json
-  # TODO(hermannloose): At the moment, this is not limited to the current
-  # user's details. Have to look up 404 generation in Rails.
   def show
-    @contact_detail = ContactDetail.find(params[:id])
+    @contact_detail = ContactDetail.with_permissions_to(:show).find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -38,7 +36,7 @@ class ContactDetailsController < ApplicationController
 
   # GET /contact_details/1/edit
   def edit
-    @contact_detail = ContactDetail.find(params[:id])
+    @contact_detail = ContactDetail.with_permissions_to(:edit).find(params[:id])
   end
 
   # POST /contact_details
@@ -60,7 +58,7 @@ class ContactDetailsController < ApplicationController
   # PUT /contact_details/1
   # PUT /contact_details/1.json
   def update
-    @contact_detail = ContactDetail.find(params[:id])
+    @contact_detail = ContactDetail.with_permissions_to(:update).find(params[:id])
 
     respond_to do |format|
       if @contact_detail.update_attributes(params[:contact_detail])
@@ -76,7 +74,7 @@ class ContactDetailsController < ApplicationController
   # DELETE /contact_details/1
   # DELETE /contact_details/1.json
   def destroy
-    @contact_detail = ContactDetail.find(params[:id])
+    @contact_detail = ContactDetail.with_permissions_to(:destroy).find(params[:id])
     @contact_detail.destroy
 
     respond_to do |format|

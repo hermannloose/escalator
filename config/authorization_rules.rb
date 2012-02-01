@@ -19,7 +19,7 @@ authorization do
     includes :guest
 
     has_permission_on [
-      :contact_details, :escalation_policies, :issues, :rotations, :users
+      :escalation_policies, :issues, :rotations, :users
     ], :to => [
       :index, :show
     ]
@@ -30,7 +30,7 @@ authorization do
     end
 
     has_permission_on :contact_details, :to => [
-      :new, :create, :edit, :update, :destroy
+      :index, :show, :new, :create, :edit, :update, :destroy
     ] do
       if_attribute :user => is { user }
     end

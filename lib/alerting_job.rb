@@ -26,14 +26,11 @@ class AlertingJob < Struct.new(:rotation_membership_id, :issue_id)
       })
     end
 
+    # TODO(hermannloose): Clean up the naming mess below.
     contact = current_step.contact_detail
-    details = {
-      :user => user,
-      :issue => issue
-    }
-    contact.contact_detail_properties.each do |property|
-      details[property.key.to_sym] = property.value
-    end
+    details = contact.details
+    details[:user] = user
+    details[:issue] = issue
 
     Service.invoke(contact.category.to_sym, details)
   end

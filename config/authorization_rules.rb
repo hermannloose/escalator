@@ -19,12 +19,19 @@ authorization do
     includes :guest
 
     has_permission_on [
-      :contact_details, :escalation_policies, :issues, :rotations, :users
+      :escalation_policies, :issues, :rotations, :users
     ], :to => [
       :index, :show
     ]
     has_permission_on :issues, :to => [:new, :create]
-    has_permission_on :contact_details, :to => [:edit, :update, :destroy] do
+
+    has_permission_on :users, :to => [:create_token, :destroy_token] do
+      if_attribute :id => is { user.id }
+    end
+
+    has_permission_on :contact_details, :to => [
+      :index, :show, :new, :create, :edit, :update, :destroy
+    ] do
       if_attribute :user => is { user }
     end
   end

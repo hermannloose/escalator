@@ -15,6 +15,21 @@
   <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
   <%= f.password_field :current_password %></div>
 
+  <div><%= f.label :token_authentication_key %><br />
+    <% if resource.authentication_token.blank? %>
+      Token Empty
+    <% else %>
+      <%= resource.authentication_token %></br>
+      <% # TODO(hermannloose): Demo only! Remove later, sends sensitive data to third parties! %>
+      <%= image_tag "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=#{resource.authentication_token}&choe=UTF-8" %>
+    <% end %>
+  </div>
+
+  <div>
+    <%= link_to "Generate token", create_token_user_path(resource.id), :method => :post, :confirm => "Are you sure?" %>
+    <%= link_to "Destroy token", create_token_user_path(resource.id), :method => :delete, :confirm => "Are you sure?" %>
+  </div>
+
   <div><%= f.submit "Update" %></div>
 <% end %>
 

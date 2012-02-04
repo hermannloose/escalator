@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  filter_resource_access
+  filter_access_to :all
 
   # GET /users
   # GET /users.json
@@ -15,7 +15,11 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find(params[:id])
+    if params[:id]
+      @user = User.find(params[:id])
+    else
+      @user = current_user
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -96,5 +100,19 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url }
       format.json { head :ok }
     end
+  end
+
+  def create_token
+    @user = User.find(params[:id])
+    @user.reset_authentication_token!
+    @user.save
+    redirect_to edit_user_registration_path
+  end
+
+  def destroy_token
+    @user = User.find(params[:id])
+    @user.authentication_token = nil
+    @user.save
+    redirect_to edit_user_registration_path
   end
 end

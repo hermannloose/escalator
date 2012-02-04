@@ -5,7 +5,6 @@
     <th>Name</th>
     <th>Category</th>
     <th>Value</th>
-    <th>User</th>
     <th></th>
     <th></th>
     <th></th>
@@ -16,16 +15,15 @@
     <td><%= contact_detail.name %></td>
     <td><%= contact_detail.category %></td>
     <td><%= contact_detail.value %></td>
-    <td><%= contact_detail.user %></td>
-    <td><%= link_to 'Show', contact_detail %></td>
+    <td><%= link_to 'Show', [:profile, contact_detail] %></td>
     <td>
       <% if permitted_to? :edit, contact_detail %>
-        <%= link_to 'Edit', edit_contact_detail_path(contact_detail) %>
+        <%= link_to 'Edit', edit_profile_contact_detail_path(contact_detail) %>
       <% end %>
     </td>
     <td>
       <% if permitted_to? :destroy, contact_detail %>
-        <%= link_to 'Destroy', contact_detail, :confirm => 'Are you sure?', :method => :delete %>
+        <%= link_to 'Destroy', [:profile, contact_detail], :confirm => 'Are you sure?', :method => :delete %>
       <% end %>
     </td>
   </tr>
@@ -35,5 +33,5 @@
 <br />
 
 <% if permitted_to? :new, :contact_details %>
-  <%= link_to 'New Contact detail', new_contact_detail_path %>
+  <%= link_to 'New Contact detail', new_profile_contact_detail_path %>
 <% end %>

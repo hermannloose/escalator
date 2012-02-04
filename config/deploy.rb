@@ -1,12 +1,16 @@
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
+require 'bundler/setup'
 require 'bundler/capistrano'
 require 'rvm/capistrano'
+require 'delayed/recipes'
 
 set :application, "escalator"
-set :repository,  "https://github.com/hermannloose/escalator.git"
-set :branch, "setup-capistrano"
-
 set :scm, :git
+set :repository,  "https://github.com/hermannloose/escalator.git"
+set :branch, fetch(:branch, "master")
+
+set :env, fetch(:env, "production")
+
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
 set :deploy_to, "/home/hermann/deployments/escalator"
@@ -45,3 +49,7 @@ namespace :deploy do
     run "cd #{deploy_to}/current && bundle exec thin restart -C config/thin.yml"
   end
 end
+
+after "deploy:start", "delayed_job:start"
+after "deploy:stop", "delayed_job:stop"
+after "deploy:restart", "delayed_job:restart"

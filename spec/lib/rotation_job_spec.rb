@@ -4,7 +4,8 @@ require 'rotation_job'
 describe RotationJob do
   describe "#perform" do
     before :each do
-      @now = Time.now
+      @now = Time.parse("01/01/2012 10:00")
+      Time.stubs(:now).returns(@now)
       @rotation = Factory(:rotation)
     end
 
@@ -44,17 +45,16 @@ describe RotationJob do
 
     it "should not drift" do
       # rotate_every defaults to 1000 in factory
-      schedule_base = 500.seconds.until(@now)
       Delayed::Job.enqueue(RotationJob.new(@rotation.to_param),
           :priority => 0,
-          :run_at => schedule_base)
+          :run_at => 500.seconds.ago)
 
       successful, failed = Delayed::Worker.new.work_off
 
       successful.should eql(1)
       failed.should eql(0)
 
-      Delayed::Job.first.run_at.should eql(500.seconds.since(@now))
+      Delayed::Job.first.run_at.should eql(500.seconds.from_now)
     end
   end
 end

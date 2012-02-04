@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
-      :trackable, :validatable
+      :token_authenticatable, :trackable, :validatable
 
   has_many :assignments
   has_many :roles, :through => :assignments
@@ -15,5 +15,15 @@ class User < ActiveRecord::Base
 
   def role_symbols
     roles.map { |role| role.name.parameterize.underscore.to_sym }
+  end
+
+  def as_json(options = {})
+    options[:except] ||= [
+      :authentication_token, :current_sign_in_at, :current_sign_in_ip,
+      :last_sign_in_at, :last_sign_in_ip, :encrypted_password, :password_salt,
+      :remember_created_at, :reset_password_sent_at, :reset_password_token,
+      :sign_in_count
+    ]
+    super(options)
   end
 end

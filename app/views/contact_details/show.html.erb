@@ -16,12 +16,15 @@
 </p>
 
 <p>
-  <b>User:</b>
-  <%= link_to @contact_detail.user.name, @contact_detail.user %>
+  <b>Details:</b>
+  <ul>
+  <% @contact_detail.details.each do |key, value| %>
+    <li>Key: <%= key %>, Value: <%= value %></li>
+  <% end %>
+  <ul>
 </p>
 
-
 <% if permitted_to? :edit, @contact_detail %>
-  <%= link_to 'Edit', edit_contact_detail_path(@contact_detail) %> |
+  <%= link_to 'Edit', edit_profile_contact_detail_path(@contact_detail) %> |
 <% end %>
-<%= link_to 'Back', contact_details_path %>
+<%= link_to 'Back', [:profile, :contact_details] %>

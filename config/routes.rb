@@ -5,9 +5,16 @@ Escalator::Application.routes.draw do
 
   devise_for :users, :path_prefix => "devise"
 
-  resources :contact_details
+  resource :profile, :controller => :users do
+    resources :contact_details
+  end
 
-  resources :users
+  resources :users do
+    member do
+      post :create_token
+      delete :destroy_token
+    end
+  end
 
   resources :rotations do
     match "membership", :to => "rotation_memberships#show", :as => "user"

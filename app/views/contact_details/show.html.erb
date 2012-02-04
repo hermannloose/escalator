@@ -15,6 +15,15 @@
   <%= @contact_detail.value %>
 </p>
 
+<p>
+  <b>Details:</b>
+  <ul>
+  <% @contact_detail.details.each do |key, value| %>
+    <li>Key: <%= key %>, Value: <%= value %></li>
+  <% end %>
+  <ul>
+</p>
+
 <% if permitted_to? :edit, @contact_detail %>
   <%= link_to 'Edit', edit_profile_contact_detail_path(@contact_detail) %> |
 <% end %>

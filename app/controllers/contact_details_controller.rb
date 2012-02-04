@@ -43,11 +43,12 @@ class ContactDetailsController < ApplicationController
   # POST /contact_details.json
   def create
     @contact_detail = ContactDetail.new(params[:contact_detail])
+    @contact_detail.details = ActiveSupport::JSON.decode(params[:contact_detail][:details]) || Hash.new
 
     respond_to do |format|
       if @contact_detail.save
         format.html { redirect_to [:profile, @contact_detail], :notice => 'Contact detail was successfully created.' }
-        format.json { render :json => @contact_detail, :status => :created, :location => @contact_detail }
+        format.json { render :json => @contact_detail, :status => :created, :location => [:profile, @contact_detail] }
       else
         format.html { render :action => "new" }
         format.json { render :json => @contact_detail.errors, :status => :unprocessable_entity }

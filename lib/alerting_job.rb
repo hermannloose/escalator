@@ -28,6 +28,7 @@ class AlertingJob < Struct.new(:rotation_membership_id, :issue_id)
 
     # TODO(hermannloose): Clean up the naming mess below.
     contact = current_step.contact_detail
+    Rails.logger.debug "Contact: " + contact.inspect + " #details: " + contact.details.inspect
     details = contact.details
     details[:user] = user
     details[:issue] = issue

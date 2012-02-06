@@ -8,16 +8,80 @@
 
 # Roles
 Role.delete_all
-admin_role = Role.create({ :name => "admin" })
-user_role = Role.create({ :name => "user" })
+admin_role, user_role = Role.create([
+  {
+    :name => "admin"
+  },
+  {
+    :name => "user"
+  }
+])
 
-# Default admin account
+# Users
 User.delete_all
-User.create([
+u1, u2 = User.create([
   {
     :name => "Mechthild von Rootrecht",
     :email => "mail@example.com",
     :roles => [ admin_role, user_role ],
     :password => "password"
+  },
+  {
+    :name => "Normal User",
+    :email => "user@example.com",
+    :roles => [ user_role ],
+    :password => "password"
+  }
+])
+
+EscalationPolicy.delete_all
+e1, e2 = EscalationPolicy.create([
+  {
+    :name => "Demo Policy"
+  },
+  {
+    :name => "Demo Policy 2"
+  }
+])
+
+Rotation.delete_all
+r1, r2 = Rotation.create([
+  {
+    :name => "Demo Rotation Primary",
+    :rotate_every => 1000
+  },
+  {
+    :name => "Demo Rotation Secondary",
+    :rotate_every => 1000
+  }
+])
+
+RotationMembership.delete_all
+rm1, rm2 = RotationMembership.create([
+  {
+    :rotation => r1,
+    :user => u1,
+    :rank => 0
+  },
+  {
+    :rotation => r2,
+    :user => u2,
+    :rank => 0
+  }
+])
+
+AlertingStep.delete_all
+
+EscalationStep.delete_all
+EscalationStep.create([
+  {
+    :escalation_policy => e1,
+    :rotation => r1,
+    :delay_minutes => 0
+  },
+  {
+    :escalation_policy => e1,
+    :rotation => r2,
+    :delay_minutes => 3
   }
 ])

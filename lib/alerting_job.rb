@@ -12,7 +12,7 @@ class AlertingJob < Struct.new(:rotation_membership_id, :issue_id)
     current_step = steps.reverse.find { |step| step.delay_minutes <= delay_minutes }
     # TODO(hermannloose): Validate that there is always a first step.
     unless current_step
-      raise RuntimeError, "No currently active alerting step."
+      raise RuntimeError, "No currently active alerting step. (delay: #{delay_minutes}, membership: #{rotation_membership_id})"
     end
     upcoming = steps.find { |step| step.delay_minutes > delay_minutes }
 

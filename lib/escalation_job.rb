@@ -8,7 +8,7 @@ class EscalationJob < Struct.new(:issue_id)
     escalate_to = issue.escalation_policy.escalation_steps.passed(delayed_minutes).last
     # TODO(hermannloose): Test.
     unless escalate_to
-      raise RuntimeError, "No currently active escalation step."
+      raise RuntimeError, "No currently active escalation step. (delay: #{delayed_minutes}, issue: #{issue_id})"
     end
     upcoming = issue.escalation_policy.escalation_steps.upcoming(delayed_minutes).first
     # TODO(hermannloose): Write log record when escalation stops.

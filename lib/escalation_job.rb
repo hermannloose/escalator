@@ -6,6 +6,10 @@ class EscalationJob < Struct.new(:issue_id)
     return unless issue.status.intern == :open
 
     escalate_to = issue.escalation_policy.escalation_steps.passed(delayed_minutes).last
+    # TODO(hermannloose): Test.
+    unless escalate_to
+      raise RuntimeError, "No currently active escalation step."
+    end
     upcoming = issue.escalation_policy.escalation_steps.upcoming(delayed_minutes).first
     # TODO(hermannloose): Write log record when escalation stops.
     check_after = nil
@@ -15,6 +19,10 @@ class EscalationJob < Struct.new(:issue_id)
     end
 
     oncall = escalate_to.rotation.rotation_memberships.first
+    # TODO(hermannloose): Test.
+    unless oncall
+      raise RuntimeError, "No on-call user found."
+    end
     unless issue.assignee == oncall.user
       old_assignee = issue.assignee
       issue.assignee = oncall.user

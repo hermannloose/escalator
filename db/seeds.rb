@@ -21,8 +21,8 @@ admin_role, user_role = Role.create([
 User.delete_all
 u1, u2 = User.create([
   {
-    :name => "Mechthild von Rootrecht",
-    :email => "mail@example.com",
+    :name => "Admin User",
+    :email => "admin@example.com",
     :roles => [ admin_role, user_role ],
     :password => "password"
   },

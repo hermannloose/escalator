@@ -32,4 +32,13 @@ class EscalationJob < Struct.new(:issue_id)
       Delayed::Job.enqueue(AlertingJob.new(oncall.to_param, issue.to_param))
     end
   end
+
+  def error(job, exception)
+    case exception
+    when ActiveRecord::RecordNotFound
+      Rails.logger.warn "##{job.id} #{job.name}: caught RecordNotFound, will not retry."
+      # Do not attempt to run again.
+      job.fail!
+    end
+  end
 end

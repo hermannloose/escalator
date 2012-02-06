@@ -8,6 +8,6 @@
   <% @membership.alerting_steps.each do |step| %>
     <li>if I do not respond within <strong><%= step.delay_minutes %>
     minutes</strong>, contact me via
-    <%= link_to step.contact_detail.name, step.contact_detail %></li>
+    <%= link_to step.contact_detail.name, [:profile, step.contact_detail] %></li>
   <% end %>
 </ol>

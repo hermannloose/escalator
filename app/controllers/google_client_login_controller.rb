@@ -47,6 +47,9 @@ class GoogleClientLoginController < ApplicationController
         end
       when 403
         # TODO(hermannloose): Handle this case appropriately.
+        Rails.logger.error "Response: " + resp.inspect
+      else
+        Rails.logger.error "Response: " + resp.inspect
       end
     end
   end

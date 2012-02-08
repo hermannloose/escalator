@@ -1,29 +1,41 @@
-\documentclass[slidestop,compress,red]{beamer}
+\documentclass[10pt]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage{ngerman}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{bbm}
+
+\usepackage{tabularx}
 \usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{url}
+\usepackage{eurosym}
+\usepackage{listings}
 
-\usetheme{Antibes}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\usepackage{setspace}
 
-\usepackage{fontspec}
-\usepackage{xltxtra}
-\setsansfont{Ubuntu}
-
-\beamertemplatenavigationsymbolsempty
-
-\definecolor{light-gray}{gray}{0.7}
+\input{theme/theme}
 
 \title{Escalator}
 \subtitle{Flexible On-Call Benachrichtigung}
 \author{Hermann Loose}
-\date{10.02.2012}
+\email{hermannloose@gmail.com}
+\institute[ZIH TUD]{Zentrum für Informationsdienste und Hochleistungsrechnen — TU Dresden}
+\date{10. Februar 2012}
 
 \begin{document}
 
-\frame[plain]{\titlepage}
+\zihmaketitle
+%\frame{\titlepage}
 
-\begin{frame}[plain]
+\begin{frame}
   \frametitle{Motivation}
   \begin{flushleft}
-    \emph{„do one thing and do it well“}
+    \emph{„do one thing and do it well“} — Douglas McIlroy
   \end{flushleft}
   \begin{itemize}
     \item automatische Eskalation von Ereignissen
@@ -33,7 +45,7 @@
     \end{itemize}
   \end{itemize}
   \begin{flushleft}
-    \emph{„write programs that work together“}
+    \emph{„write programs that work together“} — Douglas McIlroy
   \end{flushleft}
   \begin{itemize}
     \item REST-Schnittstelle für Ereignisse
@@ -48,7 +60,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[c,plain]
+\begin{frame}[c]
   \frametitle{Fokus}
   \begin{itemize}
     \item schlank
@@ -64,23 +76,23 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[c,plain]
+\begin{frame}[c]
   \frametitle{Konzept}
   \begin{itemize}
+    \item Rotationen umfassen Nutzer, jeweils ein Nutzer Bereitschaftsdienst
+    \item Nutzer definieren pro Rotation, wie sie (schrittweise) benachrichtigt werden wollen
     \item Ereignisse landen in einer Eskalationsstrategie
     \item Eskalationsstrategien haben eine Hierarchie von Rotationen
     \item bis ein Ereignis akzeptiert wird, steigt es in der Hierarchie in Zeitschritten auf
-    \item Rotationen umfassen Nutzer, von denen jeweils einer Bereitschaftsdienst hat
-    \item Nutzer definieren pro Rotation, wie sie (schrittweise) benachrichtigt werden wollen
   \end{itemize}
 \end{frame}
 
-\begin{frame}[c,plain]
-  \frametitle{bisherige Arbeit}
+\begin{frame}[c]
+  \frametitle{Bisherige Arbeit}
   \begin{itemize}
     \item Backend / Web-Frontend (Rails 3.1.3)
     \begin{itemize}
-      \item Jobs für Eskalation und Rotation
+      \item \texttt{cron}-artige Jobs für Eskalation und Rotation
       \item Email- und Android-Backend
       \item Authentifizierung \& Authorisierung
     \end{itemize}
@@ -92,8 +104,8 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[c,plain]
-  \frametitle{Zukunft}
+\begin{frame}[c]
+  \frametitle{Ausblick}
   \begin{columns}
     \begin{column}{0.4\textwidth}
       \includegraphics[width=12em]{fork}
@@ -106,6 +118,20 @@
     \item \texttt{https://github.com/hermannloose/escalator}
     \item \texttt{https://github.com/hermannloose/escalator-android}
   \end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+  \frametitle{Quellen}
+  \begin{enumerate}
+    \item http://guides.rubyonrails.org/ (Rails Guides)
+    \item http://thoughtbot.com/community (Shoulda \& Factory Girl)
+    \begin{itemize}
+      \item https://github.com/thoughtbot/shoulda
+      \item https://github.com/thoughtbot/factory\_girl
+    \end{itemize}
+    \item http://rspec.info/ (RSpec)
+    \item http://developer.android.com/guide/index.html (Android Dev Guide)
+  \end{enumerate}
 \end{frame}
 
 \end{document}

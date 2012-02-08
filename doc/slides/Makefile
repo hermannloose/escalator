@@ -1,2 +1,2 @@
 all:
-	xelatex slides.tex
+	pdflatex slides.tex

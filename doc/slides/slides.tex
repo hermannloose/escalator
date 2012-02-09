@@ -10,6 +10,7 @@
 \usepackage{graphicx}
 \usepackage{subfigure}
 \usepackage{url}
+\usepackage{hyperref}
 \usepackage{eurosym}
 \usepackage{listings}
 
@@ -91,13 +92,14 @@
 \begin{frame}[c]
   \frametitle{Bisherige Arbeit}
   \begin{itemize}
-    \item Backend / Web-Frontend (Rails 3.1.3)
+    \item Backend / Web-Frontend (Rails 3.1.3)\nocite{railsguides}
     \begin{itemize}
       \item \texttt{cron}-artige Jobs für Eskalation und Rotation
       \item Email- und Android-Backend
       \item Authentifizierung \& Authorisierung
+      \item code-to-test ratio $1:1.5$, hauptsächlich RSpec\nocite{rspec}\nocite{shoulda}\nocite{factorygirl}
     \end{itemize}
-    \item Android (2.2)
+    \item Android (2.2)\nocite{androiddev}
     \begin{itemize}
       \item grundlegender C2DM Workflow
       \item prototypische Benachrichtigungen
@@ -123,16 +125,8 @@
 
 \begin{frame}[c]
   \frametitle{Quellen}
-  \begin{enumerate}
-    \item http://guides.rubyonrails.org/ (Rails Guides)
-    \item http://thoughtbot.com/community (Shoulda \& Factory Girl)
-    \begin{itemize}
-      \item https://github.com/thoughtbot/shoulda
-      \item https://github.com/thoughtbot/factory\_girl
-    \end{itemize}
-    \item http://rspec.info/ (RSpec)
-    \item http://developer.android.com/guide/index.html (Android Dev Guide)
-  \end{enumerate}
+  \bibliographystyle{plain}
+  \bibliography{slides}
 \end{frame}
 
 \end{document}

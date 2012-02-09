@@ -35,6 +35,7 @@ class AlertingJob < Struct.new(:rotation_membership_id, :issue_id)
     end
     details[:user] = user
     details[:issue] = issue
+    details[:time_left] = check_after if check_after
 
     Service.invoke(contact.category.to_sym, details)
   end

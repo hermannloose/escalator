@@ -8,7 +8,7 @@ module Service
       RestClient.post(
           "https://android.apis.google.com/c2dm/send",
           {
-            "registration_id" => params["registration_id"],
+            "registration_id" => params[:registration_id],
             "collapse_key" => "none",
             "data.issue" => params[:issue].to_json
           },

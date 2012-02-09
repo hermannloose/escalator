@@ -28,7 +28,15 @@ class EscalationJob < Struct.new(:issue_id)
       issue.assignee = oncall.user
       issue.save
 
-      #AssigneeMailer.escalated_mail(old_assignee, issue).deliver if old_assignee
+      # TODO(hermannloose): Refactor or remove, this is just to make the demo nicer.
+      if old_assignee
+        escalated_params = Hash.new
+        escalated_params[:user] = old_assignee
+        escalated_params[:email] = old_assignee.email
+        escalated_params[:issue] = issue
+        AssigneeMailer.escalated_mail(escalated_params).deliver
+      end
+
       Delayed::Job.enqueue(AlertingJob.new(oncall.to_param, issue.to_param))
     end
   end

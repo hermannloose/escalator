@@ -35,7 +35,12 @@ class AlertingJob < Struct.new(:rotation_membership_id, :issue_id)
     end
     details[:user] = user
     details[:issue] = issue
-    details[:time_left] = check_after if check_after
+
+    # TODO(hermannloose): Hack, come up with something nicer.
+    next_escalation = issue.escalation_policy.escalation_steps.upcoming(delay_minutes).first
+    if next_escalation
+      details[:time_left] = next_escalation.delay_minutes - delay_minutes
+    end
 
     Service.invoke(contact.category.to_sym, details)
   end

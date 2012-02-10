@@ -58,7 +58,7 @@ class IssuesController < ApplicationController
     @issue = Issue.new(params[:issue])
 
     # Not sure what benefit supplied values would have. -hermannloose
-    @issue.posted_at = Time.now
+    @issue.posted_at = Time.zone.now
     @issue.status = :open
 
     respond_to do |format|

@@ -7,16 +7,16 @@ class AlertingJob < Struct.new(:rotation_membership_id, :issue_id)
     # Issue was escalated in the meantime, drop this job silently.
     return if issue.assignee != user
 
-    delay = (Time.now - issue.posted_at) / 60
+    delay_minutes = issue.delayed / 60
     steps = rotation_membership.alerting_steps.ordered.all
-    current_step = steps.reverse.find { |step| step.delay_minutes <= delay }
+    current_step = steps.reverse.find { |step| step.delay_minutes <= delay_minutes }
     # TODO(hermannloose): Validate that there is always a first step.
     unless current_step
-      raise RuntimeError, "No currently active alerting step."
+      raise RuntimeError, "No currently active alerting step. (delay: #{delay_minutes}, membership: #{rotation_membership_id})"
     end
-    upcoming = steps.find { |step| step.delay_minutes > delay }
+    upcoming = steps.find { |step| step.delay_minutes > delay_minutes }
 
-    check_after = upcoming ? upcoming.delay_minutes - delay : nil
+    check_after = upcoming ? upcoming.delay_minutes - delay_minutes : nil
     if check_after
       Rails.logger.info "Scheduling new alert for #{check_after.minutes.from_now}."
 
@@ -28,9 +28,19 @@ class AlertingJob < Struct.new(:rotation_membership_id, :issue_id)
 
     # TODO(hermannloose): Clean up the naming mess below.
     contact = current_step.contact_detail
-    details = contact.details
+    Rails.logger.debug "Contact: " + contact.inspect + " #details: " + contact.details.inspect
+    details = Hash.new
+    contact.details.each do |key, value|
+      details[key.to_sym] = value
+    end
     details[:user] = user
     details[:issue] = issue
+
+    # TODO(hermannloose): Hack, come up with something nicer.
+    next_escalation = issue.escalation_policy.escalation_steps.upcoming(delay_minutes).first
+    if next_escalation
+      details[:time_left] = next_escalation.delay_minutes - delay_minutes
+    end
 
     Service.invoke(contact.category.to_sym, details)
   end

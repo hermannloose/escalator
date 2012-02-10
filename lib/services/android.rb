@@ -8,7 +8,7 @@ module Service
       RestClient.post(
           "https://android.apis.google.com/c2dm/send",
           {
-            "registration_id" => params["registration_id"],
+            "registration_id" => params[:registration_id],
             "collapse_key" => "none",
             "data.issue" => params[:issue].to_json
           },
@@ -18,13 +18,17 @@ module Service
 
         case response.code
         when 200
+          matched = /Error=(.*)$/.match(response.body)
+          if matched
+            raise RuntimeError, "C2DM request failed: " + matched[1]
+          end
           Rails.logger.info "Android C2DM notification successfully sent."
-          # TODO(hermannloose) HTTP 200 can still mean lots of errors. Check
-          # for them.
           Rails.logger.debug "C2DM Request: " + request.inspect
           Rails.logger.debug "C2DM Response: " + response.inspect
+        when 401
+          raise RuntimeError, "C2DM request failed, got 401."
         else
-          Rails.logger.warn("C2DM request failed: " + response.inspect)
+          raise RuntimeError, "C2DM request failed: " + response.inspect
         end
       end
     end

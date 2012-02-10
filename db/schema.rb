@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120131154810) do
+ActiveRecord::Schema.define(:version => 20120206220333) do
 
   create_table "alerting_steps", :force => true do |t|
     t.integer  "delay_minutes"
@@ -91,9 +91,9 @@ ActiveRecord::Schema.define(:version => 20120131154810) do
 
   create_table "google_client_login_credentials", :force => true do |t|
     t.string   "email"
-    t.string   "token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "token"
   end
 
   create_table "issues", :force => true do |t|

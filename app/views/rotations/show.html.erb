@@ -13,7 +13,7 @@
       <% user = membership.user %>
       <%= link_to user.name, user %> (<%= user.email %>)
       <% if user == current_user %>
-        <%= link_to "Details", rotation_user_path(@rotation) %>
+        <%= link_to "Details", membership %>
       <% end %>
     </li>
   <% end %>

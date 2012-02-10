@@ -17,8 +17,18 @@ Escalator::Application.routes.draw do
   end
 
   resources :rotations do
-    match "membership", :to => "rotation_memberships#show", :as => "user"
+    resources :rotation_memberships
+=begin
+    resource :membership, :controller => :rotation_memberships do
+      resources :alerting_steps
+    end
+=end
   end
+
+  resources :rotation_memberships do
+    resources :alerting_steps
+  end
+
 
   resources :escalation_policies do
     resources :issues

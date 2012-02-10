@@ -1,0 +1,132 @@
+\documentclass[10pt]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage{ngerman}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{bbm}
+
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{eurosym}
+\usepackage{listings}
+
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\usepackage{setspace}
+
+\input{theme/theme}
+
+\title{Escalator}
+% Because frankly, overfull hboxes turn me on.
+\subtitle{Flexible Benachrichtigung von Bereitschaftsdiensten auf mobilen Endgeräten}
+\author{Hermann Loose}
+\email{hermannloose@gmail.com}
+\institute[ZIH TUD]{Zentrum für Informationsdienste und Hochleistungsrechnen — TU Dresden}
+\date{10. Februar 2012}
+
+\begin{document}
+
+\zihmaketitle
+%\frame{\titlepage}
+
+\begin{frame}
+  \frametitle{Motivation}
+  \begin{flushleft}
+    \emph{„do one thing and do it well“} — Douglas McIlroy
+  \end{flushleft}
+  \begin{itemize}
+    \item automatische Eskalation von Ereignissen
+    \begin{itemize}
+      \item an rotierende Bereitschaftsdienste
+      \item über flexible Wege der Benachrichtigung
+    \end{itemize}
+  \end{itemize}
+  \begin{flushleft}
+    \emph{„write programs that work together“} — Douglas McIlroy
+  \end{flushleft}
+  \begin{itemize}
+    \item REST-Schnittstelle für Ereignisse
+    \begin{itemize}
+      \item Monitoring, Ticket-System, …
+    \end{itemize}
+    \item unkomplizierte, erweiterbare Backends
+    \begin{itemize}
+      \item prototypisch: Email, Android
+      \item denkbar: Boxcar (iOS), SMS, XMPP, …
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+  \frametitle{Fokus}
+  \begin{itemize}
+    \item schlank
+    \item generisch
+    \begin{itemize}
+      \item nicht: Ersatz für Nagios, etc.
+    \end{itemize}
+    \item self-service
+    \begin{itemize}
+      \item Wege und zeitl. Abstände der Benachrichtigung
+      \item perspektivisch: z.B. Rotationen mit Diensttausch
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+  \frametitle{Konzept}
+  \begin{itemize}
+    \item Rotationen umfassen Nutzer, jeweils ein Nutzer Bereitschaftsdienst
+    \item Nutzer definieren pro Rotation, wie sie (schrittweise) benachrichtigt werden wollen
+    \item Ereignisse landen in einer Eskalationsstrategie
+    \item Eskalationsstrategien haben eine Hierarchie von Rotationen
+    \item bis ein Ereignis akzeptiert wird, steigt es in der Hierarchie in Zeitschritten auf
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+  \frametitle{Bisherige Arbeit}
+  \begin{itemize}
+    \item Backend / Web-Frontend (Rails 3.1.3)\nocite{railsguides}
+    \begin{itemize}
+      \item \texttt{cron}-artige Jobs für Eskalation und Rotation
+      \item Email- und Android-Backend
+      \item Authentifizierung \& Authorisierung
+      \item code-to-test ratio $1:1.5$, hauptsächlich RSpec\nocite{rspec}\nocite{shoulda}\nocite{factorygirl}
+    \end{itemize}
+    \item Android (2.2)\nocite{androiddev}
+    \begin{itemize}
+      \item grundlegender C2DM Workflow
+      \item prototypische Benachrichtigungen
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+  \frametitle{Ausblick}
+  \begin{columns}
+    \begin{column}{0.4\textwidth}
+      \includegraphics[width=12em]{fork}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \includegraphics[width=12em]{pullrequest}
+    \end{column}
+  \end{columns}
+  \begin{itemize}
+    \item \texttt{https://github.com/hermannloose/escalator}
+    \item \texttt{https://github.com/hermannloose/escalator-android}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+  \frametitle{Quellen}
+  \bibliographystyle{plain}
+  \bibliography{slides}
+\end{frame}
+
+\end{document}

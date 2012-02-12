@@ -27,6 +27,15 @@ FactoryGirl.define do
     roles [ Factory(:user_role) ]
   end
 
+  # Contact details
+  factory :contact_detail do
+    sequence :name do |n|
+      "ContactDetail ##{n}"
+    end
+    category :email
+    user Factory(:user)
+  end
+
   # Rotations
   factory :rotation do
     sequence :name do |n|
@@ -35,9 +44,17 @@ FactoryGirl.define do
     rotate_every 1000
   end
 
+  # Rotation memberships
   factory :rotation_membership do
     rotation Factory(:rotation)
     user Factory(:user)
     rank 0
+  end
+
+  # Alerting steps
+  factory :alerting_step do
+    delay_minutes 0
+    rotation_membership Factory(:rotation_membership)
+    contact_detail Factory(:contact_detail)
   end
 end

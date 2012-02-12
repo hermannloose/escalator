@@ -29,6 +29,22 @@ authorization do
       if_attribute :id => is { user.id }
     end
 
+    has_permission_on :rotation_memberships, :to => [:show] do
+      if_attribute :user => is { user }
+      if_permitted_to :show, :rotation
+    end
+
+    has_permission_on :alerting_steps, :to => [:index, :show] do
+      if_permitted_to :show, :contact_detail
+      if_permitted_to :show, :rotation_membership
+    end
+    has_permission_on :alerting_steps, :to => [
+      :new, :create, :edit, :update, :destroy
+    ] do
+      if_permitted_to :update, :contact_detail
+      if_permitted_to :update, :rotation_membership
+    end
+
     has_permission_on :contact_details, :to => [
       :index, :show, :new, :create, :edit, :update, :destroy
     ] do

@@ -20,12 +20,16 @@
     <%= f.text_field :category %>
   </div>
   <div class="field">
-    <%= f.label :value %><br />
-    <%= f.text_field :value %>
-  </div>
-  <div class="field">
-    <%= f.label :details %><br />
-    <%= f.text_area :details %>
+    <%= field_set_tag "Details" do %>
+      <%= f.fields_for :details do |details| %>
+        <% @contact_detail.details.each do |key, value| %>
+          <div>
+            <%= details.label key.to_sym %>
+            <%= details.text_field key.to_sym, :value => value %>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
   </div>
   <div class="actions">
     <%= f.hidden_field :user_id %>

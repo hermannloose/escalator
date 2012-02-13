@@ -1,4 +1,5 @@
 class AlertingStepsController < ApplicationController
+  filter_access_to :all
   before_filter :find_rotation_membership, :contact_detail_options
 
   def index

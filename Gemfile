@@ -52,6 +52,7 @@ group :development, :test do
   gem 'mocha'
   gem 'rspec-rails'
   gem 'shoulda-matchers', :git => 'git://github.com/thoughtbot/shoulda-matchers.git'
+  gem 'simplecov'
 end
 
 # Authentication

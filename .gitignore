@@ -16,3 +16,6 @@
 
 # Ignore RSpec HTML output.
 rspec-results.html
+
+# Ignore SimpleCov HTML output.
+/coverage

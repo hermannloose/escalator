@@ -1,10 +1,8 @@
 require 'rest_client'
 
 module Service
-  @client_login_token = ""
-
   module Android
-    def Android.perform(params)
+    def self.perform(params)
       RestClient.post(
           "https://android.apis.google.com/c2dm/send",
           {
@@ -33,4 +31,6 @@ module Service
       end
     end
   end
+
+  services[:android] = Android
 end

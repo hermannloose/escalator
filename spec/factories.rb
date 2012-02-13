@@ -40,6 +40,7 @@ FactoryGirl.define do
     end
     category :email
     user Factory(:user)
+    details Hash.new
   end
 
   # Rotations

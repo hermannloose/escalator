@@ -7,6 +7,8 @@ authorization do
     has_permission_on [:assignments, :google_client_login],
       :to => [:index, :show]
 
+    has_permission_on [:contact_details], :to => [:index, :show]
+
     has_permission_on [
       :assignments, :contact_details, :escalation_policies,
       :google_client_login, :issues, :rotations, :users

@@ -57,4 +57,28 @@ FactoryGirl.define do
     rotation_membership Factory(:rotation_membership)
     contact_detail Factory(:contact_detail)
   end
+
+  # Escalation policies
+  factory :escalation_policy do
+    sequence :name do |n|
+      "Escalation Policy ##{n}"
+    end
+  end
+
+  # Escalation steps
+  factory :escalation_step do
+    delay_minutes 0
+    escalation_policy FactoryGirl.create(:escalation_policy)
+    rotation FactoryGirl.create(:rotation)
+  end
+
+  # Issues
+  factory :issue do
+    sequence :title do |n|
+      "Issue ##{n}"
+    end
+    escalation_policy FactoryGirl.create(:escalation_policy)
+    status :open
+    posted_at Time.zone.now
+  end
 end

@@ -4,4 +4,6 @@ module Service
       AssigneeMailer.assignee_mail(params).deliver
     end
   end
+
+  services[:email] = Email
 end

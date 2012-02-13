@@ -1,5 +1,6 @@
 class AlertingJob < Struct.new(:rotation_membership_id, :issue_id)
   def perform
+    # TODO(hermannloose): Handle ActiveRecord::RecordNotFound in #error.
     rotation_membership = RotationMembership.find(rotation_membership_id)
     user = rotation_membership.user
     issue = Issue.find(issue_id)

@@ -27,6 +27,12 @@ FactoryGirl.define do
     roles [ Factory(:user_role) ]
   end
 
+  # Assignments
+  factory :assignment do
+    user FactoryGirl.create(:user)
+    role FactoryGirl.create(:user_role)
+  end
+
   # Contact details
   factory :contact_detail do
     sequence :name do |n|

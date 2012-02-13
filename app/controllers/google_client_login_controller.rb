@@ -46,7 +46,15 @@ class GoogleClientLoginController < ApplicationController
           end
         end
       when 403
-        # TODO(hermannloose): Handle this case appropriately.
+        matched = /Error=(.*)$/.match(resp.body)
+
+        if matched
+          Rails.logger.warn "Received #{matched[1]}."
+          # TODO(hermannloose): Handle appropriately.
+          raise RuntimeError, matched[1]
+        end
+      else
+        Rails.logger.error "Response: " + resp.inspect
       end
     end
   end

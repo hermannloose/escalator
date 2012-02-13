@@ -27,7 +27,7 @@
     </td>
     <td>
       <% if permitted_to? :destroy, issue %>
-        <%= link_to 'Destroy', issue, :confirm => 'Are you sure?', :method => :delete %>
+        <%= link_to 'Destroy', issue, :method => :delete %>
       <% end %>
     </td>
   </tr>

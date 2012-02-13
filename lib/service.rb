@@ -1,8 +1,10 @@
+require 'services/android'
 require 'services/email'
 
 module Service
   # List your services here.
   @services = {
+    :android => Service::Android,
     :email => Service::Email
   }
 

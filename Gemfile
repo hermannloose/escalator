@@ -55,6 +55,7 @@ group :development, :test do
   gem 'cucumber-rails'
   gem 'database_cleaner'
   gem 'capybara'
+  gem 'launchy'
 end
 
 # Authentication

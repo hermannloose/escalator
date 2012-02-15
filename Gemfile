@@ -52,6 +52,9 @@ group :development, :test do
   gem 'mocha'
   gem 'rspec-rails'
   gem 'shoulda-matchers', :git => 'git://github.com/thoughtbot/shoulda-matchers.git'
+  gem 'cucumber-rails'
+  gem 'database_cleaner'
+  gem 'capybara'
 end
 
 # Authentication

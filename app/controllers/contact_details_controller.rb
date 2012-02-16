@@ -43,7 +43,7 @@ class ContactDetailsController < ApplicationController
   # POST /contact_details.json
   def create
     @contact_detail = ContactDetail.new(params[:contact_detail])
-    @contact_detail.details = ActiveSupport::JSON.decode(params[:contact_detail][:details]) || Hash.new
+    @contact_detail.details = params[:contact_detail][:details] || Hash.new
 
     respond_to do |format|
       if @contact_detail.save

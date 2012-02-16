@@ -57,6 +57,7 @@ group :development, :test do
   gem 'capybara'
   gem 'launchy'
   gem 'pickle'
+  gem 'simplecov'
 end
 
 # Authentication

@@ -1,4 +1,6 @@
 class RotationMembershipsController < ApplicationController
+  filter_access_to :all
+
   def show
     @membership = RotationMembership.find(params[:id])
 

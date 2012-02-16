@@ -187,6 +187,10 @@ GEM
       multi_json (~> 1.0.4)
       rubyzip
     sexp_processor (3.0.10)
+    simplecov (0.5.4)
+      multi_json (~> 1.0.3)
+      simplecov-html (~> 0.5.3)
+    simplecov-html (0.5.3)
     sprockets (2.0.3)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -237,6 +241,7 @@ DEPENDENCIES
   ruby_parser
   sass-rails (~> 3.1.5)
   shoulda-matchers!
+  simplecov
   sqlite3
   thin
   uglifier (>= 1.0.3)

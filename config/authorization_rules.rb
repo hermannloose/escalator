@@ -7,6 +7,8 @@ authorization do
     has_permission_on [:assignments, :google_client_login],
       :to => [:index, :show]
 
+    has_permission_on [:contact_details], :to => [:index, :show]
+
     has_permission_on [
       :assignments, :contact_details, :escalation_policies,
       :google_client_login, :issues, :rotations, :users
@@ -27,6 +29,22 @@ authorization do
 
     has_permission_on :users, :to => [:create_token, :destroy_token] do
       if_attribute :id => is { user.id }
+    end
+
+    has_permission_on :rotation_memberships, :to => [:show] do
+      if_attribute :user => is { user }
+      if_permitted_to :show, :rotation
+    end
+
+    has_permission_on :alerting_steps, :to => [:index, :show] do
+      if_permitted_to :show, :contact_detail
+      if_permitted_to :show, :rotation_membership
+    end
+    has_permission_on :alerting_steps, :to => [
+      :new, :create, :edit, :update, :destroy
+    ] do
+      if_permitted_to :update, :contact_detail
+      if_permitted_to :update, :rotation_membership
     end
 
     has_permission_on :contact_details, :to => [

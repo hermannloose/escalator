@@ -8,19 +8,20 @@ Feature: Admin manages escalation policies
   Background: I am logged in as an admin
     Given I am logged in as an admin
 
-  @wip
   Scenario: Adding an escalation policy
-    When I add an escalation policy
-    Then the escalation policy should exist
+    When I add an escalation policy with name: "foobar"
+    Then an escalation policy should exist with name: "foobar"
+    And that escalation policy should be on the list of escalation policies
 
-  @wip
   Scenario: Editing an escalation policy
     Given an escalation policy exists
-    When I edit the escalation policy
-    Then I should see those changes
+    When I edit the escalation policy using name: "barfoo"
+    Then the escalation policy's name should be "barfoo"
+    And the escalation policy should be on the list of escalation policies
 
-  @wip
+  @celerity
   Scenario: Deleting an escalation policy
-    Given an escalation policy exists
+    Given an escalation policy exists with name: "barbaz"
     When I delete the escalation policy
-    Then the escalation policy should not exist
+    Then an escalation policy should not exist with name: "barbaz"
+    And "barbaz" should not be on the list of escalation policies

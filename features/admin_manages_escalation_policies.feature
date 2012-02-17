@@ -8,20 +8,34 @@ Feature: Admin manages escalation policies
   Background: I am logged in as an admin
     Given I am logged in as an admin
 
-  Scenario: Adding an escalation policy
-    When I add an escalation policy with name: "foobar"
-    Then an escalation policy should exist with name: "foobar"
+  Scenario Outline: Adding an escalation policy
+    When I add an escalation policy with name: "<name>"
+    Then an escalation policy should exist with name: "<name>"
     And that escalation policy should be on the list of escalation policies
 
-  Scenario: Editing an escalation policy
-    Given an escalation policy exists
-    When I edit the escalation policy using name: "barfoo"
-    Then the escalation policy's name should be "barfoo"
+    Examples:
+      | name                   |
+      | Demo Escalation Policy |
+      | abc                    |
+      | 123                    |
+
+  Scenario Outline: Editing an escalation policy
+    Given an escalation policy exists with name: "<original>"
+    When I edit the escalation policy using name: "<edited>"
+    Then the escalation policy's name should be "<edited>"
     And the escalation policy should be on the list of escalation policies
 
+    Examples:
+      | original               | edited                        |
+      | Demo Escalation Policy | edited Demo Escalation Policy |
+
   @celerity
-  Scenario: Deleting an escalation policy
-    Given an escalation policy exists with name: "barbaz"
+  Scenario Outline: Deleting an escalation policy
+    Given an escalation policy exists with name: "<name>"
     When I delete the escalation policy
-    Then an escalation policy should not exist with name: "barbaz"
-    And "barbaz" should not be on the list of escalation policies
+    Then an escalation policy should not exist with name: "<name>"
+    And "<name>" should not be on the list of escalation policies
+
+    Examples:
+      | name                   |
+      | Demo Escalation Policy |

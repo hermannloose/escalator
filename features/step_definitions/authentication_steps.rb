@@ -12,6 +12,6 @@ World(AuthenticationSteps)
 Given /^I am logged in as (?:an+ (user|admin))$/ do |role|
   email = "admin@example.com"
   password = "password"
-  admin = FactoryGirl.create(role.to_sym, :email => email, :password => password)
+  admin = FactoryGirl.create(role, :email => email, :password => password)
   login(email, password)
 end

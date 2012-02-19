@@ -88,4 +88,10 @@ FactoryGirl.define do
     status :open
     posted_at Time.zone.now
   end
+
+  # Google ClientLogin credentials
+  factory :google_client_login_credentials do
+    email "user@example.com"
+    token "deadbeef"
+  end
 end

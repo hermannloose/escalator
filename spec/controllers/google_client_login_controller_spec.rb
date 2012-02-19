@@ -1,9 +1,7 @@
 require 'spec_helper'
 
+# TODO(hermannloose): Make this more comprehensive.
 describe GoogleClientLoginController do
-  render_views
-  setup_mapping
-
   before :each do
     @admin = Factory(:admin)
     sign_in @admin

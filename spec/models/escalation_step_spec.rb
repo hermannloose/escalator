@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe EscalationStep do
-  fixtures :escalation_steps
-
-  subject { escalation_steps(:valid) }
-
   it { should belong_to :escalation_policy }
   it { should belong_to :rotation }
 

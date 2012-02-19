@@ -25,9 +25,21 @@ describe AlertingJob do
       AlertingJob.new(rotation_membership.id, issue.id)
     }
 
-    context "when issue.assignee != user" do
+    context "when issue.assignee is nil" do
       let(:issue) {
         FactoryGirl.create(:issue)
+      }
+
+      it "should silently return" do
+        job.perform
+      end
+    end
+
+    context "when issue.assignee != user" do
+      let(:issue) {
+        issue = FactoryGirl.create(:issue)
+        issue.assignee = FactoryGirl.create(:user)
+        issue
       }
 
       it "should silently return" do
@@ -46,7 +58,7 @@ describe AlertingJob do
     end
 
     context "when everything is just right" do
-      it "should work" do
+      it "should invoke the service" do
         Service.expects(:invoke).with(:email, {
             :foo => "bar",
             :user => user,

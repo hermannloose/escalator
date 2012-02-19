@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe Issue do
-  fixtures :issues
-
-  subject { issues(:valid) }
-
   it { should belong_to :escalation_policy }
 
   it { should validate_presence_of :escalation_policy_id }

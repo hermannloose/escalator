@@ -7,14 +7,21 @@ Spork.prefork do
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
 
+  require 'rails/application'
+  Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
+
   # This file is copied to spec/ when you run 'rails generate rspec:install'
   ENV["RAILS_ENV"] ||= 'test'
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
   require 'rspec/autorun'
+  # Explicitly require these for speed, as per
+  # http://www.opinionatedprogrammer.com/2011/02/profiling-spork-for-faster-start-up-time/
+  require 'rspec/expectations'
+  require 'rspec/matchers'
+
   require 'shoulda-matchers'
 
-  require 'factory_girl_rails'
   require 'declarative_authorization/maintenance'
   require 'authorization_helper'
 
@@ -63,6 +70,8 @@ end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
+
+  require 'factory_girl_rails'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.

@@ -58,6 +58,7 @@ group :development, :test do
   gem 'launchy'
   gem 'pickle'
   gem 'simplecov'
+  gem 'spork'
 end
 
 # Authentication

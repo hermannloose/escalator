@@ -1,36 +1,36 @@
 FactoryGirl.define do
   # Roles
-  factory :admin_role, :class => Role do
+  factory :admin_role, :class => 'Role' do
     name 'admin'
   end
 
-  factory :user_role, :class => Role do
+  factory :user_role, :class => 'Role' do
     name 'user'
   end
 
   # Users
-  factory :admin, :class => User do
+  factory :admin, :class => 'User' do
     name 'Admin'
     sequence :email do |n|
       "admin#{n}@example.com"
     end
     password 'password'
-    roles [ Factory(:admin_role) ]
+    roles { [ FactoryGirl.create(:admin_role) ] }
   end
 
-  factory :user, :class => User do
+  factory :user, :class => 'User' do
     name 'User'
     sequence :email do |n|
       "user#{n}@example.com"
     end
     password 'password'
-    roles [ Factory(:user_role) ]
+    roles { [ FactoryGirl.create(:user_role) ] }
   end
 
   # Assignments
   factory :assignment do
-    user FactoryGirl.create(:user)
-    role FactoryGirl.create(:user_role)
+    user { FactoryGirl.create(:user) }
+    role { FactoryGirl.create(:user_role) }
   end
 
   # Contact details
@@ -39,7 +39,7 @@ FactoryGirl.define do
       "ContactDetail ##{n}"
     end
     category :email
-    user Factory(:user)
+    user { FactoryGirl.create(:user) }
     details Hash.new
   end
 
@@ -53,16 +53,16 @@ FactoryGirl.define do
 
   # Rotation memberships
   factory :rotation_membership do
-    rotation Factory(:rotation)
-    user Factory(:user)
+    rotation { FactoryGirl.create(:rotation) }
+    user { FactoryGirl.create(:user) }
     rank 0
   end
 
   # Alerting steps
   factory :alerting_step do
     delay_minutes 0
-    rotation_membership Factory(:rotation_membership)
-    contact_detail Factory(:contact_detail)
+    rotation_membership { FactoryGirl.create(:rotation_membership) }
+    contact_detail { FactoryGirl.create(:contact_detail) }
   end
 
   # Escalation policies
@@ -75,8 +75,8 @@ FactoryGirl.define do
   # Escalation steps
   factory :escalation_step do
     delay_minutes 0
-    escalation_policy FactoryGirl.create(:escalation_policy)
-    rotation FactoryGirl.create(:rotation)
+    escalation_policy { FactoryGirl.create(:escalation_policy) }
+    rotation { FactoryGirl.create(:rotation) }
   end
 
   # Issues
@@ -84,9 +84,9 @@ FactoryGirl.define do
     sequence :title do |n|
       "Issue ##{n}"
     end
-    escalation_policy FactoryGirl.create(:escalation_policy)
+    escalation_policy { FactoryGirl.create(:escalation_policy) }
     status :open
-    posted_at Time.zone.now
+    posted_at { Time.zone.now }
   end
 
   # Google ClientLogin credentials

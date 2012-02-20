@@ -7,6 +7,9 @@ describe UsersController do
   before :each do
     @admin = Factory(:admin)
     sign_in @admin
+
+    # TODO(hermannloose): Is this really the best place for this?
+    FactoryGirl.create(:user_role)
   end
 
   context "when guest" do

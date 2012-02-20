@@ -228,7 +228,7 @@ DEPENDENCIES
   declarative_authorization
   delayed_job_active_record
   devise
-  factory_girl_rails (= 1.4.0)
+  factory_girl_rails
   jquery-rails
   json
   launchy

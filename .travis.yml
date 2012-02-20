@@ -7,4 +7,3 @@ rvm:
 
 before_script:
   - "rake db:migrate"
-  - "rake db:test:prepare"

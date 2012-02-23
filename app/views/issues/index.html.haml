@@ -1,0 +1,31 @@
+%h1 Listing issues
+
+%table
+  %tr
+    %th Title
+    %th Description
+    %th Posted at
+    %th Status
+    %th Assignee
+    %th
+    %th
+    %th
+
+  - @issues.each do |issue|
+    %tr
+      %td= issue.title
+      %td= issue.description
+      %td= issue.posted_at
+      %td= issue.status
+      %td= issue.assignee.name unless issue.assignee.nil?
+      %td= link_to 'Show', issue
+      %td= link_to 'Edit', edit_issue_path(issue) if permitted_to? :edit, issue
+      %td= link_to 'Destroy', issue, :method => :delete if permitted_to? :destroy, issue
+
+%br/
+
+- if permitted_to? :new, :issues
+  - if @escalation_policy
+    = link_to 'New Issue', new_escalation_policy_issue_path(@escalation_policy)
+  - else
+    = link_to 'New Issue', new_issue_path

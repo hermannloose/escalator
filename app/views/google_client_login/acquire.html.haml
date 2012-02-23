@@ -1,0 +1,6 @@
+%h1 Acquire Google ClientLogin token
+
+- if @token_acquired
+  %div Acquired a new ClientLogin token for #{@email}.
+- else
+  = render "form"

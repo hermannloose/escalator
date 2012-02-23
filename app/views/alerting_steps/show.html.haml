@@ -1,0 +1,14 @@
+%h1 Alerting step details
+
+%div
+  Rotation:
+  = link_to @alerting_step.rotation_membership.rotation.name,
+    @alerting_step.rotation_membership
+
+%div
+  Delay: #{@alerting_step.delay_minutes} minutes
+
+%div
+  Contact detail:
+  = link_to @alerting_step.contact_detail.name,
+    [:profile, @alerting_step.contact_detail]

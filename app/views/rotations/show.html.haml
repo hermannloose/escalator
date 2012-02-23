@@ -1,0 +1,20 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @rotation.name
+
+%p
+  %b Users in this rotation:
+  %ol
+    - @rotation.rotation_memberships.each do |membership|
+      %li
+        - user = membership.user
+        #{link_to user.name, user} (#{user.email})
+        - if user == current_user
+          = link_to "Details", membership
+
+- if permitted_to? :edit, @rotation
+  = link_to 'Edit', edit_rotation_path(@rotation)
+  |
+= link_to 'Back', rotations_path

@@ -1,0 +1,32 @@
+= form_for [:profile, @contact_detail] do |f|
+  - if @contact_detail.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@contact_detail.errors.count, "error")
+        prohibited this contact_detail from being saved:
+
+      %ul
+        - @contact_detail.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    %br/
+    = f.text_field :name
+
+  .field
+    = f.label :category
+    %br/
+    = f.text_field :category
+
+  .field
+    - field_set_tag "Details" do
+      = f.fields_for :details do |details|
+        - @contact_detail.details.each do |key, value|
+          %div
+            = details.label key.to_sym
+            = details.text_field key.to_sym, :value => value
+
+  .actions
+    = f.hidden_field :user_id
+    = f.submit

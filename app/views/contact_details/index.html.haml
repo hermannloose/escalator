@@ -1,0 +1,27 @@
+%h1 Listing contact details
+
+%table
+  %tr
+    %th Name
+    %th Category
+    %th Value
+    %th
+    %th
+    %th
+
+  - @contact_details.each do |contact_detail|
+    %tr
+      %td= contact_detail.name
+      %td= contact_detail.category
+      %td= contact_detail.value
+      %td= link_to 'Show', [:profile, contact_detail]
+      %td
+        - if permitted_to? :edit, contact_detail
+          = link_to 'Edit', edit_profile_contact_detail_path(contact_detail)
+      %td
+        - if permitted_to? :destroy, contact_detail
+          = link_to 'Destroy', [:profile, contact_detail], :confirm => 'Are you sure?', :method => :delete
+
+%br/
+
+= link_to 'New Contact detail', new_profile_contact_detail_path if permitted_to? :new, :contact_details

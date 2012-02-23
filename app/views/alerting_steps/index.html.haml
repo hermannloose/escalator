@@ -1,0 +1,18 @@
+%h1 Listing alerting steps
+
+%table
+  %tr
+    %th Delay
+    %th Contact detail
+    %th
+    %th
+    %th
+  - @alerting_steps.each do |alerting_step|
+    %tr
+      %td= alerting_step.delay_minutes
+      %td= alerting_step.contact_detail.name
+      %td= link_to "Show", [@rotation_membership, alerting_step]
+      %td= link_to "Edit", edit_rotation_membership_alerting_step_path(@rotation_membership, alerting_step)
+      %td= link_to "Destroy", [@rotation_membership, alerting_step], :confirm => "Are you sure?", :method => :delete
+
+= link_to "New alerting step", new_rotation_membership_alerting_step_path(@rotation_membership)

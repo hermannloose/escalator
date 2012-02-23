@@ -1,0 +1,23 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @contact_detail.name
+
+%p
+  %b Category:
+  = @contact_detail.category
+
+%p
+  %b Value:
+  = @contact_detail.value
+
+%p
+  %b Details:
+  %ul
+    - @contact_detail.details.each do |key, value|
+      %li Key: #{key}, Value: #{value}
+
+= link_to 'Edit', edit_profile_contact_detail_path(@contact_detail) if permitted_to? :edit, @contact_detail
+|
+= link_to 'Back', [:profile, :contact_details]

@@ -1,0 +1,20 @@
+%h1 Listing escalation_policies
+
+%table
+  %tr
+    %th Name
+    %th
+    %th
+    %th
+  - @escalation_policies.each do |escalation_policy|
+    %tr
+      %td= escalation_policy.name
+      %td= link_to 'Show', escalation_policy
+      %td
+        = link_to 'Edit', edit_escalation_policy_path(escalation_policy) if permitted_to? :edit, escalation_policy
+      %td
+        = link_to 'Destroy', escalation_policy, :confirm => 'Are you sure?', :method => :delete if permitted_to? :destroy, escalation_policy
+
+%br/
+
+= link_to 'New Escalation policy', new_escalation_policy_path if permitted_to? :new, :escalation_policies

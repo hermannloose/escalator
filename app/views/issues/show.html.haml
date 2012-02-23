@@ -1,0 +1,23 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @issue.title
+
+%p
+  %b Description:
+  = @issue.description
+
+%p
+  %b Posted at:
+  = @issue.posted_at
+
+%p
+  %b Status:
+  = @issue.status
+
+
+- if permitted_to? :edit, @issue
+  = link_to 'Edit', edit_issue_path(@issue)
+  |
+= link_to 'Back', issues_path

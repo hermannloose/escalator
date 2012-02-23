@@ -1,0 +1,51 @@
+%h2 Edit #{resource_name.to_s.humanize}
+
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+  = devise_error_messages!
+
+  %div
+    = f.label :email
+    %br/
+    = f.email_field :email
+
+  %div
+    = f.label :password
+    %i (leave blank if you don't want to change it)
+    %br/
+    = f.password_field :password
+
+  %div
+    = f.label :password_confirmation
+    %br/
+    = f.password_field :password_confirmation
+
+  %div
+    = f.label :current_password
+    %i (we need your current password to confirm your changes)
+    %br/
+    = f.password_field :current_password
+
+  %div
+    = f.label :token_authentication_key
+    %br/
+    - if resource.authentication_token.blank?
+      Token Empty
+    - else
+      = resource.authentication_token
+      %br/
+      / TODO(hermannloose): Demo only! Remove later, sends sensitive data to third parties!
+      = image_tag "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=#{resource.authentication_token}&choe=UTF-8"
+
+  %div
+    = link_to "Generate token", create_token_user_path(resource.id), :method => :post, :confirm => "Are you sure?"
+    = link_to "Destroy token", create_token_user_path(resource.id), :method => :delete, :confirm => "Are you sure?"
+
+  %div= f.submit "Update"
+
+%h3 Cancel my account
+
+%p
+  = surround "Unhappy? ", "." do
+    = link_to "Cancel my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete
+
+= link_to "Back", :back

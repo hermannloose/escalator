@@ -1,0 +1,17 @@
+= form_for(@escalation_policy) do |f|
+  - if @escalation_policy.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@escalation_policy.errors.count, "error")
+        prohibited this escalation_policy from being saved:
+
+      %ul
+        - @escalation_policy.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    %br/
+    = f.text_field :name
+  .actions
+    = f.submit

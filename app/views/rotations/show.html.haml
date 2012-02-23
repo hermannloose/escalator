@@ -9,12 +9,12 @@
   %ol
     - @rotation.rotation_memberships.each do |membership|
       %li
-        - user = membership.user %>
+        - user = membership.user
         #{link_to user.name, user} (#{user.email})
         - if user == current_user
           = link_to "Details", membership
 
--if permitted_to? :edit, @rotation
+- if permitted_to? :edit, @rotation
   = link_to 'Edit', edit_rotation_path(@rotation)
   |
 = link_to 'Back', rotations_path

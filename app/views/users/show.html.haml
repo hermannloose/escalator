@@ -1,0 +1,13 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @user.name
+
+%p
+  %b Email:
+  = @user.email
+
+= link_to 'Edit', edit_user_path(@user) if permitted_to? :edit, @user
+|
+= link_to 'Back', users_path

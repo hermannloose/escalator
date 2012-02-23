@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%h1<
+  Details for
+  = link_to @membership.user.name, @membership.user
+  in
+  = link_to @membership.rotation.name, @membership.rotation
+
+%h3= link_to "Alerting steps:", [@membership, :alerting_steps]
+%ol
+  - @membership.alerting_steps.each do |step|
+    %li
+      if I do not respond within
+      = succeed "," do
+        %strong #{step.delay_minutes} minutes
+      contact me via
+      = succeed "." do
+        = link_to step.contact_detail.name, [:profile, step.contact_detail]
+      = link_to "Delete", [@membership, step], :method => :delete
+
+= link_to "New alerting step", new_rotation_membership_alerting_step_path(@membership)

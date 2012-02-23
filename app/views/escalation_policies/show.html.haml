@@ -1,0 +1,20 @@
+%p#notice= notice
+
+%h1= @escalation_policy.name
+
+- if @escalation_policy.escalation_steps.empty?
+  %strong There are no escalation steps defined for this policy!
+
+%h3 Escalation Steps:
+%ol
+  - @escalation_policy.escalation_steps.each do |step|
+    %li
+      if the issue is not acknowledged within
+      %strong #{step.delay_minutes} minutes
+      of being posted, escalate it to
+      = link_to step.rotation.name, step.rotation
+
+
+= link_to 'Edit', edit_escalation_policy_path(@escalation_policy) if permitted_to? :edit, @escalation_policy
+|
+= link_to 'Back', escalation_policies_path

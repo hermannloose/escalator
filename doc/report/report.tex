@@ -1,0 +1,61 @@
+\documentclass[11pt,utf8,notoc,bibnum,german,final]{zihpub}
+\usepackage{url}
+
+\title{Escalator}
+\author{Hermann Loose}
+\matno{3411242}
+\betreuer{Jupp Müller}
+\bibfiles{report}
+\begin{document}
+
+% TODO(hermannloose): Was ist ein gutes Wort dafür?
+\section{Related Work}
+
+Gesucht wurde nach einer \emph{flexiblen, quell-offenen}
+Benachrichtigungslösung, welche zudem \emph{rotierende Bereitschaftsdienste}
+verwaltet und möglichst auch \emph{nur} das tut. Es folgen einige kurz
+evaluierte Optionen.
+
+\paragraph{Nagios Benachrichtigungen \cite{nagios-notifications}}
+
+Nagios ermöglicht die Definition von Eskalationsstrategien für
+Benachrichtigungen über Konfigurationsdateien. Weitere Recherche förderte für
+diese Methode kein zufriedenstellendes Web-Frontend zutage. Das einzige
+Resultat in dieser Richtung war NoMa \cite{noma}, welches nicht die gewünschte
+Flexibilität im Bezug auf die Verwaltung von Eskalationsstrategien und die
+Rotation von Bereitschaftsdiensten zu bieten schien.
+
+Zudem würde sich eine Lösung mittels Nagios gleichzeitig auf Nagios beschränken
+und dem Wunsch gegenüber stehen, die Benachrichtigungen verschiedener Dienste
+in einem einzelnen System aggregieren zu können.
+
+\paragraph{PagerDuty \cite{pagerduty}}
+
+In San Francisco ansässiges Start-up, dessen Produkt der Verkauf von Anruf- und
+SMS-Guthaben rund um ein Benachrichtigungssystem ist, welches den Vorstellungen
+für Escalator—ob der relativen Offensichtlichkeit dieser Idee—sehr nahe kommt.
+Allerdings fällt hier die fehlende Quelloffenheit ins Gewicht, welche es
+unwahrscheinlich macht, das System um die angedachte Android-Integration
+erweitern zu können.
+
+Zudem scheint das Routing von Ereignissen aus Monitoringsystemen zu PagerDuty
+ausschließlich über Email abzulaufen, was für eine verbesserte Anbindung der
+Daten zuführenden Systeme in der Zukunft über eine robuste Schnittstelle—im
+Falle von Escalator HTTP nach REST-Prinzipien—ungünstig erscheint.
+
+\paragraph{}
+
+Da sich keine der betrachteten Optionen als im Bezug auf die genannten
+Kriterien zufriedenstellend erwies, wurde beschlossen, eine prototypische
+Anwendung für eben diesen Zweck selbst zu implementieren.
+
+\section{Implementierung}
+
+\subsection{Web-Schnittstelle und Backend}
+
+Für die Implementierung der Web-Schnittstelle und des Backends wurde das
+Web-Framework Rails \cite{rails} ausgewählt, da ich bereits mit der Sprache
+Ruby vertraut war und die Ruby on Rails Guides \cite{rails-guides} sehr viel
+unterstützendes Material für Anfänger bereit stellen.
+
+\subsection{Android-App}

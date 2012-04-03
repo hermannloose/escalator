@@ -49,6 +49,71 @@ Da sich keine der betrachteten Optionen als im Bezug auf die genannten
 Kriterien zufriedenstellend erwies, wurde beschlossen, eine prototypische
 Anwendung für eben diesen Zweck selbst zu implementieren.
 
+\section{Konzept}
+
+Eingehende Ereignisse werden in Escalator zunächst jeweils einem von
+beliebig vielen, frei definierbaren Zuständigkeitsbereichen zugeordnet. Diese
+Unterteilung kann beispielsweise anhand der betroffenen Technologie erfolgen,
+wie etwa \emph{Webserver}, \emph{Datenbank}, \emph{Netzwerk}, oder auch
+geographisch motiviert sein, wie etwa \emph{Data Center A}, \emph{Data Center
+B}, etc.
+
+Innerhalb eines solchen Zuständigkeitsbereichs soll eine einfache Hierarchie
+von zu benachrichtigenden Benutzern abgebildet werden, welche im Bezug auf
+diesen Bereich \emph{Bereitschaftsdienst} haben. Die erste Ebene des
+Bereitschaftsdienstes ist intuitiv über eingehende Ereignisse immer ohne
+zeitliche Verzögerung zu benachrichtigen. Erfolgt von Seiten des betroffenen
+Benutzers keine Reaktion auf ein Ereignis, wird nach einer für den jeweiligen
+Zuständigkeitsbereich definierten Zeitspanne die nächste Ebene des
+Bereitschaftsdienstes benachrichtigt.
+
+Auf diesem Weg soll von Escalator als Kernfunktionalität sichergestellt werden,
+dass auftretende Ereignisse nie über längere Zeit unbeachtet bleiben, aus
+vielfältigen Gründen wie „Diensthandy im Funkloch bzw. aufgrund niedrigen
+Akkuladezustands ausgeschaltet“, „Bereitschaftsdienst überhört Diensthandy“,
+etc. Darüber hinaus ergeben sich wünschenswerte Features, die teilweise im
+Prototyp bereits erprobt wurden.
+
+Erhält ein Bereitschaftsdienst eine Benachrichtigung, die er zwar registriert,
+aufgrund der Umstände allerdings aktuell nicht bearbeiten kann, bietet
+Escalator im Prototyp—für Android als Plattform des mobilen Endgeräts—bereits
+die Möglichkeit, dieses Ereignis sofort manuell zur nächsten Hierarchieebene zu
+eskalieren, um die geringstmögliche Verzögerung bis zur tatsächlichen
+Behandlung eines Ereignisses zu erreichen.
+
+Ebenfalls prototypisch angelegt ist die automatische, regelmäßige Rotation der
+Benutzer, welche sich als Gruppe den Posten eines Bereitschaftsdienstes teilen.
+Die vorgesehene Nutzung des Features ist hier z.B. ein wöchentlicher Wechsel
+des zuständigen Benutzers. Der konkrete Zeitplan ist für jede einzelne
+Hierarchieebene separat konfigurierbar.
+
+Da wahrscheinlich jeder Benutzer eigene Präferenzen für die Art und Weise der
+Benachrichtigung haben wird, besitzt der Prototyp bereits die Möglichkeit, für
+jede Mitgliedschaft in einer solchen Gruppe einzeln festzulegen, in welchen
+Zeitabständen er über welche Wege benachrichtigt werden soll. Erfolgt so z.B.
+auf eine unmittelbar nach Zuteilung eines Ereignisses versandte SMS nicht
+innerhalb von drei Minuten eine Reaktion, versendet Escalator eine Email, bzw.
+es wird ein automatischer Anruf getätigt etc.
+
+Auf diesem Weg kann der zuständige Benutzer auch bei Ausfall oder
+Nichtbeachtung eines Benachrichtungsweges zuverlässig—sofern er diese Schritte
+sinnvoll gewählt hat—erreicht werden, ohne dass im Normalfall zuviele
+gleichzeitige Benachrichtigungen über zuviele verschiedene Kanäle für eine
+Abstumpfung gegenüber diesen Signalen sorgen. Ebenso ist eine intuitive
+Abgrenzung von Zuständigkeitsbereichen anhand des Benachrichtigungsweges für
+ein Ereignis möglich, falls der Benutzer mehrere Bereitschaftsdienste
+gleichzeitig erfüllen sollte und dies wünscht.
+
+% FIXME(hermannloose): Eventuell weiter unten als "Ausblick"?
+
+Geplant ist weiterhin die Möglichkeit der flexiblen Definition von
+Urlaubszeiträumen, Krankschreibungen etc. für jeden Benutzer, sodass von
+Escalator in dieser Zeit andere Benutzer ersatzweise zum Bereitschaftsdienst
+eingeteilt werden können. Idealerweise sollte diese Möglichkeit zu einem hohen
+Grad in der Hand der betroffenen Benutzer liegen, um eine zusätzliche
+Arbeitsbelastung von Benutzern mit administrativer Rolle gering zu halten. Dies
+würde auch spontanen Diensttausch unter Benutzern unbürokratisch gestalten.
+
 \section{Implementierung}
 
 \subsection{Web-Schnittstelle und Backend}
@@ -59,5 +124,7 @@ Ruby vertraut war und die Ruby on Rails Guides \cite{rails-guides} sehr viel
 unterstützendes Material für Anfänger bereit stellen.
 
 \subsection{Android-App}
+
+\section{Ausblick}
 
 \end{document}

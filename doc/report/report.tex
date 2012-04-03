@@ -119,9 +119,45 @@ würde auch spontanen Diensttausch unter Benutzern unbürokratisch gestalten.
 \subsection{Web-Schnittstelle und Backend}
 
 Für die Implementierung der Web-Schnittstelle und des Backends wurde das
-Web-Framework Rails \cite{rails} ausgewählt, da ich bereits mit der Sprache
-Ruby vertraut war und die Ruby on Rails Guides \cite{rails-guides} sehr viel
-unterstützendes Material für Anfänger bereit stellen.
+Webframework Rails \cite{rails} ausgewählt, da ich bereits mit der Sprache
+Ruby vertraut war, um Rails als praxiserprobtes Framework herum ein sehr
+fortgeschrittenes Ökosystem von Erweiterungen existiert und die Ruby on Rails
+Guides \cite{rails-guides} sehr viel unterstützendes Material für Anfänger
+bereit stellen.
+
+Aufgrund seiner Ausrichtung auf den REST-Architekturstil \cite{fielding-rest}
+eignet sich Rails dazu, sowohl das Web-Frontend für die Verwaltung von
+Eskalationsstrategien, Rotationen, Benutzern etc. als auch die API für die
+Anbindung von Drittsystemen, welche Ereignisse liefern, in einer einzigen
+Anwendung zu vereinen. Codegenerierung mittels \emph{Scaffolding} ermöglichte
+hier einen sehr schnellen Start bei der Anlage grundlegender Strukturen der
+Datenhaltung und von Formularen zur Manipulation von diesen.
+
+% TODO(hermannloose): Left off here.
+
+Während der Entwicklung des Prototyps habe ich mich neben der eigentlichen
+Programmierung mit einigen \emph{Best Practices} der Rails-Entwicklung befasst.
+So erfolgte nach der anfänglichen Verwendung des in Ruby selbst enthaltenen
+Testframeworks \emph{Test::Unit} \cite{testunit}—bei der Neuanlage von
+Rails-Anwendungen ohne weitere Parameter standardmäßig ausgewählt—nach kurzer
+Zeit der Wechsel zum mittlerweile Quasi-Standard der Rails-Welt in dieser
+Hinsicht, \emph{RSpec} \cite{rspec}.
+
+Für die asynchrone Abarbeitung von im Hintergrund laufenden
+Tasks—beispielsweise die rechtzeitige Eskalation von Ereignisse nach Ablauf
+einer Zeitspanne—wurde die für diese Zwecke populäre Erweiterung
+\emph{delayed\_job} \cite{delayedjob} eingesetzt. Diese hat den Vorteil, dass
+die Jobverwaltung komplett über die bereits von Rails verwendete Datenbank
+abgewickelt werden kann und die Einstiegshürde sehr gering ist.
+
+Da es sich bei Escalator weniger um einen Wegwerf-Prototypen als vielmehr um
+Entwicklung nach dem Prinzip von \emph{Tracer Bullets} \cite{tracerbullets}
+handeln soll, wurden Authentifizierung und Authorisierung innerhalb der
+Anwendung ebenfalls beleuchtet, um auch unter diesen Gesichtspunkten zu planen.
+Die Authentifizierung erfolgt mittels \emph{Devise} \cite{devise}, die
+Authorisierung auf Ressourcenebene rollenbasiert via
+\emph{declarative\_authorization} \cite{declarative-authorization}, beides
+ebenfalls sehr populäre Lösungen in Form von Rails-Erweiterungen.
 
 \subsection{Android-App}
 

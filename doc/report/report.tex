@@ -50,6 +50,7 @@ Kriterien zufriedenstellend erwies, wurde beschlossen, eine prototypische
 Anwendung für eben diesen Zweck selbst zu implementieren.
 
 \section{Konzept}
+\label{concept}
 
 Eingehende Ereignisse werden in Escalator zunächst jeweils einem von
 beliebig vielen, frei definierbaren Zuständigkeitsbereichen zugeordnet. Diese
@@ -133,7 +134,38 @@ Anwendung zu vereinen. Codegenerierung mittels \emph{Scaffolding} ermöglichte
 hier einen sehr schnellen Start bei der Anlage grundlegender Strukturen der
 Datenhaltung und von Formularen zur Manipulation von diesen.
 
+\paragraph{Ermittlung der Zuständigkeit}
+
+Die in Abschnitt \ref{concept} eingeführten Zuständigkeitsbereiche werden
+innerhalb der Anwendung als \emph{Escalation Policies} abgebildet. Die in den
+Bereich fallenden Ereignisse sind in der Form von \emph{Issues} mit diesem
+assoziiert. Eine Escalation Policy enthält weiterhin beliebig viele
+\emph{Escalation Steps}, die festhalten, nach welcher zeitlichen Verzögerung
+welcher Benutzer benachrichtig werden sollen.
+
+Zu diesem Zweck verweisen die Escalation Steps auf sogenannte \emph{Rotations},
+in denen eine Gruppe von Benutzern über \emph{Rotation Memberships} Mitglied
+ist. Jede dieser Memberships trägt zugleich einen Rang, über den festgelegt
+ist, welcher Benutzer aktuell Bereitschaftsdienst hat. Der Wechsel des
+diensthabenden Benutzers erfolgt im Prototyp mittels eines zu festgelegten
+Zeitpunkten laufenden \emph{Rotation Job}s, welcher die Ränge der
+Mitgliedschaften einer Rotation umlaufend aktualisiert.
+
+\paragraph{Benachrichtigung}
+
+Ist der zuständige Benutzer für ein neu eingegangenes Ereignisse über diesen
+Weg festgestellt, wird über die in einer Rotation Membership enthaltenen
+\emph{Alerting Steps} bestimmt, wie der Benutzer zu benachrichtigen ist. Der
+dort definierte \emph{Service} bereitet die Informationen über das Ereignis für
+den jeweiligen Endpunkt auf und garantiert den Versand der Nachricht.
+
+Aktuell implementiert sind Services für Emailversand und
+Push-Benachrichtigungen an Android-Geräte. Für neue Benachrichtigungsendpunkte
+kann dieser Teil einfach und schnell erweitert werden
+
 % TODO(hermannloose): Left off here.
+
+\paragraph{Eingesetzte Techniken}
 
 Während der Entwicklung des Prototyps habe ich mich neben der eigentlichen
 Programmierung mit einigen \emph{Best Practices} der Rails-Entwicklung befasst.
@@ -143,6 +175,13 @@ Rails-Anwendungen ohne weitere Parameter standardmäßig ausgewählt—nach kurz
 Zeit der Wechsel zum mittlerweile Quasi-Standard der Rails-Welt in dieser
 Hinsicht, \emph{RSpec} \cite{rspec}.
 
+% TODO(hermannloose): Cucumber erwähnen.
+
+Generell lag der Fokus darauf, zum Zeitpunkt der Abgabe eine prototypische
+Anwendung präsentieren zu können, die neben der geplanten Funktionalität auch
+eine möglichst hohe Testabdeckung vorzuweisen hat, um eine Weiterentwicklung
+attraktiv zu machen.
+
 Für die asynchrone Abarbeitung von im Hintergrund laufenden
 Tasks—beispielsweise die rechtzeitige Eskalation von Ereignisse nach Ablauf
 einer Zeitspanne—wurde die für diese Zwecke populäre Erweiterung
@@ -150,6 +189,7 @@ einer Zeitspanne—wurde die für diese Zwecke populäre Erweiterung
 die Jobverwaltung komplett über die bereits von Rails verwendete Datenbank
 abgewickelt werden kann und die Einstiegshürde sehr gering ist.
 
+% FIXME(hermannloose) Bibtex-Eintrag fehlt. (Pragmatic Programmer)
 Da es sich bei Escalator weniger um einen Wegwerf-Prototypen als vielmehr um
 Entwicklung nach dem Prinzip von \emph{Tracer Bullets} \cite{tracerbullets}
 handeln soll, wurden Authentifizierung und Authorisierung innerhalb der
@@ -161,6 +201,19 @@ ebenfalls sehr populäre Lösungen in Form von Rails-Erweiterungen.
 
 \subsection{Android-App}
 
+Für mobile Geräte ab Android 2.2—Entwicklung und Test erfolgten auf einem
+privaten \emph{HTC Desire}—wurde begleitend eine einfache Anwendung zum Empfang
+von Push-Benachrichtigungen entwickelt.
+
+% TODO(hermannloose): Left off here.
+
 \section{Ausblick}
+
+% TODO(hermannloose): Angedachte Features auflisten.
+
+Der Code für Escalator ist öffentlich auf \emph{GitHub} \cite{escalator-github}
+verfügbar. Die Wahl einer passenden Open-Source-Lizenz steht noch aus, wird
+aber vermutlich auf eine Form der MIT-Lizenz fallen. Eine Weiterentwicklung ist
+für jeden Interessenten möglich, ein GitHub-Account wird nicht benötigt.
 
 \end{document}

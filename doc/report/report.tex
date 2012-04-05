@@ -155,9 +155,15 @@ Mitgliedschaften einer Rotation umlaufend aktualisiert.
 
 Ist der zuständige Benutzer für ein neu eingegangenes Ereignisse über diesen
 Weg festgestellt, wird über die in einer Rotation Membership enthaltenen
-\emph{Alerting Steps} bestimmt, wie der Benutzer zu benachrichtigen ist. Der
-dort definierte \emph{Service} bereitet die Informationen über das Ereignis für
-den jeweiligen Endpunkt auf und garantiert den Versand der Nachricht.
+\emph{Alerting Steps} bestimmt, wie der Benutzer zu benachrichtigen ist. Dazu
+besitzt jeder Alerting Step einen Parameter, der die zeitliche Verzögerung
+angibt, nach der dieser Alerting Step aktiv wird.
+
+Das dort ebenfalls definierte \emph{Contact Detail} enthält in
+Schlüssel/Wert-Paaren verschiedene Parameter, welche der mit dem Typ des
+Contact Details assoziierte \emph{Service} benötigt, um die Informationen über
+das Ereignis für den jeweiligen Endpunkt aufzubereiten und den korrekten
+Versand der Nachricht zu garantieren.
 
 Aktuell implementiert sind Services für Emailversand und
 Push-Benachrichtigungen an Android-Geräte. Für neue Benachrichtigungsendpunkte
@@ -199,11 +205,63 @@ Authorisierung auf Ressourcenebene rollenbasiert via
 \emph{declarative\_authorization} \cite{declarative-authorization}, beides
 ebenfalls sehr populäre Lösungen in Form von Rails-Erweiterungen.
 
+% TODO(hermannloose): Deployment erwähnen.
+
 \subsection{Android-App}
 
 Für mobile Geräte ab Android 2.2—Entwicklung und Test erfolgten auf einem
 privaten \emph{HTC Desire}—wurde begleitend eine einfache Anwendung zum Empfang
-von Push-Benachrichtigungen entwickelt.
+von Push-Benachrichtigungen entwickelt, unter Verwendung des Android
+\emph{Cloud to Device Messaging} (C2DM) Frameworks \cite{c2dm}.
+
+\paragraph{Anmeldung}
+
+Die Anwendung muss dazu den unter \cite{c2dm-lifecycle} beschriebenen Ablauf
+zur Anmeldung für diesen Dienst implementieren. Nach der vom Gerät initiierten
+Anmeldung an Googles C2DM Server erhält die Anwendung eine sogenannte
+\emph{Registration ID}, welche für den Nachrichtenversand von der bei der
+Anmeldung angegeben Quelle zu diesem Gerät gültig ist. Dieser Anmeldevorgang
+kann im Prototyp zu Testzwecken explizit ausgelöst werden, in der endgültigen
+Anwendung sollte der Prozess für den Benutzer transparent im Hintergrund
+ablaufen. Weiterhin muss die Anwendung auf die Vergabe einer neuen Registration
+ID durch Google selbstständig reagieren, was laut \cite{c2dm-lifecycle} von
+Zeit zu Zeit (ohne konkrete Angabe wie oft) passieren kann.
+
+Besitzt die Anwendung eine solche gültige Registration ID, muss diese an das
+Escalator-Backend weitergereicht werden, damit von dort der Nachrichtenversand
+erfolgen kann. Zum einen ist hierfür die Authentifizierung am Backend
+notwendig, welche über ein in der Android-App gespeichertes
+Authentifizierungstoken durchgeführt wird. Im zweiten Schritt muss die
+Registration ID einem existierenden Contact Detail vom Typ Android zugeordnet,
+bzw. ein neues solches Contact Detail erstellt werden.
+
+Da aus Zeitgründen während der Entwicklung des Prototyps auf Android auf eine
+Oberfläche zur Auswahl eines existierenden Contact Details verzichtet wurde—die
+dafür notwendige API ist jedoch bereits vorhanden—legt die Android-App bei
+diesem Vorgang zu Demonstrationszwecken immer ein neues Contact Detail mit der
+aktuellen Registration ID an. In der Weboberfläche kann dieses Contact Detail
+dann einem Alerting Step zugeordnet werden, um bei Bereitschaftsdienst in der
+jeweiligen Rotation über das Gerät benachrichtigt zu werden.
+
+\paragraph{Benachrichtigung}
+
+Soll nun ein Android-Gerät über ein Ereignis benachrichtigt werden, sendet das
+Escalator-Backend den unter \cite{c2dm-server} beschriebenen HTTP Request an
+den C2DM Server.
+
+Das Gerät empfängt daraufhin im Normalfall vom C2DM Server einen
+\texttt{RECEIVE}-Intent mit den Parametern des ursprünglichen Ereignisses als
+Payload. Der Benutzer wird mittels eines einfachen Textes in der Statusleiste
+von Android auf das neue Ereignis hingewiesen. Ein Klick auf diese
+Benachrichtigung öffnet daraufhin eine einfache Ansicht mit den Details des
+Ereignisses.
+
+Innerhalb dieser Detailansicht hat der Benutzer im Prototyp bereits die
+Möglichkeit, durch Drücken des „Acknowledge“-Buttons das Ereignis zu
+akzeptieren, was eine weitere Eskalation verhindert. Verlässt der Benutzer die
+Detailansicht, existiert aktuell kein Weg, das Ereignis und damit den
+„Acknowledge“-Button erneut aufzurufen. Eine entsprechende Erweiterung der
+Anwendung sollte aber unkompliziert ausfallen.
 
 % TODO(hermannloose): Left off here.
 
@@ -211,9 +269,11 @@ von Push-Benachrichtigungen entwickelt.
 
 % TODO(hermannloose): Angedachte Features auflisten.
 
+\paragraph{Weiterentwicklung}
+
 Der Code für Escalator ist öffentlich auf \emph{GitHub} \cite{escalator-github}
 verfügbar. Die Wahl einer passenden Open-Source-Lizenz steht noch aus, wird
 aber vermutlich auf eine Form der MIT-Lizenz fallen. Eine Weiterentwicklung ist
-für jeden Interessenten möglich, ein GitHub-Account wird nicht benötigt.
+für jeden Interessenten möglich, ein GitHub-Account wird hierfür nicht benötigt.
 
 \end{document}

@@ -143,13 +143,13 @@ würde auch spontanen Diensttausch unter Benutzern unbürokratisch gestalten.
 \subsection{Web-Schnittstelle und Backend}
 
 Für die Implementierung der Web-Schnittstelle und des Backends wurde das
-Webframework Rails \cite{rails} ausgewählt, da ich bereits mit der Sprache
+Webframework \emph{Rails}~\cite{rails} ausgewählt, da ich bereits mit der Sprache
 Ruby vertraut war, um Rails als praxiserprobtes Framework herum ein sehr
-fortgeschrittenes Ökosystem von Erweiterungen existiert und die Ruby on Rails
-Guides \cite{rails-guides} sehr viel unterstützendes Material für Anfänger
+fortgeschrittenes Ökosystem von Erweiterungen existiert und die \emph{Ruby on Rails
+Guides}~\cite{rails-guides} sehr viel unterstützendes Material für Anfänger
 bereit stellen.
 
-Aufgrund seiner Ausrichtung auf den REST-Architekturstil \cite{fielding-rest}
+Aufgrund seiner Ausrichtung auf den REST-Architekturstil~\cite{fielding-rest}
 eignet sich Rails dazu, sowohl das Web-Frontend für die Verwaltung von
 Eskalationsstrategien, Rotationen, Benutzern etc. als auch die API für die
 Anbindung von Drittsystemen, welche Ereignisse liefern, in einer einzigen
@@ -199,10 +199,10 @@ kann dieser Teil einfach und schnell erweitert werden
 Während der Entwicklung des Prototyps habe ich mich neben der eigentlichen
 Programmierung mit einigen \emph{Best Practices} der Rails-Entwicklung befasst.
 So erfolgte nach der anfänglichen Verwendung des in Ruby selbst enthaltenen
-Testframeworks \emph{Test::Unit} \cite{testunit}—bei der Neuanlage von
+Testframeworks \emph{Test::Unit}~\cite{testunit}—bei der Neuanlage von
 Rails-Anwendungen ohne weitere Parameter standardmäßig ausgewählt—nach kurzer
 Zeit der Wechsel zum mittlerweile Quasi-Standard der Rails-Welt in dieser
-Hinsicht, \emph{RSpec} \cite{rspec}.
+Hinsicht, \emph{RSpec}~\cite{rspec}.
 
 % TODO(hermannloose): Cucumber erwähnen.
 
@@ -214,18 +214,18 @@ attraktiv zu machen.
 Für die asynchrone Abarbeitung von im Hintergrund laufenden
 Tasks—beispielsweise die rechtzeitige Eskalation von Ereignisse nach Ablauf
 einer Zeitspanne—wurde die für diese Zwecke populäre Erweiterung
-\emph{delayed\_job} \cite{delayedjob} eingesetzt. Diese hat den Vorteil, dass
+\emph{delayed\_job}~\cite{delayedjob} eingesetzt. Diese hat den Vorteil, dass
 die Jobverwaltung komplett über die bereits von Rails verwendete Datenbank
 abgewickelt werden kann und die Einstiegshürde sehr gering ist.
 
 % FIXME(hermannloose) Bibtex-Eintrag fehlt. (Pragmatic Programmer)
 Da es sich bei Escalator weniger um einen Wegwerf-Prototypen als vielmehr um
-Entwicklung nach dem Prinzip von \emph{Tracer Bullets} \cite{tracerbullets}
+Entwicklung nach dem Prinzip von \emph{Tracer Bullets}~\cite{tracerbullets}
 handeln soll, wurden Authentifizierung und Authorisierung innerhalb der
 Anwendung ebenfalls beleuchtet, um auch unter diesen Gesichtspunkten zu planen.
-Die Authentifizierung erfolgt mittels \emph{Devise} \cite{devise}, die
+Die Authentifizierung erfolgt mittels \emph{Devise}~\cite{devise}, die
 Authorisierung auf Ressourcenebene rollenbasiert via
-\emph{declarative\_authorization} \cite{declarative-authorization}, beides
+\emph{declarative\_authorization}~\cite{declarative-authorization}, beides
 ebenfalls sehr populäre Lösungen in Form von Rails-Erweiterungen.
 
 % TODO(hermannloose): Deployment erwähnen.
@@ -235,7 +235,7 @@ ebenfalls sehr populäre Lösungen in Form von Rails-Erweiterungen.
 Für mobile Geräte ab Android 2.2—Entwicklung und Test erfolgten auf einem
 privaten \emph{HTC Desire}—wurde begleitend eine einfache Anwendung zum Empfang
 von Push-Benachrichtigungen entwickelt, unter Verwendung des Android
-\emph{Cloud to Device Messaging} (C2DM) Frameworks \cite{c2dm}.
+\emph{Cloud to Device Messaging} (C2DM) Frameworks~\cite{c2dm}.
 
 \paragraph{Anmeldung}
 
@@ -294,7 +294,7 @@ Anwendung sollte aber unkompliziert ausfallen.
 
 \paragraph{Weiterentwicklung}
 
-Der Code für Escalator ist öffentlich auf \emph{GitHub} \cite{escalator-github}
+Der Code für Escalator ist öffentlich auf \emph{GitHub}~\cite{escalator-github}
 verfügbar. Die Wahl einer passenden Open-Source-Lizenz steht noch aus, wird
 aber vermutlich auf eine Form der MIT-Lizenz fallen. Eine Weiterentwicklung ist
 für jeden Interessenten möglich, ein GitHub-Account wird hierfür nicht benötigt.

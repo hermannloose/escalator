@@ -30,19 +30,21 @@ fiel die Wahl der Aufgabenstellung auf letzteren, da diese Richtung im Umfang
 ist.
 
 % TODO(hermannloose): Was ist ein gutes Wort dafür?
-\section{Related Work}
+\section{Existierende Lösungen}
 
 Gesucht wurde nach einer \emph{flexiblen, quell-offenen}
 Benachrichtigungslösung, welche zudem \emph{rotierende Bereitschaftsdienste}
-verwaltet und möglichst auch \emph{nur} das tut. Es folgen einige kurz
-evaluierte Optionen.
+verwaltet und möglichst auch \emph{nur} das tut. Weiter lag der Fokus auf
+\emph{einfacher Erweiterbarkeit} und der Verfügbarkeit einer
+\emph{REST-Schnittstelle} zum Anlegen bzw. Empfangen von Ereignissen. Es folgen
+einige kurz evaluierte Optionen.
 
-\paragraph{Nagios Benachrichtigungen \cite{nagios-notifications}}
+\paragraph{Nagios Benachrichtigungen~\cite{nagios-notifications}}
 
-Nagios ermöglicht die Definition von Eskalationsstrategien für
+\emph{Nagios} ermöglicht die Definition von Eskalationsstrategien für
 Benachrichtigungen über Konfigurationsdateien. Weitere Recherche förderte für
 diese Methode kein zufriedenstellendes Web-Frontend zutage. Das einzige
-Resultat in dieser Richtung war NoMa \cite{noma}, welches nicht die gewünschte
+Resultat in dieser Richtung war \emph{NoMa}~\cite{noma}, welches nicht die gewünschte
 Flexibilität im Bezug auf die Verwaltung von Eskalationsstrategien und die
 Rotation von Bereitschaftsdiensten zu bieten schien.
 
@@ -50,7 +52,7 @@ Zudem würde sich eine Lösung mittels Nagios gleichzeitig auf Nagios beschränk
 und dem Wunsch gegenüber stehen, die Benachrichtigungen verschiedener Dienste
 in einem einzelnen System aggregieren zu können.
 
-\paragraph{PagerDuty \cite{pagerduty}}
+\paragraph{PagerDuty~\cite{pagerduty}}
 
 In San Francisco ansässiges Start-up, dessen Produkt der Verkauf von Anruf- und
 SMS-Guthaben rund um ein Benachrichtigungssystem ist, welches den Vorstellungen
@@ -64,7 +66,7 @@ ausschließlich über Email abzulaufen, was für eine verbesserte Anbindung der
 Daten zuführenden Systeme in der Zukunft über eine robuste Schnittstelle—im
 Falle von Escalator HTTP nach REST-Prinzipien—ungünstig erscheint.
 
-\paragraph{}
+\paragraph{Fazit}
 
 Da sich keine der betrachteten Optionen als im Bezug auf die genannten
 Kriterien zufriedenstellend erwies, wurde beschlossen, eine prototypische

@@ -218,13 +218,13 @@ einer Zeitspanne—wurde die für diese Zwecke populäre Erweiterung
 die Jobverwaltung komplett über die bereits von Rails verwendete Datenbank
 abgewickelt werden kann und die Einstiegshürde sehr gering ist.
 
-% FIXME(hermannloose) Bibtex-Eintrag fehlt. (Pragmatic Programmer)
 Da es sich bei Escalator weniger um einen Wegwerf-Prototypen als vielmehr um
-Entwicklung nach dem Prinzip von \emph{Tracer Bullets}~\cite{tracerbullets}
-handeln soll, wurden Authentifizierung und Authorisierung innerhalb der
-Anwendung ebenfalls beleuchtet, um auch unter diesen Gesichtspunkten zu planen.
-Die Authentifizierung erfolgt mittels \emph{Devise}~\cite{devise}, die
-Authorisierung auf Ressourcenebene rollenbasiert via
+Entwicklung nach dem Prinzip von \emph{Tracer
+Bullets}~\cite[S. 47 ff.]{pragprog-tracerbullets} handeln soll, wurden Authentifizierung
+und Authorisierung innerhalb der Anwendung ebenfalls beleuchtet, um auch unter
+diesen Gesichtspunkten zu planen.  Die Authentifizierung erfolgt mittels
+\emph{Devise}~\cite{devise}, die Authorisierung auf Ressourcenebene
+rollenbasiert via
 \emph{declarative\_authorization}~\cite{declarative-authorization}, beides
 ebenfalls sehr populäre Lösungen in Form von Rails-Erweiterungen.
 

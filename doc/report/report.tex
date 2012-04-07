@@ -46,10 +46,7 @@ Belastung durch Bereitschaftsdienste über mehrere Mitarbeiter zu verteilen,
 sollte diese Rotation ebenfalls durch das System abbildbar sein, um den
 kompletten Vorgang der „Bereitschaft“ weitgehend zu automatisieren.
 
-% TODO(hermannloose): Was ist ein gutes Wort dafür?
 \section{Existierende Lösungen}
-
-% TODO(hermannloose): Eigentlich noch motivieren warum REST.
 
 Gesucht wurde nach einer \emph{flexiblen, quell-offenen}
 Benachrichtigungslösung, welche zudem \emph{rotierende Bereitschaftsdienste}
@@ -209,8 +206,6 @@ Aktuell implementiert sind Services für Emailversand und
 Push-Benachrichtigungen an Android-Geräte. Für neue Benachrichtigungsendpunkte
 kann dieser Teil einfach und schnell erweitert werden
 
-% TODO(hermannloose): Left off here.
-
 \paragraph{Eingesetzte Techniken}
 
 Während der Entwicklung des Prototyps habe ich mich neben der eigentlichen
@@ -321,14 +316,11 @@ ClientLogin-Tokens verwendet werden. Gespeichert wird im Backend nur das Token,
 das Passwort für den Account muss für einen etwaigen Verlust des Tokens separat
 aufbewahrt werden.
 
-% FIXME(hermannloose): Diesen Absatz fertig schreiben.
 Darüber hinaus unterliegt der Versand von Push-Benachrichtigungen über C2DM
-einer Entwickler-Quota von 200.000 Nachrichten am Tag sowie dem normalen
-Limit von 1024 Byte Nachrichteninhalt. Aus diesem Grund ist vor der Verwendung
-von C2DM die (unkomplizierte) Beantragung eines Whitelistings für diesen Dienst
+einer Entwickler-Quota von 200.000 Nachrichten am Tag sowie dem normalen Limit
+von 1024 Byte Nachrichteninhalt. Aus diesem Grund ist vor der Verwendung von
+C2DM die (unkomplizierte) Beantragung der Freischaltung für diesen Dienst
 nötig.~\cite{c2dm-quotas}
-
-% TODO(hermannloose): Left off here.
 
 \section{Ausblick}
 

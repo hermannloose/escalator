@@ -257,18 +257,19 @@ privaten \emph{HTC Desire}—wurde begleitend eine einfache Anwendung zum Empfan
 von Push-Benachrichtigungen entwickelt, unter Verwendung des Android
 \emph{Cloud to Device Messaging} (C2DM) Frameworks~\cite{c2dm}.
 
-\paragraph{Anmeldung}
+\paragraph{Anmeldung für C2DM}
 
-Die Anwendung muss dazu den unter \cite{c2dm-lifecycle} beschriebenen Ablauf
-zur Anmeldung für diesen Dienst implementieren. Nach der vom Gerät initiierten
-Anmeldung an Googles C2DM Server erhält die Anwendung eine sogenannte
-\emph{Registration ID}, welche für den Nachrichtenversand von der bei der
-Anmeldung angegeben Quelle zu diesem Gerät gültig ist. Dieser Anmeldevorgang
-kann im Prototyp zu Testzwecken explizit ausgelöst werden, in der endgültigen
-Anwendung sollte der Prozess für den Benutzer transparent im Hintergrund
-ablaufen. Weiterhin muss die Anwendung auf die Vergabe einer neuen Registration
-ID durch Google selbstständig reagieren, was laut \cite{c2dm-lifecycle} von
-Zeit zu Zeit (ohne konkrete Angabe wie oft) passieren kann.
+Die Anwendung muss dazu den unter \cite[\emph{Lifecycle Flow}]{c2dm}
+beschriebenen Ablauf zur Anmeldung für diesen Dienst implementieren. Nach der
+vom Gerät initiierten Anmeldung an Googles C2DM Server erhält die Anwendung
+eine sogenannte \emph{Registration ID}, welche für den Nachrichtenversand von
+der bei der Anmeldung angegeben Quelle zu diesem Gerät gültig ist. Dieser
+Anmeldevorgang kann im Prototyp zu Testzwecken explizit ausgelöst werden, in
+der endgültigen Anwendung sollte der Prozess für den Benutzer transparent im
+Hintergrund ablaufen. Weiterhin muss die Anwendung auf die Vergabe einer neuen
+Registration ID durch Google selbstständig reagieren, was laut
+\cite[\emph{Handling Registration Results}]{c2dm} von Zeit zu Zeit (ohne
+konkrete Angabe wie oft) passieren kann.
 
 Besitzt die Anwendung eine solche gültige Registration ID, muss diese an das
 Escalator-Backend weitergereicht werden, damit von dort der Nachrichtenversand
@@ -290,8 +291,12 @@ jeweiligen Rotation über das Gerät benachrichtigt zu werden.
 \label{android-notification}
 
 Soll nun ein Android-Gerät über ein Ereignis benachrichtigt werden, sendet das
-Escalator-Backend den unter \cite{c2dm-server} beschriebenen HTTP Request an
-den C2DM Server.
+Escalator-Backend den unter \cite[\emph{How the Application Server Sends
+Messages}]{c2dm} beschriebenen HTTP Request, welcher die Registration ID für
+das entsprechende Gerät enthält, an den C2DM Server. Hierbei identifiziert sich
+das Backend mittels eines sogenannten
+\emph{ClientLogin}-Tokens~\cite{clientlogin} als die für die Verwendung dieser
+Registration ID zugelassene Quelle.
 
 Das Gerät empfängt daraufhin im Normalfall vom C2DM Server einen
 \texttt{RECEIVE}-Intent mit den Parametern des ursprünglichen Ereignisses als
@@ -306,6 +311,22 @@ akzeptieren, was eine weitere Eskalation verhindert. Verlässt der Benutzer die
 Detailansicht, existiert aktuell kein Weg, das Ereignis und damit den
 „Acknowledge“-Button erneut aufzurufen. Eine entsprechende Erweiterung der
 Anwendung sollte aber unkompliziert ausfallen.
+
+\paragraph{Einschränkungen}
+
+Für den Versand von Push-Benachrichtigungen über C2DM ist ein sogenannter
+\emph{Rollenaccount} notwendig—technisch identisch mit einem normalen
+Google-Account—dessen Logindaten vom Backend für den Erwerb des
+ClientLogin-Tokens verwendet werden. Gespeichert wird im Backend nur das Token,
+das Passwort für den Account muss für einen etwaigen Verlust des Tokens separat
+aufbewahrt werden.
+
+% FIXME(hermannloose): Diesen Absatz fertig schreiben.
+Darüber hinaus unterliegt der Versand von Push-Benachrichtigungen über C2DM
+einer Entwickler-Quota von 200.000 Nachrichten am Tag sowie dem normalen
+Limit von 1024 Byte Nachrichteninhalt. Aus diesem Grund ist vor der Verwendung
+von C2DM die (unkomplizierte) Beantragung eines Whitelistings für diesen Dienst
+nötig.~\cite{c2dm-quotas}
 
 % TODO(hermannloose): Left off here.
 

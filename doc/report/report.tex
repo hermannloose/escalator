@@ -128,16 +128,6 @@ Abgrenzung von Zuständigkeitsbereichen anhand des Benachrichtigungsweges für
 ein Ereignis möglich, falls der Benutzer mehrere Bereitschaftsdienste
 gleichzeitig erfüllen sollte und dies wünscht.
 
-% FIXME(hermannloose): Eventuell weiter unten als "Ausblick"?
-
-Geplant ist weiterhin die Möglichkeit der flexiblen Definition von
-Urlaubszeiträumen, Krankschreibungen etc. für jeden Benutzer, sodass von
-Escalator in dieser Zeit andere Benutzer ersatzweise zum Bereitschaftsdienst
-eingeteilt werden können. Idealerweise sollte diese Möglichkeit zu einem hohen
-Grad in der Hand der betroffenen Benutzer liegen, um eine zusätzliche
-Arbeitsbelastung von Benutzern mit administrativer Rolle gering zu halten. Dies
-würde auch spontanen Diensttausch unter Benutzern unbürokratisch gestalten.
-
 \section{Implementierung}
 
 \subsection{Web-Schnittstelle und Backend}
@@ -270,6 +260,7 @@ dann einem Alerting Step zugeordnet werden, um bei Bereitschaftsdienst in der
 jeweiligen Rotation über das Gerät benachrichtigt zu werden.
 
 \paragraph{Benachrichtigung}
+\label{android-notification}
 
 Soll nun ein Android-Gerät über ein Ereignis benachrichtigt werden, sendet das
 Escalator-Backend den unter \cite{c2dm-server} beschriebenen HTTP Request an
@@ -293,7 +284,42 @@ Anwendung sollte aber unkompliziert ausfallen.
 
 \section{Ausblick}
 
-% TODO(hermannloose): Angedachte Features auflisten.
+\paragraph{Ausstehende Features}
+
+Der Prototyp enthält zu Demonstrationszwecken zwar einen Großteil der in
+Abschnitt~\ref{concept} beschriebenen Funktionalität im Backend, die
+Weboberfläche ist allerdings in den meisten Belangen noch sehr rudimentär.
+
+Für Nutzer nicht sichtbar und nur über die Rails-Konsole manipulierbar sind
+z.B. die zeitlichen Abstände der Rotation Jobs zum Wechsel des diensthabenden
+Benutzers in einer Rotation. Der Lebenszyklus eines Ereignisses ist über die
+Zustände „registriert“ bzw. „nicht registriert“—und damit automatisch
+eskalierbar—nicht weiter spezifiziert, eine Manipulation innerhalb der
+Weboberfläche ist noch nicht möglich.
+
+Nach dem Eingang bzw. der Eskalation eines Ereignisses erhält dieses seinen
+zuständigen Benutzer zugewiesen, was in der Liste aller Ereignisse zwar
+visualisiert wird, für den betroffenen Benutzer jedoch nicht gezielt, z.B. in
+Form eines Dashboards von „eigenen“ Ereignissen—einsehbar ist.
+
+Auf der Seite der Android-App wäre aus den in \ref{android-notification}
+angeführten Gründen eine Liste der vom Benutzer aktuell zu behandelnden
+Ereignisse ebenfalls wünschenswert.
+
+Eine weitere Idee für die Gewährleistung der zügigen Benachrichtigung eines
+Bereitschaftsdienstes über die App ist die fortlaufende Überwachung der
+Konnektivität, um den Benutzer bei Verlust der Erreichbarkeit am Gerät auf
+diesen Umstand hinzuweisen. Hier wurde bisher keine Recherche betrieben, ob
+eine generische Lösung für dieses Teilproblem existiert.
+
+Geplant ist für das Backend weiterhin die Möglichkeit der flexiblen Definition
+von Urlaubszeiträumen, Krankschreibungen etc. für jeden Benutzer, sodass von
+Escalator in dieser Zeit andere Benutzer ersatzweise zum Bereitschaftsdienst
+eingeteilt werden können. Idealerweise sollte diese Möglichkeit zu einem hohen
+Grad in der Hand der betroffenen Benutzer liegen, um eine zusätzliche
+Arbeitsbelastung von Benutzern mit administrativer Rolle gering zu halten. Dies
+würde auch spontanen Diensttausch unter Benutzern unbürokratisch gestalten.
+
 
 \paragraph{Weiterentwicklung}
 

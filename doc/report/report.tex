@@ -97,12 +97,15 @@ für diesen Zweck selbst zu entwickeln.
 \section{Konzept}
 \label{concept}
 
-Eingehende Ereignisse werden in Escalator zunächst jeweils einem von
+Eingehende Ereignisse—vorerst eine einfache Kombination von Titel und
+optionaler Beschreibung— werden in Escalator zunächst jeweils einem von
 beliebig vielen, frei definierbaren Zuständigkeitsbereichen zugeordnet. Diese
-Unterteilung kann beispielsweise anhand der betroffenen Technologie erfolgen,
-wie etwa \emph{Webserver}, \emph{Datenbank}, \emph{Netzwerk}, oder auch
-geographisch motiviert sein, wie etwa \emph{Data Center A}, \emph{Data Center
-B}, etc.
+Unterteilung kann im Fall eines Monitoringsystems z.B. anhand der betroffenen
+Technologie erfolgen, wie etwa \emph{Webserver}, \emph{Datenbank},
+\emph{Netzwerk}, oder auch geographisch motiviert sein, wie etwa \emph{Data
+Center A}, \emph{Data Center B}, etc.
+
+\paragraph{Hierarchische Bereitschaftsdienste}
 
 Innerhalb eines solchen Zuständigkeitsbereichs soll eine einfache Hierarchie
 von zu benachrichtigenden Benutzern abgebildet werden, welche im Bezug auf
@@ -117,21 +120,23 @@ Auf diesem Weg soll von Escalator als Kernfunktionalität sichergestellt werden,
 dass auftretende Ereignisse nie über längere Zeit unbeachtet bleiben, aus
 vielfältigen Gründen wie „Diensthandy im Funkloch bzw. aufgrund niedrigen
 Akkuladezustands ausgeschaltet“, „Bereitschaftsdienst überhört Diensthandy“,
-etc. Darüber hinaus ergeben sich wünschenswerte Features, die teilweise im
-Prototyp bereits erprobt wurden.
+etc.
 
-Erhält ein Bereitschaftsdienst eine Benachrichtigung, die er zwar registriert,
-aufgrund der Umstände allerdings aktuell nicht bearbeiten kann, bietet
-Escalator im Prototyp—für Android als Plattform des mobilen Endgeräts—bereits
-die Möglichkeit, dieses Ereignis sofort manuell zur nächsten Hierarchieebene zu
-eskalieren, um die geringstmögliche Verzögerung bis zur tatsächlichen
-Behandlung eines Ereignisses zu erreichen.
+Darüber hinaus ergeben sich wünschenswerte Features, die teilweise im Prototyp
+bereits erprobt wurden. Erhält ein Bereitschaftsdienst eine Benachrichtigung,
+die er zwar registriert, aufgrund der Umstände allerdings aktuell nicht
+bearbeiten kann, bietet Escalator im Prototyp—für Android als Plattform des
+mobilen Endgeräts—bereits die Möglichkeit, dieses Ereignis sofort manuell zur
+nächsten Hierarchieebene zu eskalieren, um die geringstmögliche Verzögerung bis
+zur tatsächlichen Behandlung eines Ereignisses zu erreichen.
 
 Ebenfalls prototypisch angelegt ist die automatische, regelmäßige Rotation der
 Benutzer, welche sich als Gruppe den Posten eines Bereitschaftsdienstes teilen.
 Die vorgesehene Nutzung des Features ist hier z.B. ein wöchentlicher Wechsel
 des zuständigen Benutzers. Der konkrete Zeitplan ist für jede einzelne
 Hierarchieebene separat konfigurierbar.
+
+\paragraph{Flexible Benachrichtigungswege}
 
 Da wahrscheinlich jeder Benutzer eigene Präferenzen für die Art und Weise der
 Benachrichtigung haben wird, besitzt der Prototyp bereits die Möglichkeit, für

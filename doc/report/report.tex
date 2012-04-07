@@ -29,15 +29,37 @@ fiel die Wahl der Aufgabenstellung auf letzteren, da diese Richtung im Umfang
 überschaubarer schien und hier schneller ein praktischer Nutzen zu erwarten
 ist.
 
+\paragraph{Ziele}
+
+Eine Lösung, welche beliebige Ereignisse, von beliebigen Quellen über eine
+gemeinsame Schnittstelle aggregiert und Benachrichtigungen in einem
+übergreifendem Format an die jeweils zuständigen Personen versendet, ist nicht
+mehr nur auf Ausnahmen in einem Monitoringsystem beschränkt, sondern kann z.B.
+auch den Eingang neuer Tickets in einem Helpdesk-System anzeigen etc. Sie wird
+überall dort nützlich, wo auf bestimmte auftretende Zustände innerhalb einer
+vorgegebenen Zeit reagiert werden soll und für den Fall einer ausbleibenden
+Reaktion der eigentlich zuständigen Stelle eine andere benennbar ist, welche
+zusätzlich benachrichtigt werden kann.
+
+Da diese Zuständigkeiten in der Realität häufig rotieren, um die erhöhte
+Belastung durch Bereitschaftsdienste über mehrere Mitarbeiter zu verteilen,
+sollte diese Rotation ebenfalls durch das System abbildbar sein, um den
+kompletten Vorgang der „Bereitschaft“ weitgehend zu automatisieren.
+
 % TODO(hermannloose): Was ist ein gutes Wort dafür?
 \section{Existierende Lösungen}
+
+% TODO(hermannloose): Eigentlich noch motivieren warum REST.
 
 Gesucht wurde nach einer \emph{flexiblen, quell-offenen}
 Benachrichtigungslösung, welche zudem \emph{rotierende Bereitschaftsdienste}
 verwaltet und möglichst auch \emph{nur} das tut. Weiter lag der Fokus auf
-\emph{einfacher Erweiterbarkeit} und der Verfügbarkeit einer
-\emph{REST-Schnittstelle} zum Anlegen bzw. Empfangen von Ereignissen. Es folgen
-einige kurz evaluierte Optionen.
+\emph{einfacher Erweiterbarkeit}, um die Anbindung von \emph{mobilen
+Endgeräten} soweit noch nicht vorhanden zu ermöglichen, sowie der Verfügbarkeit
+einer \emph{REST-Schnittstelle} zum Anlegen bzw. Empfangen von Ereignissen
+\emph{von beliebig vielen Quellen}, da HTTP als einfaches, universelles
+Protokoll für die Integration von heterogenen Systemen in diesem Fall attraktiv
+erscheint. Es folgen einige kurz evaluierte Optionen.
 
 \paragraph{Nagios Benachrichtigungen~\cite{nagios-notifications}}
 
@@ -68,9 +90,9 @@ Falle von Escalator HTTP nach REST-Prinzipien—ungünstig erscheint.
 
 \paragraph{Fazit}
 
-Da sich keine der betrachteten Optionen als im Bezug auf die genannten
-Kriterien zufriedenstellend erwies, wurde beschlossen, eine prototypische
-Anwendung für eben diesen Zweck selbst zu implementieren.
+Da sich keine der betrachteten Optionen im Bezug auf die genannten Kriterien
+als zufriedenstellend erwies, wurde beschlossen, eine prototypische Anwendung
+für diesen Zweck selbst zu entwickeln.
 
 \section{Konzept}
 \label{concept}

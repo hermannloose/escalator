@@ -1,0 +1,380 @@
+\documentclass[11pt,utf8,notoc,bibnum,german,final]{zihpub}
+\usepackage{url}
+
+\title{Escalator}
+\author{Hermann Loose}
+\matno{3411242}
+\betreuer{Jupp Müller}
+\bibfiles{report}
+
+\begin{document}
+
+\section{Ausgangspunkt}
+
+Vor dem Beginn dieser Arbeit stand ursprünglich die Idee, ein mobiles Frontend
+für ein Monitoringsystem—im konkreten Fall \emph{Ganglia}~\cite{ganglia},
+dieser Vorschlag stammte von Sven Jansky (Praktikumspartner)—zu
+entwickeln, verbunden mit der Möglichkeit, bei bestimmten Ereignissen
+Push-Benach\-richti\-gungen auf mobilen Endgeräten zum empfangen.
+
+Hinzu kam der Wunsch, z.B. den Status der Warteschlangen des Batchsystems mit
+einzubeziehen, etc.; alles möglichst mit der Option, direkt vom mobilen
+Endgerät mittels einiger einfacher, vorgeschlagener Aktionen auf die jeweiligen
+Umstände reagieren zu können.
+
+Hier zeichneten sich Benachrichtigung und Reaktion als zwei Problemfelder ab,
+die besser separat voneinander zu lösen sind. Mit der Reaktion als stärker
+anwendungsspezifischem Teil und der Benachrichtigung als dem eher generischen,
+fiel die Wahl der Aufgabenstellung auf letzteren, da diese Richtung im Umfang
+überschaubarer schien und hier schneller ein praktischer Nutzen zu erwarten
+ist.
+
+\paragraph{Ziele}
+
+Eine Lösung, welche beliebige Ereignisse, von beliebigen Quellen über eine
+gemeinsame Schnittstelle aggregiert und Benachrichtigungen in einem
+übergreifendem Format an die jeweils zuständigen Personen versendet, ist nicht
+mehr nur auf Ausnahmen in einem Monitoringsystem beschränkt, sondern kann z.B.
+auch den Eingang neuer Tickets in einem Helpdesk-System anzeigen etc. Sie wird
+überall dort nützlich, wo auf bestimmte auftretende Zustände innerhalb einer
+vorgegebenen Zeit reagiert werden soll und für den Fall einer ausbleibenden
+Reaktion der eigentlich zuständigen Stelle eine andere benennbar ist, welche
+zusätzlich benachrichtigt werden kann.
+
+Da diese Zuständigkeiten in der Realität häufig rotieren, um die erhöhte
+Belastung durch Bereitschaftsdienste über mehrere Mitarbeiter zu verteilen,
+sollte diese Rotation ebenfalls durch das System abbildbar sein, um den
+kompletten Vorgang der „Bereitschaft“ weitgehend zu automatisieren.
+
+\section{Existierende Lösungen}
+
+Gesucht wurde nach einer \emph{flexiblen, quell-offenen}
+Benachrichtigungslösung, welche zudem \emph{rotierende Bereitschaftsdienste}
+verwaltet und möglichst auch \emph{nur} das tut. Weiter lag der Fokus auf
+\emph{einfacher Erweiterbarkeit}, um die Anbindung von \emph{mobilen
+Endgeräten} soweit noch nicht vorhanden zu ermöglichen, sowie der Verfügbarkeit
+einer \emph{REST-Schnittstelle} zum Anlegen bzw. Empfangen von Ereignissen
+\emph{von beliebig vielen Quellen}, da HTTP als einfaches, universelles
+Protokoll für die Integration von heterogenen Systemen in diesem Fall attraktiv
+erscheint. Es folgen einige kurz evaluierte Optionen.
+
+\paragraph{Nagios Benachrichtigungen~\cite{nagios-notifications}}
+
+\emph{Nagios} ermöglicht die Definition von Eskalationsstrategien für
+Benachrichtigungen über Konfigurationsdateien. Weitere Recherche förderte für
+diese Methode kein zufriedenstellendes Web-Frontend zutage. Das einzige
+Resultat in dieser Richtung war \emph{NoMa}~\cite{noma}, welches nicht die gewünschte
+Flexibilität im Bezug auf die Verwaltung von Eskalationsstrategien und die
+Rotation von Bereitschaftsdiensten zu bieten schien.
+
+Zudem würde sich eine Lösung mittels Nagios gleichzeitig auf Nagios beschränken
+und dem Wunsch gegenüber stehen, die Benachrichtigungen verschiedener Dienste
+in einem einzelnen System aggregieren zu können.
+
+\paragraph{PagerDuty~\cite{pagerduty}}
+
+In San Francisco ansässiges Start-up, dessen Produkt der Verkauf von Anruf- und
+SMS-Guthaben rund um ein Benachrichtigungssystem ist, welches den Vorstellungen
+für Escalator—ob der relativen Offensichtlichkeit dieser Idee—sehr nahe kommt.
+Allerdings fällt hier die fehlende Quelloffenheit ins Gewicht, welche es
+unwahrscheinlich macht, das System um die angedachte Android-Integration
+erweitern zu können.
+
+Zudem scheint das Routing von Ereignissen aus Monitoringsystemen zu PagerDuty
+ausschließlich über Email abzulaufen, was für eine verbesserte Anbindung der
+Daten zuführenden Systeme in der Zukunft über eine robuste Schnittstelle—im
+Falle von Escalator HTTP nach REST-Prinzipien—ungünstig erscheint.
+
+\paragraph{Fazit}
+
+Da sich keine der betrachteten Optionen im Bezug auf die genannten Kriterien
+als zufriedenstellend erwies, wurde beschlossen, eine prototypische Anwendung
+für diesen Zweck selbst zu entwickeln.
+
+\section{Konzept}
+\label{concept}
+
+Eingehende Ereignisse—vorerst eine einfache Kombination von Titel und
+optionaler Beschreibung— werden in Escalator zunächst jeweils einem von
+beliebig vielen, frei definierbaren Zuständigkeitsbereichen zugeordnet. Diese
+Unterteilung kann im Fall eines Monitoringsystems z.B. anhand der betroffenen
+Technologie erfolgen, wie etwa \emph{Webserver}, \emph{Datenbank},
+\emph{Netzwerk}, oder auch geographisch motiviert sein, wie etwa \emph{Data
+Center A}, \emph{Data Center B}, etc.
+
+\paragraph{Hierarchische Bereitschaftsdienste}
+
+Innerhalb eines solchen Zuständigkeitsbereichs soll eine einfache Hierarchie
+von zu benachrichtigenden Benutzern abgebildet werden, welche im Bezug auf
+diesen Bereich \emph{Bereitschaftsdienst} haben. Die erste Ebene des
+Bereitschaftsdienstes ist intuitiv über eingehende Ereignisse immer ohne
+zeitliche Verzögerung zu benachrichtigen. Erfolgt von Seiten des betroffenen
+Benutzers keine Reaktion auf ein Ereignis, wird nach einer für den jeweiligen
+Zuständigkeitsbereich definierten Zeitspanne die nächste Ebene des
+Bereitschaftsdienstes benachrichtigt.
+
+Auf diesem Weg soll von Escalator als Kernfunktionalität sichergestellt werden,
+dass auftretende Ereignisse nie über längere Zeit unbeachtet bleiben, aus
+vielfältigen Gründen wie „Diensthandy im Funkloch bzw. aufgrund niedrigen
+Akkuladezustands ausgeschaltet“, „Bereitschaftsdienst überhört Diensthandy“,
+etc.
+
+Darüber hinaus ergeben sich wünschenswerte Features, die teilweise im Prototyp
+bereits erprobt wurden. Erhält ein Bereitschaftsdienst eine Benachrichtigung,
+die er zwar registriert, aufgrund der Umstände allerdings aktuell nicht
+bearbeiten kann, bietet Escalator im Prototyp—für Android als Plattform des
+mobilen Endgeräts—bereits die Möglichkeit, dieses Ereignis sofort manuell zur
+nächsten Hierarchieebene zu eskalieren, um die geringstmögliche Verzögerung bis
+zur tatsächlichen Behandlung eines Ereignisses zu erreichen.
+
+Ebenfalls prototypisch angelegt ist die automatische, regelmäßige Rotation der
+Benutzer, welche sich als Gruppe den Posten eines Bereitschaftsdienstes teilen.
+Die vorgesehene Nutzung des Features ist hier z.B. ein wöchentlicher Wechsel
+des zuständigen Benutzers. Der konkrete Zeitplan ist für jede einzelne
+Hierarchieebene separat konfigurierbar.
+
+\paragraph{Flexible Benachrichtigungswege}
+
+Da wahrscheinlich jeder Benutzer eigene Präferenzen für die Art und Weise der
+Benachrichtigung haben wird, besitzt der Prototyp bereits die Möglichkeit, für
+jede Mitgliedschaft in einer solchen Gruppe einzeln festzulegen, in welchen
+Zeitabständen er über welche Wege benachrichtigt werden soll. Erfolgt so z.B.
+auf eine unmittelbar nach Zuteilung eines Ereignisses versandte SMS nicht
+innerhalb von drei Minuten eine Reaktion, versendet Escalator eine Email, bzw.
+es wird ein automatischer Anruf getätigt etc.
+
+Auf diesem Weg kann der zuständige Benutzer auch bei Ausfall oder
+Nichtbeachtung eines Benachrichtungsweges zuverlässig—sofern er diese Schritte
+sinnvoll gewählt hat—erreicht werden, ohne dass im Normalfall zuviele
+gleichzeitige Benachrichtigungen über zuviele verschiedene Kanäle für eine
+Abstumpfung gegenüber diesen Signalen sorgen. Ebenso ist eine intuitive
+Abgrenzung von Zuständigkeitsbereichen anhand des Benachrichtigungsweges für
+ein Ereignis möglich, falls der Benutzer mehrere Bereitschaftsdienste
+gleichzeitig erfüllen sollte und dies wünscht.
+
+\section{Implementierung}
+
+\subsection{Web-Schnittstelle und Backend}
+
+Für die Implementierung der Web-Schnittstelle und des Backends wurde das
+Webframework \emph{Rails}~\cite{rails} ausgewählt, da ich bereits mit der Sprache
+Ruby vertraut war, um Rails als praxiserprobtes Framework herum ein sehr
+fortgeschrittenes Ökosystem von Erweiterungen existiert und die \emph{Ruby on Rails
+Guides}~\cite{rails-guides} sehr viel unterstützendes Material für Anfänger
+bereit stellen.
+
+Aufgrund seiner Ausrichtung auf den REST-Architekturstil~\cite{fielding-rest}
+eignet sich Rails dazu, sowohl das Web-Frontend für die Verwaltung von
+Eskalationsstrategien, Rotationen, Benutzern etc. als auch die API für die
+Anbindung von Drittsystemen, welche Ereignisse liefern, in einer einzigen
+Anwendung zu vereinen. Codegenerierung mittels \emph{Scaffolding} ermöglichte
+hier einen sehr schnellen Start bei der Anlage grundlegender Strukturen der
+Datenhaltung und von Formularen zur Manipulation von diesen.
+
+\paragraph{Ermittlung der Zuständigkeit}
+
+Die in Abschnitt \ref{concept} eingeführten Zuständigkeitsbereiche werden
+innerhalb der Anwendung als \emph{Escalation Policies} abgebildet. Die in den
+Bereich fallenden Ereignisse sind in der Form von \emph{Issues} mit diesem
+assoziiert. Eine Escalation Policy enthält weiterhin beliebig viele
+\emph{Escalation Steps}, die festhalten, nach welcher zeitlichen Verzögerung
+welcher Benutzer benachrichtig werden sollen.
+
+Zu diesem Zweck verweisen die Escalation Steps auf sogenannte \emph{Rotations},
+in denen eine Gruppe von Benutzern über \emph{Rotation Memberships} Mitglied
+ist. Jede dieser Memberships trägt zugleich einen Rang, über den festgelegt
+ist, welcher Benutzer aktuell Bereitschaftsdienst hat. Der Wechsel des
+diensthabenden Benutzers erfolgt im Prototyp mittels eines zu festgelegten
+Zeitpunkten laufenden \emph{Rotation Job}s, welcher die Ränge der
+Mitgliedschaften einer Rotation umlaufend aktualisiert.
+
+\paragraph{Benachrichtigung}
+
+Ist der zuständige Benutzer für ein neu eingegangenes Ereignisse über diesen
+Weg festgestellt, wird über die in einer Rotation Membership enthaltenen
+\emph{Alerting Steps} bestimmt, wie der Benutzer zu benachrichtigen ist. Dazu
+besitzt jeder Alerting Step einen Parameter, der die zeitliche Verzögerung
+angibt, nach der dieser Alerting Step aktiv wird.
+
+Das dort ebenfalls definierte \emph{Contact Detail} enthält in
+Schlüssel/Wert-Paaren verschiedene Parameter, welche der mit dem Typ des
+Contact Details assoziierte \emph{Service} benötigt, um die Informationen über
+das Ereignis für den jeweiligen Endpunkt aufzubereiten und den korrekten
+Versand der Nachricht zu garantieren.
+
+Aktuell implementiert sind Services für Emailversand und
+Push-Benachrichtigungen an Android-Geräte. Für neue Benachrichtigungsendpunkte
+kann dieser Teil einfach und schnell erweitert werden
+
+\paragraph{Eingesetzte Techniken}
+
+Während der Entwicklung des Prototyps habe ich mich neben der eigentlichen
+Programmierung mit einigen \emph{Best Practices} der Rails-Entwicklung befasst.
+So erfolgte nach der anfänglichen Verwendung des in Ruby selbst enthaltenen
+Testframeworks \emph{Test::Unit}~\cite{testunit}—bei der Neuanlage von
+Rails-Anwendungen ohne weitere Parameter standardmäßig ausgewählt—nach kurzer
+Zeit der Wechsel zum mittlerweile Quasi-Standard der Rails-Welt in dieser
+Hinsicht, \emph{RSpec}~\cite{rspec}.
+
+Generell lag der Fokus darauf, zum Zeitpunkt der Abgabe eine prototypische
+Anwendung präsentieren zu können, die neben der geplanten Funktionalität auch
+eine möglichst hohe Testabdeckung vorzuweisen hat, um eine Weiterentwicklung
+attraktiv zu machen.
+
+In diesem Rahmen wurde auch die Verwendung von \emph{Cucumber}~\cite{cucumber}
+erprobt, einem Framework für \emph{Behaviour-Driven Development}, mit dem für
+den Nutzer sichtbare Features des Systems in Textform beschrieben und darauf
+aufbauend automatisiert getestet werden können.
+
+Für die asynchrone Abarbeitung von im Hintergrund laufenden
+Tasks—beispielsweise die rechtzeitige Eskalation von Ereignisse nach Ablauf
+einer Zeitspanne—wurde die für diese Zwecke populäre Erweiterung
+\emph{delayed\_job}~\cite{delayedjob} eingesetzt. Diese hat den Vorteil, dass
+die Jobverwaltung komplett über die bereits von Rails verwendete Datenbank
+abgewickelt werden kann und die Einstiegshürde sehr gering ist.
+
+Da es sich bei Escalator weniger um einen Wegwerf-Prototypen als vielmehr um
+Entwicklung nach dem Prinzip von \emph{Tracer
+Bullets}~\cite[S. 47 ff.]{pragprog-tracerbullets} handeln soll, wurden Authentifizierung
+und Authorisierung innerhalb der Anwendung ebenfalls beleuchtet, um auch unter
+diesen Gesichtspunkten zu planen.  Die Authentifizierung erfolgt mittels
+\emph{Devise}~\cite{devise}, die Authorisierung auf Ressourcenebene
+rollenbasiert via
+\emph{declarative\_authorization}~\cite{declarative-authorization}, beides
+ebenfalls sehr populäre Lösungen in Form von Rails-Erweiterungen.
+
+Weiterhin wurde das einfache Deployment der Anwendung mittels
+\emph{Capistrano}~\cite{capistrano} konfiguriert und im Rahmen der Vorbereitung
+der in meinem Abschlussvortrag erfolgten Demonstation häufiger durchgeführt.
+Das Projekt ist somit in einem relativ robusten, wenn auch unfertigen Zustand,
+welcher eine Weiterentwicklung vor geringe Startschwierigkeiten stellen sollte.
+
+\subsection{Android-App}
+
+Für mobile Geräte ab Android 2.2—Entwicklung und Test erfolgten auf einem
+privaten \emph{HTC Desire}—wurde begleitend eine einfache Anwendung zum Empfang
+von Push-Benachrichtigungen entwickelt, unter Verwendung des Android
+\emph{Cloud to Device Messaging} (C2DM) Frameworks~\cite{c2dm}.
+
+\paragraph{Anmeldung für C2DM}
+
+Die Anwendung muss dazu den unter \cite[\emph{Lifecycle Flow}]{c2dm}
+beschriebenen Ablauf zur Anmeldung für diesen Dienst implementieren. Nach der
+vom Gerät initiierten Anmeldung an Googles C2DM Server erhält die Anwendung
+eine sogenannte \emph{Registration ID}, welche für den Nachrichtenversand von
+der bei der Anmeldung angegeben Quelle zu diesem Gerät gültig ist. Dieser
+Anmeldevorgang kann im Prototyp zu Testzwecken explizit ausgelöst werden, in
+der endgültigen Anwendung sollte der Prozess für den Benutzer transparent im
+Hintergrund ablaufen. Weiterhin muss die Anwendung auf die Vergabe einer neuen
+Registration ID durch Google selbstständig reagieren, was laut
+\cite[\emph{Handling Registration Results}]{c2dm} von Zeit zu Zeit (ohne
+konkrete Angabe wie oft) passieren kann.
+
+Besitzt die Anwendung eine solche gültige Registration ID, muss diese an das
+Escalator-Backend weitergereicht werden, damit von dort der Nachrichtenversand
+erfolgen kann. Zum einen ist hierfür die Authentifizierung am Backend
+notwendig, welche über ein in der Android-App gespeichertes
+Authentifizierungstoken durchgeführt wird. Im zweiten Schritt muss die
+Registration ID einem existierenden Contact Detail vom Typ Android zugeordnet,
+bzw. ein neues solches Contact Detail erstellt werden.
+
+Da aus Zeitgründen während der Entwicklung des Prototyps auf Android auf eine
+Oberfläche zur Auswahl eines existierenden Contact Details verzichtet wurde—die
+dafür notwendige API ist jedoch bereits vorhanden—legt die Android-App bei
+diesem Vorgang zu Demonstrationszwecken immer ein neues Contact Detail mit der
+aktuellen Registration ID an. In der Weboberfläche kann dieses Contact Detail
+dann einem Alerting Step zugeordnet werden, um bei Bereitschaftsdienst in der
+jeweiligen Rotation über das Gerät benachrichtigt zu werden.
+
+\paragraph{Benachrichtigung}
+\label{android-notification}
+
+Soll nun ein Android-Gerät über ein Ereignis benachrichtigt werden, sendet das
+Escalator-Backend den unter \cite[\emph{How the Application Server Sends
+Messages}]{c2dm} beschriebenen HTTP Request, welcher die Registration ID für
+das entsprechende Gerät enthält, an den C2DM Server. Hierbei identifiziert sich
+das Backend mittels eines sogenannten
+\emph{ClientLogin}-Tokens~\cite{clientlogin} als die für die Verwendung dieser
+Registration ID zugelassene Quelle.
+
+Das Gerät empfängt daraufhin im Normalfall vom C2DM Server einen
+\texttt{RECEIVE}-Intent mit den Parametern des ursprünglichen Ereignisses als
+Payload. Der Benutzer wird mittels eines einfachen Textes in der Statusleiste
+von Android auf das neue Ereignis hingewiesen. Ein Klick auf diese
+Benachrichtigung öffnet daraufhin eine einfache Ansicht mit den Details des
+Ereignisses.
+
+Innerhalb dieser Detailansicht hat der Benutzer im Prototyp bereits die
+Möglichkeit, durch Drücken des „Acknowledge“-Buttons das Ereignis zu
+akzeptieren, was eine weitere Eskalation verhindert. Verlässt der Benutzer die
+Detailansicht, existiert aktuell kein Weg, das Ereignis und damit den
+„Acknowledge“-Button erneut aufzurufen. Eine entsprechende Erweiterung der
+Anwendung sollte aber unkompliziert ausfallen.
+
+\paragraph{Einschränkungen}
+
+Für den Versand von Push-Benachrichtigungen über C2DM ist ein sogenannter
+\emph{Rollenaccount} notwendig—technisch identisch mit einem normalen
+Google-Account—dessen Logindaten vom Backend für den Erwerb des
+ClientLogin-Tokens verwendet werden. Gespeichert wird im Backend nur das Token,
+das Passwort für den Account muss für einen etwaigen Verlust des Tokens separat
+aufbewahrt werden.
+
+Darüber hinaus unterliegt der Versand von Push-Benachrichtigungen über C2DM
+einer Entwickler-Quota von 200.000 Nachrichten am Tag sowie dem normalen Limit
+von 1024 Byte Nachrichteninhalt. Aus diesem Grund ist vor der Verwendung von
+C2DM die (unkomplizierte) Beantragung der Freischaltung für diesen Dienst
+nötig.~\cite{c2dm-quotas}
+
+\section{Ausblick}
+
+\paragraph{Ausstehende Features}
+
+Der Prototyp enthält zu Demonstrationszwecken zwar einen Großteil der in
+Abschnitt~\ref{concept} beschriebenen Funktionalität im Backend, die
+Weboberfläche ist allerdings in den meisten Belangen noch sehr rudimentär.
+
+Für Nutzer nicht sichtbar und nur über die Rails-Konsole manipulierbar sind
+z.B. die zeitlichen Abstände der Rotation Jobs zum Wechsel des diensthabenden
+Benutzers in einer Rotation. Der Lebenszyklus eines Ereignisses ist über die
+Zustände „registriert“ bzw. „nicht registriert“—und damit automatisch
+eskalierbar—nicht weiter spezifiziert, eine Manipulation innerhalb der
+Weboberfläche ist noch nicht möglich.
+
+Nach dem Eingang bzw. der Eskalation eines Ereignisses erhält dieses seinen
+zuständigen Benutzer zugewiesen, was in der Liste aller Ereignisse zwar
+visualisiert wird, für den betroffenen Benutzer jedoch nicht gezielt, z.B. in
+Form eines Dashboards von „eigenen“ Ereignissen—einsehbar ist.
+
+Auf der Seite der Android-App wäre aus den in \ref{android-notification}
+angeführten Gründen eine Liste der vom Benutzer aktuell zu behandelnden
+Ereignisse ebenfalls wünschenswert.
+
+Eine weitere Idee für die Gewährleistung der zügigen Benachrichtigung eines
+Bereitschaftsdienstes über die App ist die fortlaufende Überwachung der
+Konnektivität, um den Benutzer bei Verlust der Erreichbarkeit am Gerät auf
+diesen Umstand hinzuweisen. Hier wurde bisher keine Recherche betrieben, ob
+eine generische Lösung für dieses Teilproblem existiert.
+
+Geplant ist für das Backend weiterhin die Möglichkeit der flexiblen Definition
+von Urlaubszeiträumen, Krankschreibungen etc. für jeden Benutzer, sodass von
+Escalator in dieser Zeit andere Benutzer ersatzweise zum Bereitschaftsdienst
+eingeteilt werden können. Idealerweise sollte diese Möglichkeit zu einem hohen
+Grad in der Hand der betroffenen Benutzer liegen, um eine zusätzliche
+Arbeitsbelastung von Benutzern mit administrativer Rolle gering zu halten. Dies
+würde auch spontanen Diensttausch unter Benutzern unbürokratisch gestalten.
+
+\paragraph{Weiterentwicklung}
+
+Der Code für Escalator ist öffentlich auf \emph{GitHub}~\cite{escalator-github}
+verfügbar. Die Wahl einer passenden Open-Source-Lizenz steht noch aus, wird
+aber vermutlich auf eine Form der MIT-Lizenz fallen. Eine Weiterentwicklung ist
+für jeden Interessenten möglich, ein GitHub-Account wird hierfür nicht benötigt.
+
+Von Seiten der Betreuer wurde bereits in zwei Fällen ein Interesse an der
+Weiterführung des Projektes signalisiert. Da mir in der näheren Zukunft
+vermutlich leider die Zeit für ein konzentriertes Vorantreiben der oben
+genannten Punkte fehlt, ist die Möglichkeit der freien Partizipation umso
+wichtiger.
+
+\end{document}
